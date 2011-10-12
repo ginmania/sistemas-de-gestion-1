@@ -38,9 +38,7 @@ public class AdministradorTx {
 
     public void crearConexion(String dir,String usuario,String pass) throws Exception{
         Class.forName("com.mysql.jdbc.Driver").newInstance();
-        //conexion = DriverManager.getConnection("jdbc:mysql://192.168.20.2/disenio", "disenio", "disenio");
-       conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/sg1", "root", "24241");
-       //conexion = DriverManager.getConnection("jdbc:mysql:" + dir, usuario,pass);
+       conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/sg1", "root", "duendecito");
         }
 
     public Connection getConexion(){
