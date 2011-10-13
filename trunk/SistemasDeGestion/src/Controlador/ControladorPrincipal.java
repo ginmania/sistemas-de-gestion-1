@@ -3,6 +3,7 @@ package Controlador;
 import Excepciones.NoProductoExcepcion;
 import Pantalla.*;
 import Persistencia.AdministradorTx;
+import java.awt.event.ActionEvent;
 import java.beans.PropertyVetoException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -65,7 +66,6 @@ public final class ControladorPrincipal {
             }
         });
         pantallaPrincipal.getMetodo().addActionListener(new java.awt.event.ActionListener() {
-
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
                     elegirMetodos();
@@ -74,6 +74,17 @@ public final class ControladorPrincipal {
                 }
             }
         });
+        
+        pantallaPrincipal.getABC().addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    curvaABC();
+                } catch (PropertyVetoException ex) {
+                    Logger.getLogger(ControladorPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+        
         pantallaPrincipal.getSalir().addActionListener(new java.awt.event.ActionListener() {
 
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -109,6 +120,10 @@ public final class ControladorPrincipal {
     
     private void elegirMetodos() throws NoProductoExcepcion{
         new ControladorMetodos(this).agregarMetodos();
+    }
+    
+    private void curvaABC () throws PropertyVetoException{
+        new ControladorCurvaABC(this).iniciar();
     }
 
     public void add(JInternalFrame jInternalFrame) {

@@ -23,6 +23,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         MenuProveedor = new javax.swing.JMenuItem();
         Ventas = new javax.swing.JMenuItem();
         Metodo = new javax.swing.JMenuItem();
+        ABC = new javax.swing.JMenuItem();
         Salir = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -32,7 +33,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         setName("Pantalla Principal"); // NOI18N
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
-        jDesktopPane1.setBackground(new java.awt.Color(145, 116, 52));
+        jDesktopPane1.setBackground(new java.awt.Color(172, 150, 102));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -59,6 +60,9 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         Metodo.setText("Metodo");
         jMenu1.add(Metodo);
 
+        ABC.setText("ABC");
+        jMenu1.add(ABC);
+
         Salir.setText("Salir");
         jMenu1.add(Salir);
 
@@ -69,6 +73,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem ABC;
     private javax.swing.JMenuItem MenuCliente;
     private javax.swing.JMenuItem MenuProducto;
     private javax.swing.JMenuItem MenuProveedor;
@@ -129,6 +134,16 @@ public class PantallaPrincipal extends javax.swing.JFrame {
 
     public void setVentas(JMenuItem Ventas) {
         this.Ventas = Ventas;
-    }    
+    }
+
+    public JMenuItem getABC() {
+        return ABC;
+    }
+
+    public void setABC(JMenuItem ABC) {
+        this.ABC = ABC;
+    }
+    
+    
     
 }

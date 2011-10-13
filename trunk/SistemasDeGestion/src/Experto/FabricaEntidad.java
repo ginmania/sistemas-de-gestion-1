@@ -3,12 +3,16 @@ package Experto;
 import Agentes.AgenteCliente;
 import Agentes.AgenteDetalleVenta;
 import Agentes.AgenteProducto;
+import Agentes.AgenteProductoProveedor;
 import Agentes.AgenteProveedor;
+import Agentes.AgenteStock;
 import Agentes.AgenteVenta;
 import Implementaciones.ClienteImpl;
 import Implementaciones.DetalleVentaImpl;
 import Implementaciones.ProductoImpl;
+import Implementaciones.ProductoProveedorImpl;
 import Implementaciones.ProveedorImpl;
+import Implementaciones.StockImpl;
 import Implementaciones.VentaImpl;
 import Persistencia.ObjetoPersistente;
 
@@ -18,7 +22,7 @@ public class FabricaEntidad {
 
     private static enum Entidades {
 
-        Cliente, Producto, Proveedor, DetalleVenta, Venta
+        Cliente, Producto, Proveedor, DetalleVenta, Venta, ProductoProveedor,Stock
     }
 
     public static FabricaEntidad getInstancia() {
@@ -51,7 +55,14 @@ public class FabricaEntidad {
             case DetalleVenta:
                 obj = new AgenteDetalleVenta();
                 ((AgenteDetalleVenta) obj).setImpl(new DetalleVentaImpl());
-                return obj;    
+                return obj;   
+            case ProductoProveedor:                
+                obj = new AgenteProductoProveedor(new ProductoProveedorImpl());                
+                return obj;   
+            case Stock:                
+                obj = new AgenteStock();
+                ((AgenteStock) obj).setImpl(new StockImpl());                
+                return obj;   
             default:
                 return "no existe la entidad que desea crear";
 

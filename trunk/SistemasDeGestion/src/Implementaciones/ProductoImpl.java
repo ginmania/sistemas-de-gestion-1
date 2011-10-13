@@ -26,6 +26,7 @@ public class ProductoImpl implements Producto {
     public Stock stock;
     public List<Proveedor> proveedores;
     public List<Demanda> demandas;
+    private char clasifABC;
 
     public ProductoImpl() {
     }
@@ -134,5 +135,13 @@ public class ProductoImpl implements Producto {
             demandas = new ArrayList<Demanda>();
         }
         demandas.add(demanda);
+    }
+    
+    public char getClasifABC(){
+        return this.clasifABC;
+    }
+    
+    public void setClasifABC(char c) {
+        this.clasifABC = c;
     }
 }
