@@ -27,6 +27,9 @@ public class FabricaExperto{
     }else if(experto.equals("ExpertoMetodos"))
         {
             return new DecoradorMetodos();
+    }else if(experto.equals("ExpertoCurvaABC"))
+        {
+            return new DecoradorCurvaABC();
     }
         return null;
     }

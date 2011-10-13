@@ -189,4 +189,12 @@ public class AgenteProducto implements Producto, ObjetoPersistente {
         }
         proveedorrelacionados.add(OIDDemanda);
     }
+    
+    public void setClasifABC(char c) {
+        impl.setClasifABC(c);
+    }
+
+    public char getClasifABC() {
+        return impl.getClasifABC();
+    }
 }

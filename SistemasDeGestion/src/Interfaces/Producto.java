@@ -51,5 +51,9 @@ public interface Producto {
     public void setDemandas(List<Demanda> demanda);
 
     public void setDemanda(Demanda demanda);
+    
+    public void setClasifABC(char c);
+    
+    public char getClasifABC();
 
 }
