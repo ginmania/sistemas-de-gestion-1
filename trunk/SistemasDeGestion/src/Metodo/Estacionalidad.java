@@ -79,8 +79,8 @@ public class Estacionalidad {
         inicializacion(dem_hist);
         for (int i = 1; i < demReal.length; i++) {
             prom[i] = actualizacion(i, demReal[i - 1]);
-//return (alfa*(demReal[i-1]/Sj[i-1]) + (1-alfa)*prom[i-1]);
-            factor[i] = beta * (demReal[i - 1] - prom[i]) + (1 - beta) * Sj[i - 1];
+//return (alfa*(demReal[i-1]/Sj[i-1]) + (1-alfa)*prom[i-1]);  cambie el menos por el dividido
+            factor[i] = beta * (demReal[i - 1] / prom[i]) + (1 - beta) * Sj[i - 1];
         }
         for (int j = 0; j < demReal.length; j++) {
             pron[j] = prediccion(demReal.length - 1, j);
