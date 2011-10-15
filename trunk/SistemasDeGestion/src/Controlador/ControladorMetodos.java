@@ -37,11 +37,9 @@ public class ControladorMetodos {
     private Periodo periodo = new Periodo();
     private int diferenciadeperiodos, valorperiodoinicial, valorperiodofinal, periodosapredecir;
     private String[][] resultadosimple;
-    private String[][] resultadotendencia = null;
-    private String[][] resultadoestacionalidad = null;
-    private int predecir;
-    private Producto productoSeleccionado;
-    private String a, b, g;
+    private String[][] resultadotendencia;
+    private String[][] resultadoestacionalidad;
+    private String a;
     private List<Producto> vectorProductos = new ArrayList<Producto>();
     private List<Producto> productobuscado = new ArrayList<Producto>();
     private String valorItemSeleccionado = "";
@@ -75,6 +73,7 @@ public class ControladorMetodos {
                 pantallaMetodos.getCampoAlfa().setEditable(true);
                 pantallaMetodos.getCampoBeta().setEditable(false);
                 pantallaMetodos.getCampoGama().setEditable(false);
+                pantallaMetodos.getCampoGama().setVisible(false);
             }
         });
         /////////BOTON METODO TENDENCIA//////////
@@ -84,6 +83,7 @@ public class ControladorMetodos {
                 pantallaMetodos.getCampoAlfa().setEditable(true);
                 pantallaMetodos.getCampoBeta().setEditable(true);
                 pantallaMetodos.getCampoGama().setEditable(false);
+                pantallaMetodos.getCampoGama().setVisible(false);
 
             }
         });
@@ -94,7 +94,9 @@ public class ControladorMetodos {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 pantallaMetodos.getCampoAlfa().setEditable(true);
                 pantallaMetodos.getCampoBeta().setEditable(false);
+                pantallaMetodos.getCampoBeta().setVisible(false);
                 pantallaMetodos.getCampoGama().setEditable(true);
+                pantallaMetodos.getCampoGama().setVisible(true);
             }
         });
 
@@ -113,8 +115,6 @@ public class ControladorMetodos {
                     System.out.println("El producto seleccionado es: " + valorItemSeleccionado);
                     a = pantallaMetodos.getCampoAlfa().getText();
                     alfa = Double.parseDouble(a);
-                    System.out.println("Soy alfa!! " + alfa);
-                    //obtener los datos de las fechas y calculo de periodos y luego llamar a metodosimple
                     fechadesde = pantallaMetodos.getTxFechadesde().getDate();
                     fechahasta = pantallaMetodos.getTxFechahasta().getDate();
                     try {
@@ -211,7 +211,6 @@ public class ControladorMetodos {
                     System.out.println("El producto seleccionado es: " + valorItemSeleccionado);
                     a = pantallaMetodos.getCampoAlfa().getText();
                     alfa = Double.parseDouble(a);
-                    //obtener los datos de las fechas y calculo de periodos y luego llamar a metodosimple
                     fechadesde = pantallaMetodos.getTxFechadesde().getDate();
                     fechahasta = pantallaMetodos.getTxFechahasta().getDate();
                     try {

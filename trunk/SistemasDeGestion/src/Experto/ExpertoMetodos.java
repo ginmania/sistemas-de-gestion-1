@@ -29,7 +29,9 @@ public class ExpertoMetodos implements Experto {
             return new Integer(t.getPeriodo()).compareTo(t1.getPeriodo());
         }
     }
-    private int cantper;
+    private int cantpersimple = 0;
+    private int cantpertendencia = 0;
+    private int cantperestacionalidad = 0;
     private List<Producto> vectorDTOProducto = new ArrayList();
     private double[] resultadosimple;
     private double[] demandarealsimple;
@@ -38,8 +40,12 @@ public class ExpertoMetodos implements Experto {
     private double[] resultadoestacionalidad;
     private double[] demandarealestacionalidad;
     private double[][] demandahistorica;
-    private int[] periodo;
-    private double a, b, g;
+    private int[] periodosimple;
+    private int[] periodotendencia;
+    private int[] periodoestacionalidad;
+    private double a = 0.1;
+    private double b = 0.1;
+    private double g = 0.1;
 
     public ExpertoMetodos() {
     }
@@ -72,17 +78,17 @@ public class ExpertoMetodos implements Experto {
         System.out.println("Valor Inicial:  " + valorperiodoinicial + "  Valor Final:  " + valorperiodofinal);
         String seleccion = productoSeleccionado;
         demandarealsimple = new double[1 + valorperiodofinal - valorperiodoinicial];
-        periodo = new int[periodosapredecir + (valorperiodofinal - valorperiodoinicial)];
-        cantper = valorperiodofinal - valorperiodoinicial;
-        String valorsimple[][] = new String[cantper + 1][2];
+        periodosimple = new int[periodosapredecir + (valorperiodofinal - valorperiodoinicial)];
+        cantpersimple = valorperiodofinal - valorperiodoinicial;
+        String valorsimple[][] = new String[cantpersimple + 1][2];
         for (Producto producto : vectorDTOProducto) {
             List<Demanda> listaDemanda = producto.getDemandas();
             Collections.sort(listaDemanda, new OrdenarDemandas());
             if (producto.getNombreProducto().equalsIgnoreCase(seleccion)) {
                 for (int k = valorperiodoinicial; k < valorperiodofinal + 1; k++) {
                     demandarealsimple[k - valorperiodoinicial] = listaDemanda.get(k - 1).getDemandareal();
-                    periodo[k - valorperiodoinicial] = listaDemanda.get(k - 1).getPeriodo();
-                    valorsimple[k - valorperiodoinicial][1] = "Demanda real:  " + demandarealsimple[k - valorperiodoinicial] + "   En el periodo: " + periodo[k - valorperiodoinicial];
+                    periodosimple[k - valorperiodoinicial] = listaDemanda.get(k - 1).getPeriodo();
+                    valorsimple[k - valorperiodoinicial][1] = "Demanda real:  " + demandarealsimple[k - valorperiodoinicial] + "   En el periodo: " + periodosimple[k - valorperiodoinicial];
                 }
             }
         }
@@ -100,22 +106,22 @@ public class ExpertoMetodos implements Experto {
         b = alfa / 2;
         String seleccion = productoSeleccionado;
         demandarealtendencia = new double[1 + valorperiodofinal - valorperiodoinicial];
-        periodo = new int[periodosapredecir + (valorperiodofinal - valorperiodoinicial)];
-        cantper = valorperiodofinal - valorperiodoinicial;
-        String valortendencia[][] = new String[cantper + 1][2];
+        periodotendencia = new int[periodosapredecir + (valorperiodofinal - valorperiodoinicial)];
+        cantpertendencia = valorperiodofinal - valorperiodoinicial;
+        String valortendencia[][] = new String[cantpertendencia + 1][2];
         for (Producto producto : vectorDTOProducto) {
             List<Demanda> listaDemanda = producto.getDemandas();
             Collections.sort(listaDemanda, new OrdenarDemandas());
             if (producto.getNombreProducto().equalsIgnoreCase(seleccion)) {
                 for (int k = valorperiodoinicial; k < valorperiodofinal + 1; k++) {
                     demandarealtendencia[k - valorperiodoinicial] = listaDemanda.get(k - 1).getDemandareal();
-                    periodo[k - valorperiodoinicial] = listaDemanda.get(k - 1).getPeriodo();
-                    valortendencia[k - valorperiodoinicial][1] = "Demanda real:  " + demandarealtendencia[k - valorperiodoinicial] + "   En el periodo: " + periodo[k - valorperiodoinicial];
+                    periodotendencia[k - valorperiodoinicial] = listaDemanda.get(k - 1).getPeriodo();
+                    valortendencia[k - valorperiodoinicial][1] = "Demanda real:  " + demandarealtendencia[k - valorperiodoinicial] + "   En el periodo: " + periodotendencia[k - valorperiodoinicial];
                 }
             }
         }
         Tendencia metodotendencia = new Tendencia();
-        resultadotendencia = metodotendencia.calcularTendencia(demandarealtendencia, a, b, cantper, periodosapredecir);
+        resultadotendencia = metodotendencia.calcularTendencia(demandarealtendencia, a, b, cantpertendencia, periodosapredecir);
         for (int i = 1; i < periodosapredecir + 1; i++) {
             resultadotendencia[i] = redondear(resultadotendencia[i], 2);
             valortendencia[i - 1][0] = "Demanda Pronosticada: " + String.valueOf(resultadotendencia[i] + "  En el periodo:  " + (i + valorperiodofinal));
@@ -126,23 +132,25 @@ public class ExpertoMetodos implements Experto {
     public String[][] calcularestacionalidad(double alfa, int valorperiodo, String productoSeleccionado, int valorperiodoinicial, int valorperiodofinal, int periodosapredecir) {
         a = alfa;
         g = alfa * 2;
+        System.out.println("Alfa:  " + a + "  gama: " + g);
         System.out.println("Cantidad de Periodos a predecir:   " + periodosapredecir);
         System.out.println("SUMA :  " + (periodosapredecir + valorperiodofinal - valorperiodoinicial));
         System.out.println("Valor Inicial:  " + valorperiodoinicial + "  Valor Final:  " + valorperiodofinal);
         String seleccion = productoSeleccionado;
         demandarealestacionalidad = new double[1 + valorperiodofinal - valorperiodoinicial];
         demandahistorica = new double[1][13];
-        periodo = new int[periodosapredecir + (valorperiodofinal - valorperiodoinicial)];
-        cantper = valorperiodofinal - valorperiodoinicial;
-        String valorestacionalidad[][] = new String[cantper + 1][2];
+        periodoestacionalidad = new int[periodosapredecir + (valorperiodofinal - valorperiodoinicial)];
+        cantperestacionalidad = valorperiodofinal - valorperiodoinicial;
+        String valorestacionalidad[][] = new String[cantperestacionalidad + 1][2];
         for (Producto producto : vectorDTOProducto) {
             List<Demanda> listaDemanda = producto.getDemandas();
             Collections.sort(listaDemanda, new OrdenarDemandas());
             if (producto.getNombreProducto().equalsIgnoreCase(seleccion)) {
                 for (int k = valorperiodoinicial; k < valorperiodofinal + 1; k++) {
                     demandarealestacionalidad[k - valorperiodoinicial] = listaDemanda.get(k - 1).getDemandareal();
-                    periodo[k - valorperiodoinicial] = listaDemanda.get(k - 1).getPeriodo();
-                    valorestacionalidad[k - valorperiodoinicial][1] = "Demanda real:  " + demandarealestacionalidad[k - valorperiodoinicial] + "   En el periodo: " + periodo[k - valorperiodoinicial];
+                    periodoestacionalidad[k - valorperiodoinicial] = listaDemanda.get(k - 1).getPeriodo();
+                    valorestacionalidad[k - valorperiodoinicial][1] = "Demanda real:  " + demandarealestacionalidad[k - valorperiodoinicial] + "   En el periodo: " + periodoestacionalidad[k - valorperiodoinicial];
+                    System.out.println("Demanda real:  " + demandarealestacionalidad[k - valorperiodoinicial] + "   En el periodo: " + periodoestacionalidad[k - valorperiodoinicial]);
                 }
             }
         }
@@ -152,16 +160,18 @@ public class ExpertoMetodos implements Experto {
             if (producto.getNombreProducto().equalsIgnoreCase(seleccion)) {
                 for (int k = 0; k < 12; k++) {
                     demandahistorica[0][k] = listaDemanda.get(k).getDemandapronosticada();
+                    System.out.println("HISTORICA:  " + demandahistorica[0][k]);
                 }
             }
         }
 
-
         Estacionalidad metodoestacionalidad = new Estacionalidad();
-        resultadoestacionalidad = metodoestacionalidad.calcularEstacionalidad(demandahistorica, demandarealestacionalidad, a, b);
+        resultadoestacionalidad = metodoestacionalidad.calcularEstacionalidad(demandahistorica, demandarealestacionalidad, a, g);
         for (int i = 1; i < periodosapredecir + 1; i++) {
+            System.out.println(" Resultado estacionalidad: " + resultadoestacionalidad[i]);
             resultadoestacionalidad[i] = redondear(resultadoestacionalidad[i], 2);
             valorestacionalidad[i - 1][0] = "Demanda Pronosticada: " + String.valueOf(resultadoestacionalidad[i] + "  En el periodo:  " + (i + valorperiodofinal));
+            System.out.println("Demanda Pronosticada: " + String.valueOf(resultadoestacionalidad[i] + "  En el periodo:  " + (i + valorperiodofinal)));
         }
         return valorestacionalidad;
     }
