@@ -72,6 +72,7 @@ public class ControladorMetodos {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 pantallaMetodos.getCampoAlfa().setEditable(true);
                 pantallaMetodos.getCampoBeta().setEditable(false);
+                pantallaMetodos.getCampoBeta().setVisible(false);
                 pantallaMetodos.getCampoGama().setEditable(false);
                 pantallaMetodos.getCampoGama().setVisible(false);
             }
