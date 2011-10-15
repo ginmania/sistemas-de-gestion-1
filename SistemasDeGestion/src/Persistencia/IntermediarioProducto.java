@@ -42,6 +42,7 @@ public class IntermediarioProducto extends IntermediarioRelacional {
         rs.addCampo(new Campo("preciocompra", String.valueOf(producto.getPrecioCompra())));
         rs.addCampo(new Campo("precioventa", String.valueOf(producto.getPrecioVenta())));
         rs.addCampo(new Campo("OIDStock", "'" + ((AgenteStock) producto.getStock()).getoid() + "'"));
+        rs.addCampo(new Campo("clasifABC","'"+producto.getClasifABC()+"'"));
         rs.addCampo(new Campo("baja", "'" + String.valueOf(producto.getbaja() + "'")));
         return rs;
 
@@ -62,6 +63,8 @@ public class IntermediarioProducto extends IntermediarioRelacional {
                 temp.setPrecioCompra((Double) (registro.getCampo("preciocompra").getValor(Double.class)));
                 temp.setPrecioVenta((Double) (registro.getCampo("precioventa").getValor(Double.class)));
                 temp.setOIDStock(registro.getCampo("OIDStock").getValor());
+                String valor = registro.getCampo("clasifABC").getValor();  
+                temp.setClasifABC(valor.charAt(0));
                 temp.setbaja(Integer.parseInt(registro.getCampo("baja").getValor()));
                 temp.setDemandas(Fachada.getInstancia().buscar(Demanda.class, FabricaCriterio.getInstancia().crearCriterio("OIDProducto", "=", temp.getoid())));
                 //busquedaoidquenoexisten(temp);
@@ -74,7 +77,6 @@ public class IntermediarioProducto extends IntermediarioRelacional {
         }
 
         return producto;
-
     }
 //    @Override
 //    public boolean guardar(ObjetoPersistente objeto) {
