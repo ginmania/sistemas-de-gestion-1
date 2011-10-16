@@ -4,11 +4,16 @@
  */
 package Experto;
 
+import Agentes.AgenteProducto;
+import Agentes.AgenteProductoProveedor;
+import Agentes.AgenteProveedor;
 import Interfaces.Producto;
 import Persistencia.Criterio;
 import Persistencia.Fachada;
 import java.util.ArrayList;
 import Excepciones.NoProductoExcepcion;
+import Interfaces.ProductoProveedor;
+import Interfaces.Proveedor;
 import Interfaces.Stock;
 import Persistencia.ObjetoPersistente;
 import java.util.List;
@@ -71,6 +76,37 @@ public class ExpertoProducto implements Experto {
         resultado = Fachada.getInstancia().guardar((ObjetoPersistente) stock);
         producto.setStock(stock);
         resultado = Fachada.getInstancia().guardar((ObjetoPersistente) producto);
+
+        return resultado;
+    }
+    
+     public boolean insertarProducto(int codigo, String nombre, String descripcion, double precioCompra,
+            double precioVenta, int baja, int cantidadminima, int cantidad, char ABC, Proveedor prov) {
+        boolean resultado = false;
+        Producto producto = (Producto) FabricaEntidad.getInstancia().FabricarEntidad(Producto.class);
+        ProductoProveedor asocia = (ProductoProveedor) FabricaEntidad.getInstancia().FabricarEntidad(ProductoProveedor.class);
+        Stock stock = (Stock) FabricaEntidad.getInstancia().FabricarEntidad(Stock.class);
+        AgenteProducto ap = (AgenteProducto) producto;
+        AgenteProveedor aP = (AgenteProveedor) prov;
+        AgenteProductoProveedor APP= (AgenteProductoProveedor) asocia;
+        producto.setCodigoProducto(codigo);
+        producto.setNombreProducto(nombre);
+        producto.setDescripcionProducto(descripcion);
+        producto.setPrecioCompra(precioCompra);
+        producto.setPrecioVenta(precioVenta);
+        producto.setClasifABC(ABC);
+        producto.setbaja(baja);        
+        stock.setCantdidadMinima(cantidadminima);
+        stock.setCantdidad(cantidad);
+        asocia.setProducto(producto);
+        asocia.setProveedor(prov);
+        asocia.setbaja(baja);
+        resultado = Fachada.getInstancia().guardar((ObjetoPersistente) stock);
+        producto.setStock(stock);
+        resultado = Fachada.getInstancia().guardar((ObjetoPersistente) producto);
+        
+        if(resultado)
+            resultado = Fachada.getInstancia().guardar((ObjetoPersistente) asocia);
 
         return resultado;
     }

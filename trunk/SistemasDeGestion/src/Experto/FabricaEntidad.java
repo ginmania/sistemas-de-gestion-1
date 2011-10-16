@@ -64,6 +64,7 @@ public class FabricaEntidad {
                 ((AgenteStock) obj).setImpl(new StockImpl());                
                 return obj;   
             default:
+                System.out.println("no existe la entidad que desea crear");
                 return "no existe la entidad que desea crear";
 
         }

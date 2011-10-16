@@ -19,7 +19,7 @@ public final class ControladorPrincipal {
         pantallaPrincipal.setVisible(true);
         pantallaPrincipal.setLocationRelativeTo(null);
         pantallaPrincipal.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        crearConexion("jdbc:mysql://localhost:3306/sg1", "root", "24241");
+        crearConexion("jdbc:mysql://localhost:3306/sg1", "root", "duendecito");
 
         pantallaPrincipal.getItemCliente().addActionListener(new java.awt.event.ActionListener() {
 
@@ -98,6 +98,7 @@ public final class ControladorPrincipal {
         try {
             AdministradorTx.getInstance().crearConexion(dir, usuario, pass);
         } catch (Exception e) {
+            System.out.println("ud no esta conectado a la bd");
         }
 
     }

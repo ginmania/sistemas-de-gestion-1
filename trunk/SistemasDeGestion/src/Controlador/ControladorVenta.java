@@ -69,7 +69,6 @@ public class ControladorVenta {
 
         //SELECCIONAMOS UN cliente
         pantallaVta.getJbSelecCliente().addActionListener(new java.awt.event.ActionListener() {
-
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
                     seleccion = "Cliente";
