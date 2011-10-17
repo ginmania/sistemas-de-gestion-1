@@ -7,6 +7,7 @@ package Experto;
 import Excepciones.NoProductoExcepcion;
 import Interfaces.Demanda;
 import Interfaces.Producto;
+import Metodo.Calculo;
 import Metodo.Estacionalidad;
 import Metodo.Simple;
 import Metodo.Tendencia;
@@ -167,7 +168,10 @@ public class ExpertoMetodos implements Experto {
 
         Estacionalidad metodoestacionalidad = new Estacionalidad();
         resultadoestacionalidad = metodoestacionalidad.calcularEstacionalidad(demandahistorica, demandarealestacionalidad, a, g);
+        Calculo calculo = new Calculo();
+        
         for (int i = 1; i < periodosapredecir + 1; i++) {
+            calculo.DatosIniciales(demandahistorica[i][1], demandarealestacionalidad[i], demandahistorica[0][1], demandahistorica[0][1], 0, 0, 0, 0, 0, a, 0.3, cantperestacionalidad, 0, 0);
             System.out.println(" Resultado estacionalidad: " + resultadoestacionalidad[i]);
             resultadoestacionalidad[i] = redondear(resultadoestacionalidad[i], 2);
             valorestacionalidad[i - 1][0] = "Demanda Pronosticada: " + String.valueOf(resultadoestacionalidad[i] + "  En el periodo:  " + (i + valorperiodofinal));
@@ -175,6 +179,8 @@ public class ExpertoMetodos implements Experto {
         }
         return valorestacionalidad;
     }
+    
+    
 
     public static double redondear(double num, int ndecimal) {
         double aux0 = Math.pow(10, ndecimal);

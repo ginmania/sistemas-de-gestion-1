@@ -141,12 +141,16 @@ public class ControladorMetodos {
                     String cadena = "";
                     String cadena2 = "";
                     for (int i = 0; i < resultadosimple.length; i++) {
-                        cadena = resultadosimple[i][1] + "    \n";
-                        cadena2 += cadena;
+                        if (!(resultadosimple[i][1] == null)) {
+                            cadena = resultadosimple[i][1] + "    \n";
+                            cadena2 += cadena;
+                        }
                     }
                     for (int i = 0; i < periodosapredecir; i++) {
-                        cadena = resultadosimple[i][0] + "    \n";
-                        cadena2 += cadena;
+                        if (!(resultadosimple[i][0] == null)) {
+                            cadena = resultadosimple[i][0] + "    \n";
+                            cadena2 += cadena;
+                        }
                     }
 
 
@@ -190,15 +194,17 @@ public class ControladorMetodos {
                     String cadena = "";
                     String cadena2 = "";
                     for (int i = 0; i < resultadotendencia.length; i++) {
-                        cadena = resultadotendencia[i][1] + "    \n";
-                        cadena2 += cadena;
+                        if (!(resultadotendencia[i][1] == null)) {
+                            cadena = resultadotendencia[i][1] + "    \n";
+                            cadena2 += cadena;
+                        }
                     }
                     for (int i = 0; i < periodosapredecir; i++) {
-                        cadena = resultadotendencia[i][0] + "    \n";
-                        cadena2 += cadena;
+                        if (!(resultadotendencia[i][0] == null)) {
+                            cadena = resultadotendencia[i][0] + "    \n";
+                            cadena2 += cadena;
+                        }
                     }
-
-
                     pantallaMetodos.getAreaResultado().setText(cadena2);
                     cadena = "";
                     cadena2 = "";
@@ -237,12 +243,16 @@ public class ControladorMetodos {
                     String cadena = "";
                     String cadena2 = "";
                     for (int i = 0; i < resultadoestacionalidad.length; i++) {
-                        cadena = resultadoestacionalidad[i][1] + "    \n";
-                        cadena2 += cadena;
+                        if (!(resultadoestacionalidad[i][1] == null)) {
+                            cadena = resultadoestacionalidad[i][1] + "    \n";
+                            cadena2 += cadena;
+                        }
                     }
                     for (int i = 0; i < periodosapredecir; i++) {
-                        cadena = resultadoestacionalidad[i][0] + "    \n";
-                        cadena2 += cadena;
+                        if (!(resultadoestacionalidad[i][0] == null)) {
+                            cadena = resultadoestacionalidad[i][0] + "    \n";
+                            cadena2 += cadena;
+                        }
                     }
                     pantallaMetodos.getAreaResultado().setText(cadena2);
                     cadena = "";
