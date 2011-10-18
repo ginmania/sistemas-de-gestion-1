@@ -14,6 +14,7 @@ package Pantalla;
 import com.toedter.calendar.JDateChooser;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
@@ -64,6 +65,10 @@ public class PantallaMetodos extends javax.swing.JDialog {
         txPeriodo = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         areaResultado = new javax.swing.JTextArea();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        areaResultado2 = new javax.swing.JTextArea();
+        botonDE = new javax.swing.JCheckBox();
+        botonSR = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Metodos de Suavizamiento");
@@ -108,6 +113,14 @@ public class PantallaMetodos extends javax.swing.JDialog {
         areaResultado.setRows(5);
         jScrollPane1.setViewportView(areaResultado);
 
+        areaResultado2.setColumns(20);
+        areaResultado2.setRows(5);
+        jScrollPane2.setViewportView(areaResultado2);
+
+        botonDE.setText("Desviación Estandar");
+
+        botonSR.setText("Señal de rastreo");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -116,8 +129,9 @@ public class PantallaMetodos extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 802, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 416, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
@@ -170,7 +184,11 @@ public class PantallaMetodos extends javax.swing.JDialog {
                                                 .addComponent(txPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                         .addGap(21, 21, 21))))
                             .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING))
-                        .addGap(262, 262, 262))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(botonDE)
+                        .addGap(18, 18, 18)
+                        .addComponent(botonSR)))
+                .addGap(21, 21, 21))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -200,7 +218,9 @@ public class PantallaMetodos extends javax.swing.JDialog {
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(BotonCancelarMetodos)
-                                    .addComponent(botonCalcularMetodos)))
+                                    .addComponent(botonCalcularMetodos)
+                                    .addComponent(botonDE)
+                                    .addComponent(botonSR)))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(botonSimple)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -220,7 +240,9 @@ public class PantallaMetodos extends javax.swing.JDialog {
                             .addComponent(jLabel8)
                             .addComponent(txPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 268, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 268, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 268, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -238,8 +260,11 @@ private void txPeriodoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:ev
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BotonCancelarMetodos;
     private javax.swing.JTextArea areaResultado;
+    private javax.swing.JTextArea areaResultado2;
     private javax.swing.JButton botonCalcularMetodos;
+    private javax.swing.JCheckBox botonDE;
     private javax.swing.JRadioButton botonEstacionalidad;
+    private javax.swing.JCheckBox botonSR;
     private javax.swing.JRadioButton botonSimple;
     private javax.swing.JRadioButton botonTendencia;
     private javax.swing.JTextField campoAlfa;
@@ -256,10 +281,35 @@ private void txPeriodoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:ev
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private com.toedter.calendar.JDateChooser txFechadesde;
     private com.toedter.calendar.JDateChooser txFechahasta;
     private javax.swing.JTextField txPeriodo;
     // End of variables declaration//GEN-END:variables
+
+    public JTextArea getAreaResultado2() {
+        return areaResultado2;
+    }
+
+    public void setAreaResultado2(JTextArea areaResultado2) {
+        this.areaResultado2 = areaResultado2;
+    }
+
+    public JCheckBox getBotonDE() {
+        return botonDE;
+    }
+
+    public void setBotonDE(JCheckBox botonDE) {
+        this.botonDE = botonDE;
+    }
+
+    public JCheckBox getBotonSR() {
+        return botonSR;
+    }
+
+    public void setBotonSR(JCheckBox botonSR) {
+        this.botonSR = botonSR;
+    }
 
     public JTextArea getAreaResultado() {
         return areaResultado;

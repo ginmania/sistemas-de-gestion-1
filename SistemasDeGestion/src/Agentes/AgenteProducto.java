@@ -40,7 +40,6 @@ public class AgenteProducto implements Producto, ObjetoPersistente {
         this.demandarelacionadas = agente.demandarelacionadas;
     }
 
-    
     public List<String> getDemandarelacionadas() {
         return demandarelacionadas;
     }
@@ -187,9 +186,9 @@ public class AgenteProducto implements Producto, ObjetoPersistente {
         if (demandarelacionadas == null) {
             demandarelacionadas = new ArrayList<String>();
         }
-        proveedorrelacionados.add(OIDDemanda);
+        demandarelacionadas.add(OIDDemanda);
     }
-    
+
     public void setClasifABC(char c) {
         impl.setClasifABC(c);
     }

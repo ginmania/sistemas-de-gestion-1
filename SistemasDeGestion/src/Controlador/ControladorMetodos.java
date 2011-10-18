@@ -82,6 +82,7 @@ public class ControladorMetodos {
 
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 pantallaMetodos.getCampoAlfa().setEditable(true);
+                pantallaMetodos.getCampoBeta().setVisible(true);
                 pantallaMetodos.getCampoBeta().setEditable(true);
                 pantallaMetodos.getCampoGama().setEditable(false);
                 pantallaMetodos.getCampoGama().setVisible(false);
@@ -140,6 +141,10 @@ public class ControladorMetodos {
                     resultadosimple = calcularsimple(alfa, diferenciadeperiodos, valorItemSeleccionado, valorperiodoinicial, valorperiodofinal, periodosapredecir);
                     String cadena = "";
                     String cadena2 = "";
+                    String cadena3 = "";
+                    String cadena4 = "";
+                    pantallaMetodos.getAreaResultado().setText(cadena2);
+                    pantallaMetodos.getAreaResultado2().setText(cadena4);
                     for (int i = 0; i < resultadosimple.length; i++) {
                         if (!(resultadosimple[i][1] == null)) {
                             cadena = resultadosimple[i][1] + "    \n";
@@ -152,11 +157,29 @@ public class ControladorMetodos {
                             cadena2 += cadena;
                         }
                     }
-
-
                     pantallaMetodos.getAreaResultado().setText(cadena2);
+                    if (pantallaMetodos.getBotonDE().isSelected()) {
+                        for (int i = 0; i < resultadosimple.length; i++) {
+                            if (!(resultadosimple[i][2] == null)) {
+                                cadena3 = resultadosimple[i][2] + "    \n";
+                                cadena4 += cadena3;
+                            }
+                        }
+                        pantallaMetodos.getAreaResultado2().setText(cadena4);
+                    }
+                    if (pantallaMetodos.getBotonSR().isSelected()) {
+                        for (int i = 0; i < resultadosimple.length; i++) {
+                            if (!(resultadosimple[i][3] == null)) {
+                                cadena3 = resultadosimple[i][3] + "    \n";
+                                cadena4 += cadena3;
+                            }
+                        }
+                        pantallaMetodos.getAreaResultado2().setText(cadena4);
+                    }
                     cadena = "";
                     cadena2 = "";
+                    cadena3 = "";
+                    cadena4 = "";
 
                 }
 
@@ -193,6 +216,10 @@ public class ControladorMetodos {
                     resultadotendencia = calculartendencia(alfa, diferenciadeperiodos, valorItemSeleccionado, valorperiodoinicial, valorperiodofinal, periodosapredecir);
                     String cadena = "";
                     String cadena2 = "";
+                    String cadena3 = "";
+                    String cadena4 = "";
+                    pantallaMetodos.getAreaResultado().setText(cadena2);
+                    pantallaMetodos.getAreaResultado2().setText(cadena4);
                     for (int i = 0; i < resultadotendencia.length; i++) {
                         if (!(resultadotendencia[i][1] == null)) {
                             cadena = resultadotendencia[i][1] + "    \n";
@@ -206,8 +233,28 @@ public class ControladorMetodos {
                         }
                     }
                     pantallaMetodos.getAreaResultado().setText(cadena2);
+                    if (pantallaMetodos.getBotonDE().isSelected()) {
+                        for (int i = 0; i < resultadotendencia.length; i++) {
+                            if (!(resultadotendencia[i][2] == null)) {
+                                cadena3 = resultadotendencia[i][2] + "    \n";
+                                cadena4 += cadena3;
+                            }
+                        }
+                        pantallaMetodos.getAreaResultado2().setText(cadena4);
+                    }
+                    if (pantallaMetodos.getBotonSR().isSelected()) {
+                        for (int i = 0; i < resultadotendencia.length; i++) {
+                            if (!(resultadotendencia[i][3] == null)) {
+                                cadena3 = resultadotendencia[i][3] + "    \n";
+                                cadena4 += cadena3;
+                            }
+                        }
+                        pantallaMetodos.getAreaResultado2().setText(cadena4);
+                    }
                     cadena = "";
                     cadena2 = "";
+                    cadena3 = "";
+                    cadena4 = "";
                 }
 
                 ///PARA EL METODO ESTACIONALIDAD ///
@@ -242,6 +289,11 @@ public class ControladorMetodos {
                     resultadoestacionalidad = calcularestacionalidad(alfa, diferenciadeperiodos, valorItemSeleccionado, valorperiodoinicial, valorperiodofinal, periodosapredecir);
                     String cadena = "";
                     String cadena2 = "";
+                    String cadena3 = "";
+                    String cadena4 = "";
+                    pantallaMetodos.getAreaResultado().setText(cadena2);
+                    pantallaMetodos.getAreaResultado2().setText(cadena4);
+
                     for (int i = 0; i < resultadoestacionalidad.length; i++) {
                         if (!(resultadoestacionalidad[i][1] == null)) {
                             cadena = resultadoestacionalidad[i][1] + "    \n";
@@ -255,8 +307,29 @@ public class ControladorMetodos {
                         }
                     }
                     pantallaMetodos.getAreaResultado().setText(cadena2);
+
+                    if (pantallaMetodos.getBotonDE().isSelected()) {
+                        for (int i = 0; i < resultadoestacionalidad.length; i++) {
+                            if (!(resultadoestacionalidad[i][2] == null)) {
+                                cadena3 = resultadoestacionalidad[i][2] + "    \n";
+                                cadena4 += cadena3;
+                            }
+                        }
+                        pantallaMetodos.getAreaResultado2().setText(cadena4);
+                    }
+                    if (pantallaMetodos.getBotonSR().isSelected()) {
+                        for (int i = 0; i < resultadoestacionalidad.length; i++) {
+                            if (!(resultadoestacionalidad[i][3] == null)) {
+                                cadena3 = resultadoestacionalidad[i][3] + "    \n";
+                                cadena4 += cadena3;
+                            }
+                        }
+                        pantallaMetodos.getAreaResultado2().setText(cadena4);
+                    }
                     cadena = "";
                     cadena2 = "";
+                    cadena3 = "";
+                    cadena4 = "";
                 }
 
             }

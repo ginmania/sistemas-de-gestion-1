@@ -68,8 +68,8 @@ public class IntermediarioProducto extends IntermediarioRelacional {
                 temp.setClasifABC(valor.charAt(0));
                 temp.setbaja(Integer.parseInt(registro.getCampo("baja").getValor()));
                 temp.setDemandas(Fachada.getInstancia().buscar(Demanda.class, FabricaCriterio.getInstancia().crearCriterio("OIDProducto", "=", temp.getoid())));
-                temp.setProveedors(Fachada.getInstancia().buscar(ProductoProveedor.class, FabricaCriterio.getInstancia().crearCriterio("OIDProducto", "=", temp.getoid())));
-                //busquedaoidquenoexisten(temp);
+                busquedaoidquenoexisten(temp);
+//                temp.setProveedors(Fachada.getInstancia().buscar(Proveedor.class, FabricaCriterio.getInstancia().crearCriterio("OIDProducto", "=", temp.getoid())));
                 producto.add(temp);
             }
         } catch (Exception ex) {
