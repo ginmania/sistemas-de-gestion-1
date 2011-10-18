@@ -49,7 +49,8 @@ public class Calculo {
         this.destandarerror = destandarerror;
         this.senal = senal;
         beta = 1 - alfa;
-
+        System.out.println("Promedio inicial: " + promedioinicial);
+        System.out.println("Demanda real: " + demandareal);
 
     }
 

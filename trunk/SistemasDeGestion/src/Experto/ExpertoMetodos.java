@@ -78,10 +78,11 @@ public class ExpertoMetodos implements Experto {
         //System.out.println("SUMA :  " + (periodosapredecir + valorperiodofinal - valorperiodoinicial));
         //System.out.println("Valor Inicial:  " + valorperiodoinicial + "  Valor Final:  " + valorperiodofinal);
         String seleccion = productoSeleccionado;
+        demandahistorica = new double[1][13];
         demandarealsimple = new double[1 + valorperiodofinal - valorperiodoinicial];
         periodosimple = new int[periodosapredecir + (valorperiodofinal - valorperiodoinicial)];
         cantpersimple = valorperiodofinal - valorperiodoinicial;
-        String valorsimple[][] = new String[cantpersimple + periodosapredecir][2];
+        String valorsimple[][] = new String[cantpersimple + periodosapredecir][4];
         for (Producto producto : vectorDTOProducto) {
             List<Demanda> listaDemanda = producto.getDemandas();
             Collections.sort(listaDemanda, new OrdenarDemandas());
@@ -93,11 +94,35 @@ public class ExpertoMetodos implements Experto {
                 }
             }
         }
+        for (Producto producto : vectorDTOProducto) {
+            List<Demanda> listaDemanda = producto.getDemandas();
+            Collections.sort(listaDemanda, new OrdenarDemandas());
+            if (producto.getNombreProducto().equalsIgnoreCase(seleccion)) {
+                for (int k = 0; k < 12; k++) {
+                    demandahistorica[0][k] = listaDemanda.get(k).getDemandapronosticada();
+                }
+            }
+        }
+        Calculo calculo = new Calculo();
+        double[] promedio = new double[periodosapredecir + 1];
         Simple metodosimple = new Simple();
         resultadosimple = metodosimple.calcularSimple(demandarealsimple, a, periodosapredecir);
         for (int i = 1; i < periodosapredecir + 1; i++) {
             resultadosimple[i] = redondear(resultadosimple[i], 2);
             valorsimple[i - 1][0] = "Demanda Pronosticada: " + String.valueOf(resultadosimple[i] + "  En el periodo:  " + (i + valorperiodofinal));
+            calculo.DatosIniciales(demandahistorica[0][i - 1], resultadosimple[i], demandahistorica[0][1], demandahistorica[0][1], 0, 0, 0, 0, 0, a, 0.3, cantpersimple, 0, 0);
+            promedio[i] = calculo.actualizacion();
+            promedio[i] = calculo.getPrediccionfn();
+            promedio[i] = calculo.getPrediccionfn_1();
+            promedio[i] = calculo.geterrorEn();
+            promedio[i] = calculo.getErrorPromedio();
+            promedio[i] = calculo.geterror2();
+            promedio[i] = calculo.getMSEen();
+            promedio[i] = calculo.getDesviacionEstandar();
+            valorsimple[i - 1][2] = " Desviacion Estandar: " + String.valueOf(promedio[i]);
+            promedio[i] = calculo.getDesviacionEstandarError();
+            promedio[i] = calculo.getsenal();
+            valorsimple[i - 1][3] = " Señal rastreo: " + String.valueOf(promedio[i]);
         }
         return valorsimple;
     }
@@ -106,10 +131,11 @@ public class ExpertoMetodos implements Experto {
         a = alfa;
         b = alfa / 2;
         String seleccion = productoSeleccionado;
+        demandahistorica = new double[1][13];
         demandarealtendencia = new double[1 + valorperiodofinal - valorperiodoinicial];
         periodotendencia = new int[periodosapredecir + (valorperiodofinal - valorperiodoinicial)];
         cantpertendencia = valorperiodofinal - valorperiodoinicial;
-        String valortendencia[][] = new String[cantpertendencia + periodosapredecir][2];
+        String valortendencia[][] = new String[cantpertendencia + periodosapredecir][4];
         for (Producto producto : vectorDTOProducto) {
             List<Demanda> listaDemanda = producto.getDemandas();
             Collections.sort(listaDemanda, new OrdenarDemandas());
@@ -121,11 +147,36 @@ public class ExpertoMetodos implements Experto {
                 }
             }
         }
+        for (Producto producto : vectorDTOProducto) {
+            List<Demanda> listaDemanda = producto.getDemandas();
+            Collections.sort(listaDemanda, new OrdenarDemandas());
+            if (producto.getNombreProducto().equalsIgnoreCase(seleccion)) {
+                for (int k = 0; k < 12; k++) {
+                    demandahistorica[0][k] = listaDemanda.get(k).getDemandapronosticada();
+                }
+            }
+        }
+        Calculo calculo = new Calculo();
+        double[] promedio = new double[periodosapredecir + 1];
         Tendencia metodotendencia = new Tendencia();
         resultadotendencia = metodotendencia.calcularTendencia(demandarealtendencia, a, b, cantpertendencia, periodosapredecir);
         for (int i = 1; i < periodosapredecir + 1; i++) {
             resultadotendencia[i] = redondear(resultadotendencia[i], 2);
             valortendencia[i - 1][0] = "Demanda Pronosticada: " + String.valueOf(resultadotendencia[i] + "  En el periodo:  " + (i + valorperiodofinal));
+            calculo.DatosIniciales(demandahistorica[0][i - 1], resultadotendencia[i], demandahistorica[0][1], demandahistorica[0][1], 0, 0, 0, 0, 0, a, 0.3, cantpertendencia, 0, 0);
+            promedio[i] = calculo.actualizacion();
+            promedio[i] = calculo.getPrediccionfn();
+            promedio[i] = calculo.getPrediccionfn_1();
+            promedio[i] = calculo.geterrorEn();
+            promedio[i] = calculo.getErrorPromedio();
+            promedio[i] = calculo.geterror2();
+            promedio[i] = calculo.getMSEen();
+            promedio[i] = calculo.getDesviacionEstandar();
+            valortendencia[i - 1][2] = " Desviacion Estandar: " + String.valueOf(promedio[i]);
+            promedio[i] = calculo.getDesviacionEstandarError();
+            promedio[i] = calculo.getsenal();
+            valortendencia[i - 1][3] = " Señal rastreo: " + String.valueOf(promedio[i]);
+
         }
         return valortendencia;
     }
@@ -142,7 +193,7 @@ public class ExpertoMetodos implements Experto {
         demandahistorica = new double[1][13];
         periodoestacionalidad = new int[periodosapredecir + (valorperiodofinal - valorperiodoinicial)];
         cantperestacionalidad = valorperiodofinal - valorperiodoinicial;
-        String valorestacionalidad[][] = new String[cantperestacionalidad + periodosapredecir][2];
+        String valorestacionalidad[][] = new String[cantperestacionalidad + periodosapredecir][4];
         for (Producto producto : vectorDTOProducto) {
             List<Demanda> listaDemanda = producto.getDemandas();
             Collections.sort(listaDemanda, new OrdenarDemandas());
@@ -161,26 +212,32 @@ public class ExpertoMetodos implements Experto {
             if (producto.getNombreProducto().equalsIgnoreCase(seleccion)) {
                 for (int k = 0; k < 12; k++) {
                     demandahistorica[0][k] = listaDemanda.get(k).getDemandapronosticada();
-                    System.out.println("HISTORICA:  " + demandahistorica[0][k]);
                 }
             }
         }
-
+        Calculo calculo = new Calculo();
+        double[] promedio = new double[periodosapredecir + 1];
         Estacionalidad metodoestacionalidad = new Estacionalidad();
         resultadoestacionalidad = metodoestacionalidad.calcularEstacionalidad(demandahistorica, demandarealestacionalidad, a, g);
-        Calculo calculo = new Calculo();
-        
         for (int i = 1; i < periodosapredecir + 1; i++) {
-            calculo.DatosIniciales(demandahistorica[i][1], demandarealestacionalidad[i], demandahistorica[0][1], demandahistorica[0][1], 0, 0, 0, 0, 0, a, 0.3, cantperestacionalidad, 0, 0);
-            System.out.println(" Resultado estacionalidad: " + resultadoestacionalidad[i]);
             resultadoestacionalidad[i] = redondear(resultadoestacionalidad[i], 2);
             valorestacionalidad[i - 1][0] = "Demanda Pronosticada: " + String.valueOf(resultadoestacionalidad[i] + "  En el periodo:  " + (i + valorperiodofinal));
-            System.out.println("Demanda Pronosticada: " + String.valueOf(resultadoestacionalidad[i] + "  En el periodo:  " + (i + valorperiodofinal)));
+            calculo.DatosIniciales(demandahistorica[0][i - 1], resultadoestacionalidad[i], demandahistorica[0][1], demandahistorica[0][1], 0, 0, 0, 0, 0, a, 0.3, cantperestacionalidad, 0, 0);
+            promedio[i] = calculo.actualizacion();
+            promedio[i] = calculo.getPrediccionfn();
+            promedio[i] = calculo.getPrediccionfn_1();
+            promedio[i] = calculo.geterrorEn();
+            promedio[i] = calculo.getErrorPromedio();
+            promedio[i] = calculo.geterror2();
+            promedio[i] = calculo.getMSEen();
+            promedio[i] = calculo.getDesviacionEstandar();
+            valorestacionalidad[i - 1][2] = " Desviacion Estandar: " + String.valueOf(promedio[i]);
+            promedio[i] = calculo.getDesviacionEstandarError();
+            promedio[i] = calculo.getsenal();
+            valorestacionalidad[i - 1][3] = " Señal rastreo: " + String.valueOf(promedio[i]);
         }
         return valorestacionalidad;
     }
-    
-    
 
     public static double redondear(double num, int ndecimal) {
         double aux0 = Math.pow(10, ndecimal);
