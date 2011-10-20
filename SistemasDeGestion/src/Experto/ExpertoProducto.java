@@ -52,8 +52,8 @@ public class ExpertoProducto implements Experto {
                 System.out.println("Descripcion: " + producto.getDescripcionProducto() + "\n");
                 System.out.println("PrecioCompra: " + producto.getPrecioCompra() + "\n");
                 System.out.println("PrecioVenta: " + producto.getPrecioVenta() + "\n");
-                System.out.println("Cantidad Minima: " + producto.getStock().getCantidadMinima() + "\n");
-                System.out.println("Cantidad: " + producto.getStock().getCantidad() + "\n");
+              //  System.out.println("Cantidad Minima: " + producto.getStock().getCantidadMinima() + "\n");
+              //  System.out.println("Cantidad: " + producto.getStock().getCantidad() + "\n");
                 vectorDTOProducto.add(producto);
             }
         }
@@ -81,7 +81,7 @@ public class ExpertoProducto implements Experto {
     }
     
      public boolean insertarProducto(int codigo, String nombre, String descripcion, double precioCompra,
-            double precioVenta, int baja, int cantidadminima, int cantidad, char ABC, Proveedor prov) {
+            double precioVenta, int baja, int cantidadminima, int cantidad, char ABC, Proveedor prov) throws NoProductoExcepcion {
         boolean resultado = false;
         Producto producto = (Producto) FabricaEntidad.getInstancia().FabricarEntidad(Producto.class);
         ProductoProveedor asocia = (ProductoProveedor) FabricaEntidad.getInstancia().FabricarEntidad(ProductoProveedor.class);
@@ -107,6 +107,10 @@ public class ExpertoProducto implements Experto {
         
         if(resultado)
             resultado = Fachada.getInstancia().guardar((ObjetoPersistente) asocia);
+        else{
+            resultado = false;
+            throw new NoProductoExcepcion();
+        }
 
         return resultado;
     }

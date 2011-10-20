@@ -241,7 +241,12 @@ public class ControladorProducto {
         char c = ABC.charAt(0);
         baja = 0;
         Proveedor p = (Proveedor) proveedores.get(prov);
-        resultado = expertoProducto.insertarProducto(codigo, nombre, descripcion, precioCompra, precioVenta, baja, cantidadminima, cantidad,c,p);
+        try {
+            resultado = expertoProducto.insertarProducto(codigo, nombre, descripcion, precioCompra, precioVenta, baja, cantidadminima, cantidad,c,p);
+        } catch (NoProductoExcepcion ex) {
+            Logger.getLogger(ControladorProducto.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("no fue guardado el producto");
+        }
         return resultado;
     }
 

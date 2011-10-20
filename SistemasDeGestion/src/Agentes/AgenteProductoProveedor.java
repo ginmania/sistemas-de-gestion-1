@@ -4,6 +4,7 @@
  */
 package Agentes;
 
+import Implementaciones.ProductoProveedorImpl;
 import Interfaces.Producto;
 import Interfaces.ProductoProveedor;
 import Interfaces.Proveedor;
@@ -21,6 +22,10 @@ public class AgenteProductoProveedor implements ProductoProveedor, ObjetoPersist
 
     public AgenteProductoProveedor(ProductoProveedor impl) {
         this.impl = impl;
+    }
+
+    public AgenteProductoProveedor() {
+        
     }
     
     public void setoid(String oid) {
@@ -73,6 +78,10 @@ public class AgenteProductoProveedor implements ProductoProveedor, ObjetoPersist
 
     public Proveedor getProveedor() {
         return this.getProveedor();
+    }
+
+    public void setImpl(ProductoProveedorImpl productoProveedorImpl) {
+        impl = productoProveedorImpl;
     }
     
     

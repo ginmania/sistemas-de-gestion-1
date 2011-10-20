@@ -6,6 +6,7 @@ import Interfaces.Demanda;
 import Interfaces.Producto;
 import Interfaces.ProductoProveedor;
 import Interfaces.Proveedor;
+import Interfaces.Stock;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +30,6 @@ public class IntermediarioProducto extends IntermediarioRelacional {
     @Override
     public String generarSQLOID(String oid) {
         return "SELECT * FROM " + tabla + " WHERE OIDProducto= " + oid;
-
     }
 
     @Override
@@ -67,9 +67,18 @@ public class IntermediarioProducto extends IntermediarioRelacional {
                 String valor = registro.getCampo("clasifABC").getValor();  
                 temp.setClasifABC(valor.charAt(0));
                 temp.setbaja(Integer.parseInt(registro.getCampo("baja").getValor()));
-                temp.setDemandas(Fachada.getInstancia().buscar(Demanda.class, FabricaCriterio.getInstancia().crearCriterio("OIDProducto", "=", temp.getoid())));
-                busquedaoidquenoexisten(temp);
-//                temp.setProveedors(Fachada.getInstancia().buscar(Proveedor.class, FabricaCriterio.getInstancia().crearCriterio("OIDProducto", "=", temp.getoid())));
+                ArrayList<Stock> buscarStock;
+                buscarStock= FachadaInterna.getInstancia().buscar(Stock.class,FabricaCriterio.getInstancia().crearCriterio("OIDStock", "=", registro.getCampo("OIDStock").getValor()));
+                if(!buscarStock.isEmpty())
+                    temp.setStock(buscarStock.get(0));
+                ArrayList<Demanda> buscar; 
+                buscar = Fachada.getInstancia().buscar(Demanda.class, FabricaCriterio.getInstancia().crearCriterio("OIDProducto", "=", temp.getoid()));
+                if(!buscar.isEmpty())
+                    temp.setDemandas(buscar);
+                //busquedaoidquenoexisten(temp);
+                //proveedor deberia tener siempre
+               // ArrayList<ProductoProveedor> pp = Fachada.getInstancia().buscar(ProductoProveedor.class, FabricaCriterio.getInstancia().crearCriterio("OIDProducto", "=", temp.getoid()));
+                //temp.setProveedor(pp.get(0).getProveedor() );
                 producto.add(temp);
             }
         } catch (Exception ex) {
