@@ -6,8 +6,7 @@ public class Main {
     public static void main(String[] args) {
 
         ControladorPrincipal cpp = new ControladorPrincipal();
-
-        //        int demanda[] = new int[4];
+  //        int demanda[] = new int[4];
 //        demanda[0] = 70;
 //        demanda[1] = 65;
 //        demanda[2] = 70;
