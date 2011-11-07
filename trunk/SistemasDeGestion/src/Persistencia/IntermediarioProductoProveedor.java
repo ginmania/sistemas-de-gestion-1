@@ -42,6 +42,7 @@ class IntermediarioProductoProveedor extends IntermediarioRelacional {
                 temp.setoid(registro.getCampo(oid).getValor());
                 temp.setOIDProducto(registro.getCampo("OIDProducto").getValor());
                 temp.setOIDProveedor(registro.getCampo("OIDProveedor").getValor());
+                temp.setbaja(Integer.parseInt(registro.getCampo("baja").getValor()));
                 prodprovs.add(temp);
             }
         } catch (Exception ex) {

@@ -22,8 +22,7 @@ public class IntermediarioProducto extends IntermediarioRelacional {
 
         List<Registro> registros = ejecutarSQLB(consulta);
         for (Registro registro : registros) {
-            aproducto.addOIDProveedor(registro.getCampo("OIDProveedor").getValor());
-
+            aproducto.addOIDProveedor(registro.getCampo("OIDProveedor").getValor());            
         }
     }
 
@@ -45,6 +44,8 @@ public class IntermediarioProducto extends IntermediarioRelacional {
         rs.addCampo(new Campo("OIDStock", "'" + ((AgenteStock) producto.getStock()).getoid() + "'"));
         rs.addCampo(new Campo("clasifABC","'"+producto.getClasifABC()+"'"));
         rs.addCampo(new Campo("baja", "'" + String.valueOf(producto.getbaja() + "'")));
+        rs.addCampo(new Campo("nivelServicio", String.valueOf(producto.getNivelServicio())));
+        rs.addCampo(new Campo("politica", "'" + producto.getOIDPolitica() + "'"));
         return rs;
 
     }
@@ -67,6 +68,8 @@ public class IntermediarioProducto extends IntermediarioRelacional {
                 String valor = registro.getCampo("clasifABC").getValor();  
                 temp.setClasifABC(valor.charAt(0));
                 temp.setbaja(Integer.parseInt(registro.getCampo("baja").getValor()));
+                temp.setPrecioVenta((Double) (registro.getCampo("nivelServicio").getValor(Double.class)));
+                temp.setOIDPolitica(registro.getCampo("politica").getValor());
                 ArrayList<Stock> buscarStock;
                 buscarStock= FachadaInterna.getInstancia().buscar(Stock.class,FabricaCriterio.getInstancia().crearCriterio("OIDStock", "=", registro.getCampo("OIDStock").getValor()));
                 if(!buscarStock.isEmpty())

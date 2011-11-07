@@ -1,6 +1,6 @@
 
 import Controlador.ControladorPrincipal;
-import de.javasoft.plaf.synthetica.SyntheticaBlueIceLookAndFeel;
+//import de.javasoft.plaf.synthetica.SyntheticaBlueIceLookAndFeel;
 import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -10,14 +10,14 @@ import javax.swing.UnsupportedLookAndFeelException;
 public class Main {
 
     public static void main(String[] args) {
-              try {
+        /*try {
 
             UIManager.setLookAndFeel(new SyntheticaBlueIceLookAndFeel());
         } catch (UnsupportedLookAndFeelException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ParseException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }*/
         ControladorPrincipal cpp = new ControladorPrincipal();
   //             int demanda[] = new int[4];
 //        demanda[0] = 70;

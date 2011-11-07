@@ -39,6 +39,16 @@
                 <Property name="text" type="java.lang.String" value="ABC"/>
               </Properties>
             </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jmPedidos">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Politicas Stock"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jmRealizarPedido">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="RealizarPedido"/>
+              </Properties>
+            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="Salir">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Salir"/>

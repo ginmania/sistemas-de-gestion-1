@@ -21,7 +21,7 @@ import java.util.List;
 public class AgenteProducto implements Producto, ObjetoPersistente {
 
     private ProductoImpl impl;
-    private String OIDProducto, OIDStock;
+    private String OIDProducto, OIDStock, OIDPolitica;
     private List<String> proveedorrelacionados;
     private List<String> demandarelacionadas;
 
@@ -196,4 +196,29 @@ public class AgenteProducto implements Producto, ObjetoPersistente {
     public char getClasifABC() {
         return impl.getClasifABC();
     }
+
+    public float getNivelServicio() {
+        return impl.getNivelServicio();
+    }
+
+    public void setNivelServicio(float nivelservicio) {
+        impl.setNivelServicio(nivelservicio);
+    }
+
+    public String getPolitica() {
+        return impl.getPolitica();
+    }
+
+    public void setPolitica(String oidPolitica) {
+        impl.setPolitica(oidPolitica);
+    }
+
+    public String getOIDPolitica() {
+        return this.OIDPolitica;
+    }
+    
+    public void setOIDPolitica(String oidPol){
+        this.OIDPolitica = oidPol;
+    }
+    
 }

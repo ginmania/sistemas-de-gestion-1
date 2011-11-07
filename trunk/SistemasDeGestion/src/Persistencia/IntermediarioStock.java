@@ -32,6 +32,7 @@ class IntermediarioStock extends IntermediarioRelacional {
         rs.addCampo(new Campo("OIDStock", "'" + stock.getoid() + "'"));
         rs.addCampo(new Campo("cantidadminima", "'" + String.valueOf(stock.getCantidadMinima()) + "'"));
         rs.addCampo(new Campo("cantidad", "'" + String.valueOf(stock.getCantidad()) + "'"));
+        rs.addCampo(new Campo("stockPendiente", "'" + String.valueOf(stock.getStockPendiente()) + "'"));
         return rs;
 
     }
@@ -47,6 +48,7 @@ class IntermediarioStock extends IntermediarioRelacional {
                 temp.setoid(registro.getCampo("OIDStock").getValor());
                 temp.setCantdidadMinima((Integer) (registro.getCampo("cantidadminima").getValor(Integer.class)));
                 temp.setCantdidad((Integer) (registro.getCampo("cantidad").getValor(Integer.class)));
+                temp.setCantdidad((Integer) (registro.getCampo("stockPendiente").getValor(Integer.class)));
                 stock.add(temp);
             }
         } catch (Exception ex) {

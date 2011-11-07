@@ -27,6 +27,8 @@ public class ProductoImpl implements Producto {
     public List<Proveedor> proveedores;
     public List<Demanda> demandas;
     private char clasifABC;
+    private float NivelServicio;
+    private String Politica;
 
     public ProductoImpl() {
     }
@@ -143,5 +145,21 @@ public class ProductoImpl implements Producto {
     
     public void setClasifABC(char c) {
         this.clasifABC = c;
+    }
+
+    public float getNivelServicio() {
+        return this.NivelServicio;
+    }
+    
+    public void setNivelServicio(float nivelservicio) {
+        this.NivelServicio = nivelservicio;
+    }
+
+    public String getPolitica() {
+        return this.Politica;
+    }
+
+    public void setPolitica(String oidPolitica) {
+        this.Politica = oidPolitica;
     }
 }

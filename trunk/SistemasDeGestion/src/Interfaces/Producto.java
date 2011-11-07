@@ -56,4 +56,12 @@ public interface Producto {
     
     public char getClasifABC();
 
+    public float getNivelServicio();
+    
+    public void setNivelServicio(float nivelservicio);
+
+    public String getPolitica();
+    
+    public void setPolitica(String oidPolitica);
+
 }

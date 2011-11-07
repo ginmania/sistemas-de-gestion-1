@@ -97,4 +97,28 @@ public class AgenteProveedor implements Proveedor, ObjetoPersistente {
         impl.setbaja(baja);
     }
     
+    public double getCostoEmision() {
+        return impl.getCostoEmision();
+    }
+
+    public void setCostoEmision(double costoEmision) {
+        impl.setCostoEmision(costoEmision);
+    }
+
+    public int getTiempoR() {
+        return impl.getTiempoR();
+    }
+
+    public void setTiempoR(int TiempoR) {
+        impl.setTiempoR(TiempoR);
+    }
+
+    public int getPeriodoActual() {
+        return impl.getPeriodoActual();
+    }
+
+    public void setPeriodoActual(int PeriodoActual) {
+        impl.setPeriodoActual(PeriodoActual);
+    }
+    
 }

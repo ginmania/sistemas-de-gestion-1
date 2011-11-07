@@ -14,6 +14,7 @@ public class StockImpl implements Stock {
 
     private int cantidadminima;
     private int cantidad;
+    private int stockPendiente;
 
     public StockImpl() {
     }
@@ -37,5 +38,13 @@ public class StockImpl implements Stock {
 
     public void setCantdidad(int cantidad) {
         this.cantidad = cantidad;
+    }
+
+    public int getStockPendiente() {
+        return this.stockPendiente;
+    }
+
+    public void setStockPendiente(int auxSP) {
+        this.stockPendiente = auxSP;
     }
 }

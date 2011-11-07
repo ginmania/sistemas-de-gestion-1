@@ -20,6 +20,8 @@ public class PedidoImpl implements Pedido {
     private String fechaentrega;
     private List<DetallePedido> detallepedidos;
     private Proveedor proveedor;
+    private int pendiente;
+    
 
     public PedidoImpl() {
     }
@@ -64,6 +66,14 @@ public class PedidoImpl implements Pedido {
 
     public void setProveedor(Proveedor proveedor) {
         this.proveedor = proveedor;
+    }
+
+    public int getPendiente() {
+        return this.pendiente;
+    }
+
+    public void setPendiente(int baja) {
+        this.pendiente = baja;
     }
 
 }

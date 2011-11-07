@@ -22,6 +22,9 @@ public class ProveedorImpl implements Proveedor {
     private int codigo_proveedor;
     private String email;
     private int baja;    
+    private double costoEmision;
+    private int TiempoR;
+    private int PeriodoActual;
 
     public ProveedorImpl() {
     }
@@ -82,4 +85,27 @@ public class ProveedorImpl implements Proveedor {
         this.baja = baja;
     }
 
+    public double getCostoEmision() {
+        return costoEmision;
+    }
+
+    public void setCostoEmision(double costoEmision) {
+        this.costoEmision = costoEmision;
+    }
+
+    public int getTiempoR() {
+        return TiempoR;
+    }
+
+    public void setTiempoR(int TiempoR) {
+        this.TiempoR = TiempoR;
+    }
+
+    public int getPeriodoActual() {
+        return PeriodoActual;
+    }
+
+    public void setPeriodoActual(int PeriodoActual) {
+        this.PeriodoActual = PeriodoActual;
+    }
 }

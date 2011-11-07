@@ -1,14 +1,20 @@
 package Experto;
 
+import Agentes.AgenteCatalogo;
 import Agentes.AgenteCliente;
+import Agentes.AgenteDetallePedido;
 import Agentes.AgenteDetalleVenta;
+import Agentes.AgentePedido;
 import Agentes.AgenteProducto;
 import Agentes.AgenteProductoProveedor;
 import Agentes.AgenteProveedor;
 import Agentes.AgenteStock;
 import Agentes.AgenteVenta;
+import Implementaciones.CatalogoImpl;
 import Implementaciones.ClienteImpl;
+import Implementaciones.DetallePedidoImpl;
 import Implementaciones.DetalleVentaImpl;
+import Implementaciones.PedidoImpl;
 import Implementaciones.ProductoImpl;
 import Implementaciones.ProductoProveedorImpl;
 import Implementaciones.ProveedorImpl;
@@ -22,7 +28,8 @@ public class FabricaEntidad {
 
     private static enum Entidades {
 
-        Cliente, Producto, Proveedor, DetalleVenta, Venta, ProductoProveedor,Stock
+        Cliente, Producto, Proveedor, DetalleVenta, Venta, ProductoProveedor,Stock,
+        Pedido, DetallePedido, Catalogo
     }
 
     public static FabricaEntidad getInstancia() {
@@ -63,6 +70,18 @@ public class FabricaEntidad {
                 obj = new AgenteStock();
                 ((AgenteStock) obj).setImpl(new StockImpl());                
                 return obj;   
+            case Pedido:
+                obj = new AgentePedido();
+                ((AgentePedido)obj).setImpl(new PedidoImpl());
+                return obj;
+            case DetallePedido:
+                obj = new AgenteDetallePedido();
+                ((AgenteDetallePedido)obj).setImpl(new DetallePedidoImpl());
+                return obj;
+            case Catalogo:
+                obj = new AgenteCatalogo();
+                ((AgenteCatalogo)obj).setImpl(new CatalogoImpl());
+                return obj;
             default:
                 System.out.println("no existe la entidad que desea crear");
                 return "no existe la entidad que desea crear";
