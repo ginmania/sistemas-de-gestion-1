@@ -200,7 +200,7 @@ CREATE TABLE  `sg1`.`DetallePedido` (
   `OIDProducto` varchar(50) NOT NULL,
   `OIDPedido` varchar(50) NOT NULL,
   `cantidad` int(10) NOT NULL,
-  `baja` bit(1) DEFAULT b'0',
+  `baja` tinyint(1) NOT NULL,
   PRIMARY KEY (`OIDDetallePedido`),
   KEY `OIDProducto` (`OIDProducto`),
   KEY `OIDPedido` (`OIDPedido`),
@@ -214,7 +214,7 @@ CREATE TABLE  `sg1`.`DetallePedido` (
 
 /*!40000 ALTER TABLE `DetallePedido` DISABLE KEYS */;
 LOCK TABLES `DetallePedido` WRITE;
-INSERT INTO `sg1`.`DetallePedido` VALUES  ('1','43','1',15,0x00);
+INSERT INTO `sg1`.`DetallePedido` VALUES  ('1','43','1',15,0);
 UNLOCK TABLES;
 /*!40000 ALTER TABLE `DetallePedido` ENABLE KEYS */;
 
@@ -264,7 +264,7 @@ CREATE TABLE  `sg1`.`Pedido` (
   `OIDProveedor` varchar(50) NOT NULL,
   `fechaemision` varchar(50) NOT NULL,
   `fechaentrega` varchar(50) NOT NULL,
-  `pendiente` bit(1) NOT NULL,
+  `pendiente` tinyint(1) NOT NULL,
   `NroPedido` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`OIDPedido`),
   UNIQUE KEY `NroPedido` (`NroPedido`),
@@ -278,7 +278,7 @@ CREATE TABLE  `sg1`.`Pedido` (
 
 /*!40000 ALTER TABLE `Pedido` DISABLE KEYS */;
 LOCK TABLES `Pedido` WRITE;
-INSERT INTO `sg1`.`Pedido` VALUES  ('1','3','2011-01-10','null',0x01,'0000000001');
+INSERT INTO `sg1`.`Pedido` VALUES  ('1','3','2011-01-10','null',1,'0000000001');
 UNLOCK TABLES;
 /*!40000 ALTER TABLE `Pedido` ENABLE KEYS */;
 
