@@ -92,4 +92,12 @@ public class AgenteDetallePedido implements DetallePedido, ObjetoPersistente {
     public String getoid() {
         return OIDDetallePedido;
     }
+
+    public void setBaja(int b) {
+        impl.setBaja(b);
+    }
+
+    public int getBaja() {
+        return impl.getBaja();
+    }
 }

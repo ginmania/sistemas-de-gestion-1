@@ -43,7 +43,7 @@ public class IntermediarioProducto extends IntermediarioRelacional {
         rs.addCampo(new Campo("precioventa", String.valueOf(producto.getPrecioVenta())));
         rs.addCampo(new Campo("OIDStock", "'" + ((AgenteStock) producto.getStock()).getoid() + "'"));
         rs.addCampo(new Campo("clasifABC","'"+producto.getClasifABC()+"'"));
-        rs.addCampo(new Campo("baja", "'" + String.valueOf(producto.getbaja() + "'")));
+        rs.addCampo(new Campo("baja", "'" + String.valueOf(producto.getbaja()) + "'"));
         rs.addCampo(new Campo("nivelServicio", String.valueOf(producto.getNivelServicio())));
         rs.addCampo(new Campo("politica", "'" + producto.getOIDPolitica() + "'"));
         return rs;

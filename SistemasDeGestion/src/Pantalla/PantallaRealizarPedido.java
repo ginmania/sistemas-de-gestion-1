@@ -36,6 +36,7 @@ public class PantallaRealizarPedido extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jtPedidos = new javax.swing.JTable();
         jbRealizarPedido = new javax.swing.JButton();
+        jbRecibirPedido = new javax.swing.JButton();
 
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -54,7 +55,9 @@ public class PantallaRealizarPedido extends javax.swing.JInternalFrame {
         ));
         jScrollPane1.setViewportView(jtPedidos);
 
-        jbRealizarPedido.setText("Realizar Pedido");
+        jbRealizarPedido.setText("Consultar Pendientes");
+
+        jbRecibirPedido.setText("Recibir Pedido");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -66,8 +69,10 @@ public class PantallaRealizarPedido extends javax.swing.JInternalFrame {
                         .addGap(22, 22, 22)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 617, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(259, 259, 259)
-                        .addComponent(jbRealizarPedido)))
+                        .addGap(113, 113, 113)
+                        .addComponent(jbRealizarPedido)
+                        .addGap(69, 69, 69)
+                        .addComponent(jbRecibirPedido)))
                 .addContainerGap(27, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -75,9 +80,11 @@ public class PantallaRealizarPedido extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(47, 47, 47)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32)
-                .addComponent(jbRealizarPedido)
-                .addContainerGap(43, Short.MAX_VALUE))
+                .addGap(28, 28, 28)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jbRealizarPedido)
+                    .addComponent(jbRecibirPedido))
+                .addContainerGap(47, Short.MAX_VALUE))
         );
 
         pack();
@@ -86,6 +93,7 @@ public class PantallaRealizarPedido extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton jbRealizarPedido;
+    private javax.swing.JButton jbRecibirPedido;
     private javax.swing.JTable jtPedidos;
     // End of variables declaration//GEN-END:variables
 
@@ -103,6 +111,14 @@ public class PantallaRealizarPedido extends javax.swing.JInternalFrame {
 
     public void setJtPedidos(JTable jtPedidos) {
         this.jtPedidos = jtPedidos;
+    }
+
+    public JButton getJbRecibirPedido() {
+        return jbRecibirPedido;
+    }
+
+    public void setJbRecibirPedido(JButton jbRecibirPedido) {
+        this.jbRecibirPedido = jbRecibirPedido;
     }
 
 

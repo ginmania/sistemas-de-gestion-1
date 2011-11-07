@@ -17,6 +17,7 @@ public class DetallePedidoImpl implements DetallePedido {
     private int cantidad;
     private Pedido pedido;
     private Producto producto;
+    private int baja;
 
     public DetallePedidoImpl() {
     }
@@ -43,5 +44,13 @@ public class DetallePedidoImpl implements DetallePedido {
 
     public void setProducto(Producto producto) {
         this.producto = producto;
+    }
+
+    public void setBaja(int b) {
+        baja = b;
+    }
+
+    public int getBaja() {
+        return baja;
     }
 }

@@ -44,7 +44,8 @@ CREATE TABLE  `sg1`.`Catalogo` (
 LOCK TABLES `Catalogo` WRITE;
 INSERT INTO `sg1`.`Catalogo` VALUES  ('1','3','42','2011-01-01',3,1.25),
  ('2','2','43','2011-01-01',3,0.25),
- ('3','1','44','2011-01-01',3,2.25);
+ ('3','1','44','2011-01-01',3,2.25),
+ ('4','3','43','2011-10-01',3,0.2);
 UNLOCK TABLES;
 /*!40000 ALTER TABLE `Catalogo` ENABLE KEYS */;
 
@@ -199,6 +200,7 @@ CREATE TABLE  `sg1`.`DetallePedido` (
   `OIDProducto` varchar(50) NOT NULL,
   `OIDPedido` varchar(50) NOT NULL,
   `cantidad` int(10) NOT NULL,
+  `baja` bit(1) DEFAULT b'0',
   PRIMARY KEY (`OIDDetallePedido`),
   KEY `OIDProducto` (`OIDProducto`),
   KEY `OIDPedido` (`OIDPedido`),
@@ -212,6 +214,7 @@ CREATE TABLE  `sg1`.`DetallePedido` (
 
 /*!40000 ALTER TABLE `DetallePedido` DISABLE KEYS */;
 LOCK TABLES `DetallePedido` WRITE;
+INSERT INTO `sg1`.`DetallePedido` VALUES  ('1','43','1',15,0x00);
 UNLOCK TABLES;
 /*!40000 ALTER TABLE `DetallePedido` ENABLE KEYS */;
 
@@ -261,8 +264,10 @@ CREATE TABLE  `sg1`.`Pedido` (
   `OIDProveedor` varchar(50) NOT NULL,
   `fechaemision` varchar(50) NOT NULL,
   `fechaentrega` varchar(50) NOT NULL,
-  `pendiente` bit(1) DEFAULT NULL,
+  `pendiente` bit(1) NOT NULL,
+  `NroPedido` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`OIDPedido`),
+  UNIQUE KEY `NroPedido` (`NroPedido`),
   KEY `OIDProveedor` (`OIDProveedor`),
   CONSTRAINT `OIDProve1` FOREIGN KEY (`OIDProveedor`) REFERENCES `Proveedor` (`OIDProveedor`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -273,6 +278,7 @@ CREATE TABLE  `sg1`.`Pedido` (
 
 /*!40000 ALTER TABLE `Pedido` DISABLE KEYS */;
 LOCK TABLES `Pedido` WRITE;
+INSERT INTO `sg1`.`Pedido` VALUES  ('1','3','2011-01-10','null',0x01,'0000000001');
 UNLOCK TABLES;
 /*!40000 ALTER TABLE `Pedido` ENABLE KEYS */;
 
@@ -384,7 +390,7 @@ CREATE TABLE  `sg1`.`Proveedor` (
   `PeriodoActual` int(11) NOT NULL,
   PRIMARY KEY (`OIDProveedor`),
   KEY `Codigo_Proveedor` (`Codigo_Proveedor`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1 COMMENT='Tabla de Proveedores';
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1 COMMENT='Tabla de Proveedores';
 
 --
 -- Dumping data for table `sg1`.`Proveedor`
@@ -394,7 +400,9 @@ CREATE TABLE  `sg1`.`Proveedor` (
 LOCK TABLES `Proveedor` WRITE;
 INSERT INTO `sg1`.`Proveedor` VALUES  ('1','La Delicia Felipe Fort S.A.','Gascón 329 - Buenos Aires','46180000','01039672',1,'consumidor@felfort.com.ar',0,0,3,0),
  ('2','Aguila S.A','San Pedro 786 Las Heras','654321','654321',2,'chocolate@aguila.com',0,0,3,0),
- ('3','Pamela S.A.','San luis 328 Guaymallen','45888888','30-2000000-0',3,'pandulce@pamela.com.ar',0,0,3,0);
+ ('3','Pamela S.A.','San luis 328 Guaymallen','45888888','30-2000000-0',3,'pandulce@pamela.com.ar',0,0,3,0),
+ ('6302324a-542a-47c8-8986-78ec045e473f','La Serenisima S.A.','Cordoba Av.Calle S/N','02354587','12-254879',4,'la@laserenisima.com.ar',0,0,0,0),
+ ('74cc77fe-fe3e-47e0-b76c-acd993723975','La Serenisima S.A.','Cordoba Av.Calle S/N','02354587','12-254879',5,'la@laserenisima.com.ar',1,0,0,0);
 UNLOCK TABLES;
 /*!40000 ALTER TABLE `Proveedor` ENABLE KEYS */;
 

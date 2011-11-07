@@ -34,7 +34,7 @@ public class PantallaPolitica extends javax.swing.JInternalFrame {
         initComponents();        
         objCont = ctrl;        
         this.jdFecha.setDateFormatString(fechaDelSistema());
-        this.jdFecha.setEnabled(false);
+        //this.jdFecha.setEnabled(false);
         //**********************************************************************
         Object[][] data = new Object[0][5];
         String[] columnNames = {"Codigo","Nombre","Precio","Stock Actual","Lote"};
@@ -60,6 +60,7 @@ public class PantallaPolitica extends javax.swing.JInternalFrame {
         jbEliminar = new javax.swing.JButton();
         jbAceptar = new javax.swing.JButton();
         jdFecha = new com.toedter.calendar.JDateChooser();
+        jbCrearPedido = new javax.swing.JButton();
 
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -87,6 +88,8 @@ public class PantallaPolitica extends javax.swing.JInternalFrame {
 
         jbAceptar.setText("Aceptar");
 
+        jbCrearPedido.setText("Crear");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -105,12 +108,14 @@ public class PantallaPolitica extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 453, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jbEliminar))
+                        .addGap(12, 12, 12)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jbCrearPedido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jbEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(227, 227, 227)
                         .addComponent(jbAceptar)))
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -125,10 +130,14 @@ public class PantallaPolitica extends javax.swing.JInternalFrame {
                     .addComponent(jdFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jbEliminar)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jbAceptar)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jbAceptar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jbCrearPedido)
+                        .addGap(20, 20, 20)
+                        .addComponent(jbEliminar)))
                 .addContainerGap(22, Short.MAX_VALUE))
         );
 
@@ -144,6 +153,7 @@ public class PantallaPolitica extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton jbAceptar;
+    private javax.swing.JButton jbCrearPedido;
     private javax.swing.JButton jbEliminar;
     private javax.swing.JComboBox jcProveedores;
     private com.toedter.calendar.JDateChooser jdFecha;
@@ -192,6 +202,16 @@ public class PantallaPolitica extends javax.swing.JInternalFrame {
         this.jtTabla = jtTabla;
     }
 
+    public JButton getJbCrearPedido() {
+        return jbCrearPedido;
+    }
+
+    public void setJbCrearPedido(JButton jbCrearPedido) {
+        this.jbCrearPedido = jbCrearPedido;
+    }
+
+    
+    
     private String fechaDelSistema(){
         String fechaSistema;
         GregorianCalendar fechaActual = new GregorianCalendar();

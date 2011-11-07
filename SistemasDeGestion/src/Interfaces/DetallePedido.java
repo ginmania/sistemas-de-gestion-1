@@ -21,4 +21,8 @@ public interface DetallePedido {
     public Producto getProducto();
 
     public void setProducto(Producto producto);
+    
+    public void setBaja(int b);
+    
+    public int getBaja();
 }

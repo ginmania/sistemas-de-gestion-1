@@ -34,4 +34,8 @@ public interface Pedido {
 
     public void setPendiente(int baja);
     
+    public void setNroPedido(String Nro);
+    
+    public String getNroPedido();
+    
 }

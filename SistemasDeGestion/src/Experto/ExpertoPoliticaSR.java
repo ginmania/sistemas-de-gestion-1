@@ -37,21 +37,28 @@ public class ExpertoPoliticaSR implements Experto{
     private Producto[] objProd;
     private PoliticaStock[] objPolStock;
     private float [][] tablaK = new float[9][2];
-    private Demanda objHD;
+    private ArrayList<Demanda> objHD;
     private Catalogo objCat;
     //..............................
     private Pedido objPPend;
     private ArrayList<DetallePedido> objDPPend;
     private Object[][] matrix;
     private String[][] matrixII;
+    private String fechaSistema;
+    private String NroPedido;
 
     public ExpertoPoliticaSR(){}
 
     public void iniciar() {
-         objFP = Fachada.getInstancia();        
+         objFP = Fachada.getInstancia();     
+         GregorianCalendar fechaActual = new GregorianCalendar();
         //Busco todos los proveedores...........................................
-        objProv = objFP.buscar_todo(Proveedor.class);      
-        verificarPolitica();
+        objProv = objFP.buscar_todo(Proveedor.class);  
+        fechaSistema = String.valueOf(fechaActual.get(GregorianCalendar.DAY_OF_MONTH)).concat("/")
+                    .concat(String.valueOf(fechaActual.get(GregorianCalendar.MONTH)+1)).concat("/")
+                    .concat(String.valueOf(fechaActual.get(GregorianCalendar.YEAR)).substring(2,4));
+        
+        //verificarPolitica();
         //......................................................................o
     }
 
@@ -70,11 +77,14 @@ public class ExpertoPoliticaSR implements Experto{
         //Busco todas las polÃ­ticas para identicar el UUID de S,R...............
         String uuidPSR = "";
         ArrayList<PoliticaStock> objAUXII = objFP.buscar_todo(PoliticaStock.class);
+        ArrayList<Producto> prod = new ArrayList<Producto>();
+        Hashtable demora = new Hashtable();
+        GregorianCalendar fechaActual = new GregorianCalendar();
         
         for(int j = 0; j < objAUXII.size(); j++){
             objPolStock[j] = objAUXII.get(j);
             //Obtengo el UUID de la polÃ­tica SR.................................
-            if(objPolStock[j].getDescripcion().equals("S,R"))
+            if(objPolStock[j].getDescripcion().equals("Politica S,R"))
                 uuidPSR = String.valueOf(((AgentePoliticaStock)objPolStock[j]).getoid());
             //..................................................................
         }
@@ -104,12 +114,12 @@ public class ExpertoPoliticaSR implements Experto{
                 Criterio c1 = objFP.crearCriterio("OIDProveedor", "=", ((AgenteProveedor)objProv.get(i)).getoid());
                 //Criterio c2 = objFP.crearCriterio("politica", "=", uuidPSR);
                 ArrayList<Catalogo> cat = objFP.buscar(Catalogo.class, c1);
-                //traigo todos los productos del catalogo
-                ArrayList<Producto> prod = null;
-                Hashtable demora = new Hashtable();
+                //traigo todos los productos del catalogo             
                 for(int h=0;h < cat.size();h++){
-                    Producto aux = (Producto) FachadaInterna.getInstancia().buscarOID(Producto.class, ((AgenteCatalogo)cat.get(h)).getOIDProducto());
-                    if(aux.getPolitica().equals(uuidPSR)){
+                    Producto aux = (Producto) FabricaEntidad.getInstancia().FabricarEntidad(Producto.class);
+                    aux = (Producto) FachadaInterna.getInstancia().buscarOID(Producto.class, ((AgenteCatalogo)cat.get(h)).getOIDProducto());
+                    AgenteProducto Agaux = (AgenteProducto)aux;
+                    if(Agaux.getOIDPolitica().equals("1")){
                         prod.add(aux);
                         demora.put(aux.getDescripcionProducto(),cat.get(h).getDemora());
                     }
@@ -117,8 +127,15 @@ public class ExpertoPoliticaSR implements Experto{
                 //armo el pedido si hay productos para armar el pedido
                 if(!prod.isEmpty()){
                 Pedido objPP = (Pedido) FabricaEntidad.getInstancia().FabricarEntidad(Pedido.class);  
+                //intento armar un numero de pedido único
+                NroPedido =String.valueOf(fechaActual.get(GregorianCalendar.DAY_OF_MONTH))
+                    .concat(String.valueOf(fechaActual.get(GregorianCalendar.MONTH)+1))
+                    .concat(String.valueOf(fechaActual.get(GregorianCalendar.YEAR)).substring(2,4))
+                    .concat(String.valueOf(fechaActual.get(GregorianCalendar.HOUR)).substring(2,4))
+                    .concat(String.valueOf(fechaActual.get(GregorianCalendar.MINUTE)).substring(2,4));
+                objPP.setNroPedido(NroPedido);
                 ((AgentePedido)objPP).setOIDProveedor(((AgenteProveedor)objProv.get(i)).getoid());
-                objPP.setFechaEmision(String.valueOf(GregorianCalendar.DATE));
+                objPP.setFechaEmision(fechaSistema);
                 //calcular el tamaño de la orden por producto
                 for(int z=0;z<prod.size();z++){
                    DetallePedido objDP = (DetallePedido) FabricaEntidad.getInstancia().FabricarEntidad(DetallePedido.class);
@@ -128,16 +145,21 @@ public class ExpertoPoliticaSR implements Experto{
                    int R = objProv.get(i).getTiempoR();
                    float nivelServicio = aux.getNivelServicio();
                    float StockDisp = aux.getStock().getCantidad() + aux.getStock().getStockPendiente();
-                   GregorianCalendar fechaActual = new GregorianCalendar();
+                   
                    //busco la demanda para el producto - año - periodo
                    c1 = objFP.crearCriterio("OIDProducto", "=",((AgenteProducto)aux).getoid());
                    Criterio c2 = objFP.crearCriterio("periodo", "=", String.valueOf(periodo));
                    Criterio c3 = objFP.crearCriterio("anio","=",String.valueOf(fechaActual.get(GregorianCalendar.YEAR)-1));
                    Criterio co = objFP.crearCriterioCompuesto(c1, "=", c2);
                    Criterio cco = objFP.crearCriterioCompuesto(co, "=", c3);
-                   objHD = (Demanda) objFP.buscar(Demanda.class, cco);
-                   float demanda = (float) objHD.getDemandapronosticada();
-                   float MSE = (float) objHD.getMse();
+                   System.out.println("Criterio: "+cco.getAtributo()+cco.getOperador()+cco.getValor().toString());
+                   objHD = objFP.buscar(Demanda.class, cco);
+                   float demanda = (float) 0.0; 
+                   float MSE = (float) 0.0;
+                   for(int d=0; d < objHD.size();d++){
+                       demanda = (float) (demanda + objHD.get(d).getDemandapronosticada());
+                       MSE = (float) objHD.get(d).getMse();
+                   }
                    //busco la demora en el hashtable para este producto
                     int te = Integer.parseInt(demora.get(aux.getDescripcionProducto()).toString());
                    //Registro el pedido pendiente

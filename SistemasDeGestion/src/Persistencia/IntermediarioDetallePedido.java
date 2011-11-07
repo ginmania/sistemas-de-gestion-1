@@ -33,6 +33,7 @@ public class IntermediarioDetallePedido extends IntermediarioRelacional{
         rs.addCampo(new Campo("OIDProducto", "'" + detallepedido.getOIDProducto() + "'"));
         rs.addCampo(new Campo("OIDPedido", "'" + detallepedido.getOIDPedido() + "'"));
         rs.addCampo(new Campo("cantidad", String.valueOf(detallepedido.getCantidad())));
+        rs.addCampo(new Campo("baja", "'" + String.valueOf(detallepedido.getBaja() + "'")));
         return rs;
 
     }
@@ -45,10 +46,11 @@ public class IntermediarioDetallePedido extends IntermediarioRelacional{
             for (Registro registro : rs) {
                 temp = new Agentes.AgenteDetallePedido();
                 temp.setImpl(new Implementaciones.DetallePedidoImpl());
-                temp.setoid(registro.getCampo("OIDDetalleVenta").getValor());
+                temp.setoid(registro.getCampo("OIDDetallePedido").getValor());
                 temp.setOIDProducto(registro.getCampo("OIDProducto").getValor());
                 temp.setOIDPedido(registro.getCampo("OIDPedido").getValor());
                 temp.setCantidad(Integer.parseInt(registro.getCampo("cantidad").getValor()));
+                temp.setBaja(Integer.parseInt(registro.getCampo("baja").getValor()));
                 detallepedido.add(temp);
             }
         } catch (Exception ex) {

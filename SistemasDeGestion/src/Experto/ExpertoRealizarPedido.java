@@ -70,20 +70,22 @@ public class ExpertoRealizarPedido implements Experto{
     private DefaultTableModel mostrarPorProveedor(){
         String s = new String();
         DefaultTableModel pedidos = new DefaultTableModel();
-        String[] fila = null ;
+        String[] fila = new String[3];
         pedidos.addColumn("Proveedor");
         pedidos.addColumn("Producto");
         pedidos.addColumn("Cantidad");
         s = "Se realizarÃ¡n el siguiente pedido de productos: \n";
         for(int i = 0; i < proveedor.size(); i++){
             for(int j = 0; j < producto.size(); j++){
-                if(((AgenteProveedor)proveedor.get(i)).getoid() == ((AgenteCatalogo)catalogo.get(j)).getOIDProveedor()){
+                String idProvCatalogo = ((AgenteCatalogo)catalogo.get(j)).getOIDProveedor();
+                String idProveedor = ((AgenteProveedor)proveedor.get(i)).getoid();
+                if(idProveedor.equals(idProvCatalogo)){ //si el proveedor trae ese producto
                     s.concat("Para el Proveedor " + proveedor.get(i).getNombre() + " se deben pedir del producto "
-                            + producto.get(i).getCodigoProducto() + " " + producto.get(i).getDescripcionProducto() +
-                            " la cantidad " + String.valueOf(producto.get(i).getStock().getStockPendiente()));
+                            + producto.get(j).getCodigoProducto() + " " + producto.get(j).getDescripcionProducto() +
+                            " la cantidad " + String.valueOf(producto.get(j).getStock().getStockPendiente()));
                     fila[0]=proveedor.get(i).getNombre();
-                    fila[1]=producto.get(i).getCodigoProducto() + " " + producto.get(i).getDescripcionProducto();
-                    fila[2]=String.valueOf(producto.get(i).getStock().getStockPendiente());
+                    fila[1]=producto.get(j).getCodigoProducto() + " " + producto.get(j).getDescripcionProducto();
+                    fila[2]=String.valueOf(producto.get(j).getStock().getStockPendiente());
                     pedidos.addRow(fila);
                 }
                 s =  s + "\n";
