@@ -24,6 +24,8 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         Ventas = new javax.swing.JMenuItem();
         Metodo = new javax.swing.JMenuItem();
         ABC = new javax.swing.JMenuItem();
+        jmPedidos = new javax.swing.JMenuItem();
+        jmRealizarPedido = new javax.swing.JMenuItem();
         Salir = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -63,6 +65,12 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         ABC.setText("ABC");
         jMenu1.add(ABC);
 
+        jmPedidos.setText("Politicas Stock");
+        jMenu1.add(jmPedidos);
+
+        jmRealizarPedido.setText("RealizarPedido");
+        jMenu1.add(jmRealizarPedido);
+
         Salir.setText("Salir");
         jMenu1.add(Salir);
 
@@ -83,6 +91,8 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jmPedidos;
+    private javax.swing.JMenuItem jmRealizarPedido;
     // End of variables declaration//GEN-END:variables
 
     public JMenuItem getItemCliente() {
@@ -142,6 +152,22 @@ public class PantallaPrincipal extends javax.swing.JFrame {
 
     public void setABC(JMenuItem ABC) {
         this.ABC = ABC;
+    }
+
+    public JMenuItem getJmPedidos() {
+        return jmPedidos;
+    }
+
+    public void setJmPedidos(JMenuItem jmPedidos) {
+        this.jmPedidos = jmPedidos;
+    }
+
+    public JMenuItem getJmRealizarPedido() {
+        return jmRealizarPedido;
+    }
+
+    public void setJmRealizarPedido(JMenuItem jmRealizarPedido) {
+        this.jmRealizarPedido = jmRealizarPedido;
     }
     
     

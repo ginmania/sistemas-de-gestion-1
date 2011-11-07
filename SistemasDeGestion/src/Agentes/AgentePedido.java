@@ -98,4 +98,13 @@ public class AgentePedido implements Pedido, ObjetoPersistente {
     public String getoid() {
         return OIDPedido;
     }
+
+    public int getPendiente() {
+        return impl.getPendiente();
+    }
+
+    public void setPendiente(int baja) {
+        impl.setPendiente(baja);
+    }
+    
 }

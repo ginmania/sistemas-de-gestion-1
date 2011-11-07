@@ -39,5 +39,17 @@ public interface Proveedor {
     public int getbaja();
 
     public void setbaja(int baja);
+
+    public double getCostoEmision();
+
+    public void setCostoEmision(double costoEmision);
+
+    public int getTiempoR() ;
+
+    public void setTiempoR(int TiempoR);
+
+    public int getPeriodoActual();
+
+    public void setPeriodoActual(int PeriodoActual);
     
 }

@@ -48,4 +48,12 @@ public class AgenteStock implements Stock, ObjetoPersistente {
     public String getoid() {
         return OIDStock;
     }
+
+    public int getStockPendiente() {
+        return impl.getStockPendiente();
+    }
+
+    public void setStockPendiente(int auxSP) {
+        impl.setStockPendiente(auxSP);
+    }
 }

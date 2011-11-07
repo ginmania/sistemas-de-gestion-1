@@ -30,6 +30,12 @@ public class FabricaExperto{
     }else if(experto.equals("ExpertoCurvaABC"))
         {
             return new DecoradorCurvaABC();
+    }else if(experto.equals("ExpertoPoliticaSR"))
+        {
+            return new DecoradorPoliticaSR();
+    }else if(experto.equals("ExpertoRealizarPedido"))
+        {
+            return new DecoradorRealizarPedido();
     }
         return null;
     }

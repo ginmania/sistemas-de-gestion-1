@@ -1,0 +1,7 @@
+cambios:
+- Agregamos una clase catálogo
+- A ProductoProveedor se le agrego la fecha - probablemente no se use más esta tabla
+- A Producto hay que agregar "nivel de servicio"
+- A Proveedor agrega: tiempo de reposicion - costo emision - periodo actual
+- A Stock hay que agregarle el stock pendiente
+- A pedido hay que agregar el tamaño del lote.

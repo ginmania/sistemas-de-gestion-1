@@ -37,6 +37,9 @@ public class IntermediarioProveedor extends IntermediarioRelacional {
         //rs.addCampo(new Campo("Codigo_Proveedor", String.valueOf(proveedor.getCodigo_proveedor())));
         rs.addCampo(new Campo("email", "'" + proveedor.getEmail() + "'"));        
         rs.addCampo(new Campo("baja", "'" + String.valueOf(proveedor.getbaja()) + "'"));
+        rs.addCampo(new Campo("CostoEmision", "'" + String.valueOf(proveedor.getCostoEmision()) + "'"));
+        rs.addCampo(new Campo("TiempoReposicion", "'" + String.valueOf(proveedor.getTiempoR()) + "'"));
+        rs.addCampo(new Campo("PeriodoActual", "'" + String.valueOf(proveedor.getPeriodoActual()) + "'"));
         return rs;
 
     }
@@ -57,6 +60,9 @@ public class IntermediarioProveedor extends IntermediarioRelacional {
                 temp.setCodigo_proveedor(Integer.parseInt(registro.getCampo("Codigo_Proveedor").getValor()));
                 temp.setEmail(registro.getCampo("email").getValor());
                 temp.setbaja(Integer.parseInt(registro.getCampo("baja").getValor()));
+                temp.setCostoEmision(Double.parseDouble(registro.getCampo("CostoEmision").getValor()));
+                temp.setTiempoR(Integer.parseInt(registro.getCampo("TiempoReposicion").getValor()));
+                temp.setPeriodoActual(Integer.parseInt(registro.getCampo("PeriodoActual").getValor()));
                 proveedor.add(temp);
             }
         } catch (Exception ex) {

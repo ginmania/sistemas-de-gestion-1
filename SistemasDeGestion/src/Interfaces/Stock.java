@@ -17,5 +17,9 @@ public void setCantdidadMinima(int cantidadminima);
 public int getCantidad();
 
 public void setCantdidad(int cantidad);
+
+    public int getStockPendiente();
+
+    public void setStockPendiente(int auxSP);
     
 }

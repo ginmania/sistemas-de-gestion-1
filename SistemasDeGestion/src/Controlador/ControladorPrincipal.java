@@ -85,6 +85,20 @@ public final class ControladorPrincipal {
             }
         });
         
+        pantallaPrincipal.getJmPedidos().addActionListener(new java.awt.event.ActionListener() {
+
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Politica();
+            }
+        });
+        
+        pantallaPrincipal.getJmRealizarPedido().addActionListener(new java.awt.event.ActionListener() {
+
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RealizarPedido();
+            }
+        });
+        
         pantallaPrincipal.getSalir().addActionListener(new java.awt.event.ActionListener() {
 
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -92,6 +106,8 @@ public final class ControladorPrincipal {
                 System.exit(0);
             }
         });
+        
+        
     }
 
     public void crearConexion(String dir, String usuario, String pass) {
@@ -125,6 +141,14 @@ public final class ControladorPrincipal {
     
     private void curvaABC () throws PropertyVetoException{
         new ControladorCurvaABC(this).iniciar();
+    }
+    
+    private void Politica (){
+        new ControladorPoliticaSR(this).iniciar();
+    }
+    
+    private void RealizarPedido (){
+        new ControladorRealizarPedido(this).iniciar();
     }
 
     public void add(JInternalFrame jInternalFrame) {

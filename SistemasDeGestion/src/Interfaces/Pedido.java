@@ -28,5 +28,10 @@ public interface Pedido {
 
     public Proveedor getProveedor();
 
-    public void setProveedor(Proveedor proveedor);
+    public void setProveedor(Proveedor proveedor);    
+    
+    public int getPendiente();
+
+    public void setPendiente(int baja);
+    
 }
