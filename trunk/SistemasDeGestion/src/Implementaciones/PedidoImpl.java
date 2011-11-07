@@ -15,7 +15,7 @@ import java.util.List;
  * @author diego
  */
 public class PedidoImpl implements Pedido {
-
+    private String NroPedido;
     private String fechaemision;
     private String fechaentrega;
     private List<DetallePedido> detallepedidos;
@@ -74,6 +74,14 @@ public class PedidoImpl implements Pedido {
 
     public void setPendiente(int baja) {
         this.pendiente = baja;
+    }
+
+    public void setNroPedido(String Nro) {
+        this.NroPedido = Nro;
+    }
+
+    public String getNroPedido() {
+        return this.NroPedido;
     }
 
 }

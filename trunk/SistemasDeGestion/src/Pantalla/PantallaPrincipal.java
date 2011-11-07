@@ -68,7 +68,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         jmPedidos.setText("Politicas Stock");
         jMenu1.add(jmPedidos);
 
-        jmRealizarPedido.setText("RealizarPedido");
+        jmRealizarPedido.setText("Pedido");
         jMenu1.add(jmRealizarPedido);
 
         Salir.setText("Salir");

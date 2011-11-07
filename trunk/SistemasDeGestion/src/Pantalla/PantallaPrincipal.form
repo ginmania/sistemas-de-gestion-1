@@ -46,7 +46,7 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jmRealizarPedido">
               <Properties>
-                <Property name="text" type="java.lang.String" value="RealizarPedido"/>
+                <Property name="text" type="java.lang.String" value="Pedido"/>
               </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="Salir">

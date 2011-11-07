@@ -55,7 +55,10 @@ public class AgentePedido implements Pedido, ObjetoPersistente {
     }
 
     public String getFechaEntrega() {
-        return impl.getFechaEntrega();
+        String fecha = impl.getFechaEntrega();
+        if(fecha == "null")
+            fecha = "0-0-1900";                
+        return fecha;
     }
 
     public void setFechaEntrega(String fechaentrega) {
@@ -105,6 +108,14 @@ public class AgentePedido implements Pedido, ObjetoPersistente {
 
     public void setPendiente(int baja) {
         impl.setPendiente(baja);
+    }
+
+    public void setNroPedido(String Nro) {
+        impl.setNroPedido(Nro);
+    }
+
+    public String getNroPedido() {
+        return impl.getNroPedido();
     }
     
 }

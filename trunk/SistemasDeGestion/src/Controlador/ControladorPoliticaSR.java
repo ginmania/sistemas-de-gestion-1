@@ -49,6 +49,12 @@ public class ControladorPoliticaSR {
                 objGUIPolSR.Eliminar();
             }
         });
+        
+        objGUIPolSR.getJbCrearPedido().addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                objEPSR.verificarPolitica();
+            }
+        });
     }
 
     public DTO obtenerDTO(DTO dTO) {
@@ -64,7 +70,7 @@ public class ControladorPoliticaSR {
     }
 
     public void iniciarVPsr(){ //Verifica la polÃ­tica(s,r)...
-        expProv = new ExpertoProveedor();
+        //expProv = new ExpertoProveedor();
         //this.iniciar();
         objEPSR.iniciar();
         objEPSR.verificarPolitica();

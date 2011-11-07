@@ -17,6 +17,7 @@ public class ControladorRealizarPedido {
     private ControladorPrincipal ppal;
     private PantallaRealizarPedido pantalla;
     private ExpertoRealizarPedido experto;
+    private ControladorRecibirPedido ctrlRecibir;
     
     public ControladorRealizarPedido(ControladorPrincipal p) {
         ppal = p;
@@ -24,6 +25,15 @@ public class ControladorRealizarPedido {
         experto = (ExpertoRealizarPedido) FabricaExperto.getInstancia().FabricarExperto("ExpertoRealizarPedido");
         pantalla.setVisible(true);
         p.add(pantalla);
+        
+        pantalla.getJbRecibirPedido().addActionListener(new java.awt.event.ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+                pantalla.setVisible(false);
+                ppal.remove(pantalla);
+                ctrlRecibir = new ControladorRecibirPedido(ppal);
+            }
+        });
     }
 
     void iniciar() {
@@ -31,7 +41,7 @@ public class ControladorRealizarPedido {
             public void actionPerformed(ActionEvent e) {
                pantalla.getJtPedidos().setModel( experto.iniciar());
             }
-        });
+        });        
     }
     
     
