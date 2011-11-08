@@ -267,7 +267,6 @@ CREATE TABLE  `sg1`.`Pedido` (
   `pendiente` tinyint(1) NOT NULL,
   `NroPedido` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`OIDPedido`),
-  UNIQUE KEY `NroPedido` (`NroPedido`),
   KEY `OIDProveedor` (`OIDProveedor`),
   CONSTRAINT `OIDProve1` FOREIGN KEY (`OIDProveedor`) REFERENCES `Proveedor` (`OIDProveedor`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;

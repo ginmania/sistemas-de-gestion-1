@@ -110,6 +110,7 @@ private void historial(){
         double dava = 0;
         for (int i = 0; i < arregloABC.length; i++){
             dava = arregloABC[i].getDemandaAV() + dava;
+            System.out.println("DAVA :  " + dava);
             arregloABC[i].setDemandaAVA(dava);
         }
     }
@@ -117,7 +118,7 @@ private void historial(){
     private void calcularCAP(InformeABC arregloABC[]){
         double dava = arregloABC[arregloABC.length - 1].getDemandaAVA();
         for (int i = 0; i < arregloABC.length; i++){
-            arregloABC[i].setPorcentajeAcumulado(arregloABC[i].getDemandaAVA() * 100 / dava);
+            arregloABC[i].setPorcentajeAcumulado(10);//Revisar esto (arregloABC[i].getDemandaAVA() * 100 / dava);
         }
 
     }
