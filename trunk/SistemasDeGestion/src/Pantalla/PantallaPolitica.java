@@ -29,16 +29,17 @@ public class PantallaPolitica extends javax.swing.JInternalFrame {
     private String[] provedores = {" "};
     private DefaultTableModel dtm;
     private ControladorPoliticaSR objCont;
+
     /** Creates new form PantallaPolitica */
     public PantallaPolitica(ControladorPoliticaSR ctrl) {
-        initComponents();        
-        objCont = ctrl;        
+        initComponents();
+        objCont = ctrl;
         this.jdFecha.setDateFormatString(fechaDelSistema());
         //this.jdFecha.setEnabled(false);
         //**********************************************************************
         Object[][] data = new Object[0][5];
-        String[] columnNames = {"Codigo","Nombre","Precio","Stock Actual","Lote"};
-        dtm = new javax.swing.table.DefaultTableModel(data,columnNames);
+        String[] columnNames = {"Codigo", "Nombre", "Precio", "Stock Actual", "Lote"};
+        dtm = new javax.swing.table.DefaultTableModel(data, columnNames);
         jtTabla.setModel(dtm);
         //**********************************************************************
     }
@@ -143,11 +144,9 @@ public class PantallaPolitica extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
     /**
      * @param args the command line arguments
      */
-    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -192,8 +191,6 @@ public class PantallaPolitica extends javax.swing.JInternalFrame {
         this.jdFecha = jdFecha;
     }
 
-    
-
     public JTable getJtTabla() {
         return jtTabla;
     }
@@ -210,55 +207,49 @@ public class PantallaPolitica extends javax.swing.JInternalFrame {
         this.jbCrearPedido = jbCrearPedido;
     }
 
-    
-    
-    private String fechaDelSistema(){
+    private String fechaDelSistema() {
         String fechaSistema;
         GregorianCalendar fechaActual = new GregorianCalendar();
-        fechaSistema = String.valueOf(fechaActual.get(GregorianCalendar.DAY_OF_MONTH)).concat("/")
-                    .concat(String.valueOf(fechaActual.get(GregorianCalendar.MONTH)+1)).concat("/")
-                    .concat(String.valueOf(fechaActual.get(GregorianCalendar.YEAR)).substring(2,4));//AÃ±o...
+        fechaSistema = String.valueOf(fechaActual.get(GregorianCalendar.DAY_OF_MONTH)).concat("-").concat(String.valueOf(fechaActual.get(GregorianCalendar.MONTH) + 1)).concat("-").concat(String.valueOf(fechaActual.get(GregorianCalendar.YEAR)));//AÃ±o...
 
         return fechaSistema;
     }
 
     public void Aceptar() {
-            String [][]datos;
-                if(jtTabla.getRowCount() >= 1){
+        String[][] datos;
+        if (jtTabla.getRowCount() >= 1) {
             datos = new String[dtm.getRowCount()][2];
-            for(int i = 0; i < dtm.getRowCount(); i++){
-                datos[i][0] = String.valueOf(dtm.getValueAt(i,0));
-                datos[i][1] = String.valueOf(dtm.getValueAt(i,4));
+            for (int i = 0; i < dtm.getRowCount(); i++) {
+                datos[i][0] = String.valueOf(dtm.getValueAt(i, 0));
+                datos[i][1] = String.valueOf(dtm.getValueAt(i, 4));
             }
             objCont.setPedidoManual(datos);
             objCont.cerrarGUI();
         }
     }
-    
-    public void Eliminar () {
-        if(jtTabla.getSelectedRow() >= 0){ //Verifico que se seleccione una Fila de la Tabla...
+
+    public void Eliminar() {
+        if (jtTabla.getSelectedRow() >= 0) { //Verifico que se seleccione una Fila de la Tabla...
             int valor = jtTabla.getSelectedRow();
             dtm.removeRow(valor);
-        }
-        else if(dtm.getRowCount()-1 >= 0){//Si no hay filas seleccionadas...
-                dtm.removeRow(dtm.getRowCount()-1);
-        }
-        else {
-            JOptionPane.showMessageDialog(null, "No Existen Filas..." , "CUIDADO" , JOptionPane.WARNING_MESSAGE);
+        } else if (dtm.getRowCount() - 1 >= 0) {//Si no hay filas seleccionadas...
+            dtm.removeRow(dtm.getRowCount() - 1);
+        } else {
+            JOptionPane.showMessageDialog(null, "No Existen Filas...", "CUIDADO", JOptionPane.WARNING_MESSAGE);
         }
     }
-    
-    public void AccionCombo(){
-    //AcciÃ³n de ComboBox...
+
+    public void AccionCombo() {
+        //AcciÃ³n de ComboBox...
         //......................................................................
         Object[][] data = new Object[0][5];
-        String[] columnNames = {"Codigo","Nombre","Precio","Stock Actual","Lote"};
-        dtm = new javax.swing.table.DefaultTableModel(data,columnNames);
+        String[] columnNames = {"Codigo", "Nombre", "Precio", "Stock Actual", "Lote"};
+        dtm = new javax.swing.table.DefaultTableModel(data, columnNames);
         jtTabla.setModel(dtm);
         //......................................................................
         Object[][] temp = objCont.getProductosPrev(jcProveedores.getSelectedIndex());
         Object[] newRow = new Object[5];
-        for(int i = 0 ; i < temp.length; i++){            
+        for (int i = 0; i < temp.length; i++) {
             newRow[0] = temp[i][0];
             newRow[1] = temp[i][1];
             newRow[2] = temp[i][2];
@@ -267,13 +258,13 @@ public class PantallaPolitica extends javax.swing.JInternalFrame {
             agregarProducto(newRow);
         }
     }
-    
-    public void agregarProducto(Object[] fila){
+
+    public void agregarProducto(Object[] fila) {
         Object[] newRow = fila;
         dtm.addRow(newRow);
     }
-    
-    public void setProveedores(String[] vecProv){
+
+    public void setProveedores(String[] vecProv) {
         this.provedores = vecProv;
         jcProveedores.setModel(new javax.swing.DefaultComboBoxModel(provedores));
     }
