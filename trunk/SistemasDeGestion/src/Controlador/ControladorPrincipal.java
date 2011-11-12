@@ -66,6 +66,7 @@ public final class ControladorPrincipal {
             }
         });
         pantallaPrincipal.getMetodo().addActionListener(new java.awt.event.ActionListener() {
+
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
                     elegirMetodos();
@@ -74,8 +75,9 @@ public final class ControladorPrincipal {
                 }
             }
         });
-        
+
         pantallaPrincipal.getABC().addActionListener(new java.awt.event.ActionListener() {
+
             public void actionPerformed(ActionEvent e) {
                 try {
                     curvaABC();
@@ -84,21 +86,21 @@ public final class ControladorPrincipal {
                 }
             }
         });
-        
+
         pantallaPrincipal.getJmPedidos().addActionListener(new java.awt.event.ActionListener() {
 
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Politica();
             }
         });
-        
+
         pantallaPrincipal.getJmRealizarPedido().addActionListener(new java.awt.event.ActionListener() {
 
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 RealizarPedido();
             }
         });
-        
+
         pantallaPrincipal.getSalir().addActionListener(new java.awt.event.ActionListener() {
 
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -106,8 +108,18 @@ public final class ControladorPrincipal {
                 System.exit(0);
             }
         });
-        
-        
+
+        pantallaPrincipal.getItemEstablecer().addActionListener(new java.awt.event.ActionListener() {
+
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                try {
+                    establecerParametros();
+                } catch (NoProductoExcepcion ex) {
+                    Logger.getLogger(ControladorPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+
     }
 
     public void crearConexion(String dir, String usuario, String pass) {
@@ -134,20 +146,24 @@ public final class ControladorPrincipal {
     private void AdministrarVentas() throws PropertyVetoException {
         new ControladorVenta(this).AdministrarVentas();
     }
-    
-    private void elegirMetodos() throws NoProductoExcepcion{
+
+    private void elegirMetodos() throws NoProductoExcepcion {
         new ControladorMetodos(this).agregarMetodos();
     }
-    
-    private void curvaABC () throws PropertyVetoException{
+
+    private void establecerParametros() throws NoProductoExcepcion {
+        new ControladorParametros(this).agregarParametros();
+    }
+
+    private void curvaABC() throws PropertyVetoException {
         new ControladorCurvaABC(this).iniciar();
     }
-    
-    private void Politica (){
+
+    private void Politica() {
         new ControladorPoliticaSR(this).iniciar();
     }
-    
-    private void RealizarPedido (){
+
+    private void RealizarPedido() {
         new ControladorRealizarPedido(this).iniciar();
     }
 
@@ -157,7 +173,7 @@ public final class ControladorPrincipal {
         jInternalFrame.setMaximizable(true);
         pantallaPrincipal.getjDesktopPane1().add(jInternalFrame);
         //pantallaPrincipal.getjDesktopPane1().getDesktopManager().maximizeFrame(jInternalFrame);
-        
+
     }
 
     public void error() {

@@ -28,6 +28,8 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
         jmPedidos = new javax.swing.JMenuItem();
         jmRealizarPedido = new javax.swing.JMenuItem();
+        menuParametros = new javax.swing.JMenu();
+        itemEstablecer = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistemas de Gestion 1");
@@ -47,6 +49,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         getContentPane().add(jDesktopPane1, gridBagConstraints);
 
         jMenu1.setText("Sistema");
+        jMenu1.setMargin(new java.awt.Insets(0, 10, 0, 0));
 
         MenuCliente.setText("Cliente");
         jMenu1.add(MenuCliente);
@@ -81,6 +84,14 @@ public class PantallaPrincipal extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu2);
 
+        menuParametros.setText("Parametros");
+        menuParametros.setMargin(new java.awt.Insets(0, 10, 0, 0));
+
+        itemEstablecer.setText("Establecer");
+        menuParametros.add(itemEstablecer);
+
+        jMenuBar1.add(menuParametros);
+
         setJMenuBar(jMenuBar1);
 
         pack();
@@ -93,13 +104,23 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem Metodo;
     private javax.swing.JMenuItem Salir;
     private javax.swing.JMenuItem Ventas;
+    private javax.swing.JMenuItem itemEstablecer;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jmPedidos;
     private javax.swing.JMenuItem jmRealizarPedido;
+    private javax.swing.JMenu menuParametros;
     // End of variables declaration//GEN-END:variables
+
+    public JMenuItem getItemEstablecer() {
+        return itemEstablecer;
+    }
+
+    public void setItemEstablecer(JMenuItem menuEstablecer) {
+        this.itemEstablecer = menuEstablecer;
+    }
 
     public JMenuItem getItemCliente() {
         return MenuCliente;
@@ -128,11 +149,12 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     public JMenuItem getItemProducto() {
         return MenuProducto;
     }
+
     public void setMenuProducto(JMenuItem MenuProducto) {
         this.MenuProducto = MenuProducto;
     }
 
-        public JMenuItem getItemProveedor() {
+    public JMenuItem getItemProveedor() {
         return MenuProveedor;
     }
 
@@ -175,7 +197,4 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     public void setJmRealizarPedido(JMenuItem jmRealizarPedido) {
         this.jmRealizarPedido = jmRealizarPedido;
     }
-    
-    
-    
 }
