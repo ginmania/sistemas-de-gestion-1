@@ -46,12 +46,16 @@ public class ControladorMetodos {
     private String[][] vectorDemandaensimple = null;
     private String[][] vectorDemandaentendencia = null;
     private String[][] vectorDemandaenestacionalidad = null;
+    private ControladorParametros controladorParametros;
 
     public ControladorMetodos(ControladorPrincipal controladorPrincipal) {
         this.controladorPrincipal = controladorPrincipal;
         expertoMetodos = (ExpertoMetodos) FabricaExperto.getInstancia().FabricarExperto("ExpertoMetodos");
         pantallaMetodos = new PantallaMetodos(null, true);
         pantallaMetodos.setLocationRelativeTo(null);
+        alfa = controladorParametros.getAlfa();
+        beta = controladorParametros.getBeta();
+        gama = controladorParametros.getGama();
 
         /////////BOTON METODO CANCELAR//////////
         pantallaMetodos.getBotonCancelarMetodos().addActionListener(new java.awt.event.ActionListener() {
@@ -336,32 +340,7 @@ public class ControladorMetodos {
         });
 
 
-        ///FOCO PARA EL BETA EN EL METODO TENDENCIA ////////
-        pantallaMetodos.getCampoBeta().addFocusListener(new java.awt.event.FocusAdapter() {
 
-            @Override
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                a = pantallaMetodos.getCampoAlfa().getText();
-                alfa = Double.parseDouble(a);
-                beta = alfa / 2;
-                pantallaMetodos.getCampoBeta().setText(String.valueOf(beta));
-
-            }
-        });
-
-
-        ///FOCO PARA EL GAMMA EN EL METODO ESTACIONALIDAD ////////
-        pantallaMetodos.getCampoGama().addFocusListener(new java.awt.event.FocusAdapter() {
-
-            @Override
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                a = pantallaMetodos.getCampoAlfa().getText();
-                alfa = Double.parseDouble(a);
-                gama = alfa * 2;
-                pantallaMetodos.getCampoGama().setText(String.valueOf(gama));
-
-            }
-        });
     }
 
     private List<Producto> buscarProducto() throws NoProductoExcepcion {
