@@ -56,13 +56,17 @@ public class ExpertoPoliticaSR implements Experto {
         GregorianCalendar fechaActual = new GregorianCalendar();
         //Busco todos los proveedores...........................................
         objProv = objFP.buscar_todo(Proveedor.class);
-        fechaSistema = String.valueOf(fechaActual.get(GregorianCalendar.DAY_OF_MONTH)).concat("-").concat(String.valueOf(fechaActual.get(GregorianCalendar.MONTH) + 1)).concat("-").concat(String.valueOf(fechaActual.get(GregorianCalendar.YEAR)));
+        fechaSistema = String.valueOf(fechaActual.get(GregorianCalendar.DAY_OF_MONTH))
+                .concat("-")
+                .concat(String.valueOf(fechaActual.get(GregorianCalendar.MONTH) + 1))
+                .concat("-")
+                .concat(String.valueOf(fechaActual.get(GregorianCalendar.YEAR)));
 
         //verificarPolitica();
         //......................................................................o
     }
 
-    public void verificarPolitica() {
+ public void verificarPolitica() {
         //Cargo tabla k.........................................................
         tablaK[0][0] = 0.50f;
         tablaK[0][1] = 0f;
@@ -141,55 +145,61 @@ public class ExpertoPoliticaSR implements Experto {
                     }
                 }
                 //armo el pedido si hay productos para armar el pedido
-                if (!prod.isEmpty()) {
-                    Pedido objPP = (Pedido) FabricaEntidad.getInstancia().FabricarEntidad(Pedido.class);
-                    //intento armar un numero de pedido único
-                    NroPedido = String.valueOf(fechaActual.get(GregorianCalendar.DAY_OF_MONTH)).concat(String.valueOf(fechaActual.get(GregorianCalendar.MONTH) + 1)).concat(String.valueOf(fechaActual.get(GregorianCalendar.YEAR))).concat(String.valueOf(fechaActual.get(GregorianCalendar.MINUTE)));
-                    objPP.setNroPedido(NroPedido);
-                    ((AgentePedido) objPP).setOIDProveedor(((AgenteProveedor) objProv.get(i)).getoid());
-                    objPP.setFechaEmision(fechaSistema);
-                    //calcular el tamaño de la orden por producto
-                    for (int z = 0; z < prod.size(); z++) {
-                        DetallePedido objDP = (DetallePedido) FabricaEntidad.getInstancia().FabricarEntidad(DetallePedido.class);
-                        Producto aux = prod.get(z);
-                        System.out.println("");
-                        System.out.println("  Inicio Calculo para el producto: " + aux.getDescripcionProducto());
-                        int R = objProv.get(i).getTiempoR();
-                        float nivelServicio = aux.getNivelServicio();
-                        float StockDisp = aux.getStock().getCantidad() + aux.getStock().getStockPendiente();
 
-                        //busco la demanda para el producto - año - periodo
-                        c1 = objFP.crearCriterio("OIDProducto", "=", ((AgenteProducto) aux).getoid());
-                        Criterio c2 = objFP.crearCriterio("periodo", "=", String.valueOf(periodo));
-                        Criterio c3 = objFP.crearCriterio("anio", "=", String.valueOf(fechaActual.get(GregorianCalendar.YEAR) - 1));
-                        Criterio co = objFP.crearCriterioCompuesto(c1, "=", c2);
-                        Criterio cco = objFP.crearCriterioCompuesto(co, "=", c3);
-                        System.out.println("Criterio: " + cco.getAtributo() + cco.getOperador() + cco.getValor().toString());
-                        objHD = objFP.buscar(Demanda.class, cco);
-                        float demanda = (float) 0.0;
-                        float MSE = (float) 0.0;
-                        for (int d = 0; d < objHD.size(); d++) {
-                            demanda = (float) (demanda + objHD.get(d).getDemandapronosticada());
-                            MSE = (float) objHD.get(d).getMse();
-                        }
-                        //busco la demora en el hashtable para este producto
-                        int te = Integer.parseInt(demora.get(aux.getDescripcionProducto()).toString());
-                        //Registro el pedido pendiente
-                        int loteS = (int) getLoteS(nivelServicio, demanda, R, te, MSE, (int) StockDisp);
-                        ((AgenteDetallePedido) objDP).setOIDPedido(((AgentePedido) objPP).getoid());
-                        ((AgenteDetallePedido) objDP).setOIDProducto(((AgenteProducto) aux).getoid());
-                        ((AgenteDetallePedido) objDP).setCantidad(loteS);
-                        objPP.setDetallePedido(objDP);
+                if(!prod.isEmpty()){
+                Pedido objPP = (Pedido) FabricaEntidad.getInstancia().FabricarEntidad(Pedido.class);  
+                //intento armar un numero de pedido único
+                NroPedido =String.valueOf(fechaActual.get(GregorianCalendar.DAY_OF_MONTH))
+                    .concat(String.valueOf(fechaActual.get(GregorianCalendar.MONTH)+1))
+                    .concat(String.valueOf(fechaActual.get(GregorianCalendar.YEAR)).substring(2,4))
+                    .concat(String.valueOf(fechaActual.get(GregorianCalendar.HOUR)))
+                    .concat(String.valueOf(fechaActual.get(GregorianCalendar.MINUTE)));
+                objPP.setNroPedido(NroPedido);
+                ((AgentePedido)objPP).setOIDProveedor(((AgenteProveedor)objProv.get(i)).getoid());
+                objPP.setFechaEmision(fechaSistema);
+                //calcular el tamaño de la orden por producto
+                for(int z=0;z<prod.size();z++){
+                   DetallePedido objDP = (DetallePedido) FabricaEntidad.getInstancia().FabricarEntidad(DetallePedido.class);
+                   Producto aux = prod.get(z);
+                   System.out.println("");
+                   System.out.println("  Inicio Calculo para el producto: "+aux.getDescripcionProducto());
+                   int R = objProv.get(i).getTiempoR();
+                   float nivelServicio = aux.getNivelServicio();
+                   float StockDisp = aux.getStock().getCantidad() + aux.getStock().getStockPendiente();
+                   
+                   //busco la demanda para el producto - año - periodo
+                   c1 = objFP.crearCriterio("OIDProducto", "=",((AgenteProducto)aux).getoid());
+                   Criterio c2 = objFP.crearCriterio("periodo", "=", String.valueOf(periodo));
+                   Criterio c3 = objFP.crearCriterio("anio","=",String.valueOf(fechaActual.get(GregorianCalendar.YEAR)-1));
+                   Criterio co = objFP.crearCriterioCompuesto(c1, "=", c2);
+                   Criterio cco = objFP.crearCriterioCompuesto(co, "=", c3);
+                   System.out.println("Criterio: "+cco.getAtributo()+cco.getOperador()+cco.getValor().toString());
+                   objHD = objFP.buscar(Demanda.class, cco);
+                   float demanda = (float) 0.0; 
+                   float MSE = (float) 0.0;
+                   for(int d=0; d < objHD.size();d++){
+                       demanda = (float) (demanda + objHD.get(d).getDemandapronosticada());
+                       MSE = (float) objHD.get(d).getMse();
+                   }
+                   //busco la demora en el hashtable para este producto
+                    int te = Integer.parseInt(demora.get(aux.getDescripcionProducto()).toString());
+                   //Registro el pedido pendiente
+                    int loteS = (int)getLoteS(nivelServicio,demanda,R,te,MSE, (int) StockDisp);
+                    ((AgenteDetallePedido)objDP).setOIDPedido(((AgentePedido)objPP).getoid());
+                    ((AgenteDetallePedido)objDP).setOIDProducto(((AgenteProducto)aux).getoid());
+                    ((AgenteDetallePedido)objDP).setCantidad(loteS); 
+                    objPP.setDetallePedido(objDP);                   
                     }
                     //guardar un pedido por proveedor - la cabecera deberia guardar el detalle
                     objPP.setPendiente(1);
                     objFP.guardar((ObjetoPersistente) objPP);
+
                 }
             }
         }
     }
 
-    public Object[][] getProductosPrev(int posProv) {
+ public Object[][] getProductosPrev(int posProv) {
         ArrayList<Pedido> PedPen;
         String prov;
         prov = String.valueOf((((AgenteProveedor) objProv.get(posProv)).getoid()));
@@ -212,30 +222,33 @@ public class ExpertoPoliticaSR implements Experto {
             matrix[i][0] = productos.get(i).getCodigoProducto();
             matrix[i][1] = productos.get(i).getDescripcionProducto();
             matrix[i][2] = productos.get(i).getPrecioCompra();
-            matrix[i][3] = productos.get(i).getStock().getCantidad() + productos.get(i).getStock().getStockPendiente();
+            //cantidad en stock
+            int stockActual = productos.get(i).getStock().getCantidad();
+            int stockPendiente= productos.get(i).getStock().getStockPendiente();
+            matrix[i][3] = stockActual + stockPendiente ;
             //..................................................................            
             Criterio c2 = objFP.crearCriterio("OIDProveedor", "=", prov);
-            Criterio c4 = objFP.crearCriterio("pendiente", "=", "1");
+            Criterio c4 = objFP.crearCriterio("pend", "=", "1");
             Criterio c5 = objFP.crearCriterioCompuesto(c2, "and", c4);
             PedPen = objFP.buscar(Pedido.class, c5);
             //Criterio c1 = objFP.crearCriterio("OIDProducto", "=", ((AgenteProducto)productos.get(i)).getoid());
-            for (int pp = 0; pp < PedPen.size(); pp++) {
-                //traigo los detalles de ese pedido
-                objDPPend = (ArrayList<DetallePedido>) PedPen.get(pp).getDetallePedido();
-                for (int d = 0; d < objDPPend.size(); d++) {
-                    if (objDPPend.get(d).getProducto().getCodigoProducto() == productos.get(i).getCodigoProducto()) {
-                        matrix[i][4] = objDPPend.get(d).getCantidad();
-                    }
-                    matrix[i][4] = 0;
-                }
-                matrixII[i][0] = prov; //UUID Proveedor...
-                matrixII[i][1] = ((AgenteProducto) productos.get(i)).getoid(); //UUID Producto...
-                matrixII[i][2] = String.valueOf(productos.get(i).getCodigoProducto());
-                matrixII[i][3] = ((AgentePedido) PedPen.get(pp)).getoid(); //UUID Pedido Pendiente... 
+            
+            for(int pp=0; pp<PedPen.size();pp++){
+            //traigo los detalles de ese pedido
+            objDPPend = (ArrayList<DetallePedido>) PedPen.get(pp).getDetallePedido();
+            matrix[i][4] = String.valueOf(0);
+            for(int d=0; d < objDPPend.size();d++){
+                if(objDPPend.get(d).getProducto().getCodigoProducto() == productos.get(i).getCodigoProducto())
+                    matrix[i][4] = objDPPend.get(d).getCantidad();
+                
             }
-
+            matrixII[i][0] = prov; //UUID Proveedor...
+            matrixII[i][1] = ((AgenteProducto)productos.get(i)).getoid(); //UUID Producto...
+            matrixII[i][2] = String.valueOf(productos.get(i).getCodigoProducto());
+            matrixII[i][3] = ((AgentePedido)PedPen.get(pp)).getoid(); //UUID Pedido Pendiente... 
+            matrixII[i][4] = String.valueOf(0);
+            }
         }
-
         return matrix;
     }
 
@@ -278,6 +291,7 @@ public class ExpertoPoliticaSR implements Experto {
     }
 
     private float getLoteS(float nivelServ, float demanda, int R, int te, float desvEstandar, int stockDisp) {
+        System.out.println("Nivel Servicio:"+ nivelServ);
         float k = getK(nivelServ);
         System.out.println("  K = " + k + " Demanda: " + demanda + " R: " + R + " te: " + te + " Oe: " + desvEstandar + " Stock Disponible: " + stockDisp);
 
@@ -296,7 +310,22 @@ public class ExpertoPoliticaSR implements Experto {
         return total;
     }
 
-    private float getK(float nivelServ) {
+     /*
+     //PREDICCION DE LA DEMANDA DURANTE UN TIEMPO R (ue).......
+     * Demanda (Demandan Pronostica) // Tabla HistorialDemanda.  $$$$$
+     * R (tiempoR) // Tabla proveedor.                           $$$$$
+     * te = (Demora) //Tabla catalogo.                           $$$$$
+
+     Nivel de Servicio // Tabla Productos. Con esto obtengo K.   $$$$$
+
+     //DesviaciÃ³n estandar (oe).................................
+     * oe = Raiz(MSE) // Tabla HistorialDemanda.                  $$$$$
+     * R =  (tiempoR) // Tabla proveedor.                         $$$$$
+     * te = (Demora) //Tabla catalogo.                            $$$$$
+
+     Stock Disponible = Cant_Stock + StockPend //Tabla Productos. $$$$$
+     */
+    private float getK(float nivelServ){
         float rtaK = 0;
         for (int i = 0; i < tablaK.length; i++) {
             if (nivelServ == tablaK[i][0]) {
@@ -305,5 +334,85 @@ public class ExpertoPoliticaSR implements Experto {
             }
         }
         return rtaK;
+    }
+
+ public float calcularLote(Producto p, Proveedor P) {
+        tablaK[0][0] = 0.50f;
+        tablaK[0][1] = 0f;
+        tablaK[1][0] = 0.60f;
+        tablaK[1][1] = 0.25f;
+        tablaK[2][0] = 0.70f;
+        tablaK[2][1] = 0.52f;
+        tablaK[3][0] = 0.80f;
+        tablaK[3][1] = 0.84f;
+        tablaK[4][0] = 0.90f;
+        tablaK[4][1] = 1.28f;
+        tablaK[5][0] = 0.95f;
+        tablaK[5][1] = 1.64f;
+        tablaK[6][0] = 0.975f;
+        tablaK[6][1] = 1.96f;
+        tablaK[7][0] = 0.9990f;
+        tablaK[7][1] = 3.08f;
+        tablaK[8][0] = 0.9998f;
+        tablaK[8][1] = 3.6f;
+        
+        GregorianCalendar fechaActual = new GregorianCalendar();
+        int tiemR = 1;     //Valor por defecto...
+        int perActual = 1; //Valor por defecto...
+        float diaTemp = 0; //Valor por defecto...
+        float demanda = (float) 0.0; 
+        float MSE = (float) 0.0;
+        tiemR = P.getTiempoR();
+        perActual = P.getPeriodoActual();
+        objDia = new DayOfYear();
+        int diaDelAnio = objDia.getDiaDelAnio();
+        int diasTotalAnio = (objDia.esBisiesto()) ? 366 : 365;
+            if (tiemR == 0) {
+                diaTemp = 0;
+            } else {
+                diaTemp = diaDelAnio / tiemR;
+            }
+            int periodo = (int) diaTemp;
+            //..................................................................
+            if (diaTemp - periodo != 0) {
+                if (diaTemp < (int) (diasTotalAnio / tiemR)) {
+                    ++periodo;
+                }
+            }
+        //busco la demanda pronosticada del producto
+        //busco el tiempo de reposición del proveedor
+        //busco el tiempo de demora en el catálogo
+        //calculo el stock disponible
+        /*Producto aux = prod.get(z);*/
+          System.out.println("  Inicio Calculo para el producto: "+p.getDescripcionProducto());
+          int R = P.getTiempoR();
+          float nivelServicio = p.getNivelServicio();
+          float StockDisp = p.getStock().getCantidad() + p.getStock().getStockPendiente();
+       //busco la demanda para el producto - año - periodo
+          Criterio c1 = objFP.crearCriterio("OIDProducto", "=",((AgenteProducto)p).getoid());
+          Criterio c2 = objFP.crearCriterio("periodo", "=", String.valueOf(periodo));
+          Criterio c3 = objFP.crearCriterio("anio","=",String.valueOf(fechaActual.get(GregorianCalendar.YEAR)-1));
+          Criterio co = objFP.crearCriterioCompuesto(c1, "=", c2);
+          Criterio cco = objFP.crearCriterioCompuesto(co, "=", c3);
+          System.out.println("Criterio: "+cco.getAtributo()+cco.getOperador()+cco.getValor().toString());
+          objHD = objFP.buscar(Demanda.class, cco);
+          
+          for(int d=0; d < objHD.size();d++){
+              demanda = (float) (demanda + objHD.get(d).getDemandapronosticada());
+              MSE = (float) objHD.get(d).getMse();
+                   }
+          Criterio k1 = objFP.crearCriterio("OIDProducto", "=", ((AgenteProducto)p).getoid());
+          Criterio k2 = objFP.crearCriterio("OIDProveedor","=",((AgenteProveedor)P).getoid());
+          Criterio k3 = objFP.crearCriterioCompuesto(k1,"=",k2);
+          ArrayList<Catalogo> cat = objFP.buscar(Catalogo.class,k3);          
+           //busco la demora en el hashtable para este producto
+          int te = 0;
+          if(cat.size()!=0){
+              int i = cat.size() -1 ;
+              te = cat.get(i).getDemora();
+          }           
+           //Registro el pedido pendiente
+            float loteS = getLoteS(nivelServicio,demanda,R,te,MSE, (int) StockDisp);           
+          return loteS;
     }
 }

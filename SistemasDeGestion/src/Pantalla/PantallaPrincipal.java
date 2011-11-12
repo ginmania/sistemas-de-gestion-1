@@ -24,9 +24,10 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         Ventas = new javax.swing.JMenuItem();
         Metodo = new javax.swing.JMenuItem();
         ABC = new javax.swing.JMenuItem();
+        Salir = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
         jmPedidos = new javax.swing.JMenuItem();
         jmRealizarPedido = new javax.swing.JMenuItem();
-        Salir = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistemas de Gestion 1");
@@ -65,16 +66,20 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         ABC.setText("ABC");
         jMenu1.add(ABC);
 
-        jmPedidos.setText("Politicas Stock");
-        jMenu1.add(jmPedidos);
-
-        jmRealizarPedido.setText("Pedido");
-        jMenu1.add(jmRealizarPedido);
-
         Salir.setText("Salir");
         jMenu1.add(Salir);
 
         jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Stock");
+
+        jmPedidos.setText("Politicas Stock");
+        jMenu2.add(jmPedidos);
+
+        jmRealizarPedido.setText("Pedido");
+        jMenu2.add(jmRealizarPedido);
+
+        jMenuBar1.add(jMenu2);
 
         setJMenuBar(jMenuBar1);
 
@@ -90,6 +95,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem Ventas;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jmPedidos;
     private javax.swing.JMenuItem jmRealizarPedido;

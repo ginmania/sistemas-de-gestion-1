@@ -45,8 +45,9 @@ public class ExpertoRealizarPedido implements Experto{
         return dp;
     }
 
-    private void buscarPedidosPendientes(){ //
-        Criterio c1 = obFP.crearCriterio("pendiente", "=", 1);
+    private void buscarPedidosPendientes(){ 
+        //trae los pedidos que se encuentran pendientes
+        Criterio c1 = obFP.crearCriterio("pend", "=", 1);
         pedido = obFP.buscar(Pedido.class,c1);          
     }
 
@@ -54,8 +55,10 @@ public class ExpertoRealizarPedido implements Experto{
         //traigo el producto y su catalogo para cada producto con pedido pendiente
         for(int i = 0; i < pedido.size();i++){   
             Criterio c = obFP.crearCriterio("OIDPedido", "=", ((AgentePedido)pedido.get(i)).getoid());
+           //busco los detalles de los pedidos pendientes
             ArrayList<DetallePedido> dp = obFP.buscar(DetallePedido.class,c);
           for(int j=0;j<dp.size();j++){
+              //trae los productos incluido en cada pedido
             Criterio c1 = obFP.crearCriterio("OIDProducto", "=", ((AgenteDetallePedido)dp.get(j)).getOIDProducto());
             producto = obFP.buscar(Producto.class,c1);  
             catalogo = obFP.buscar(Catalogo.class, c1);
@@ -63,7 +66,8 @@ public class ExpertoRealizarPedido implements Experto{
     }
 
     private void buscarProveedores(){
-        Criterio c1 = obFP.crearCriterio("baja", "=", 0);
+        //busco los proveedores que esten activos
+        Criterio c1 = obFP.crearCriterio("baja", "=",0);
         proveedor = obFP.buscar(Proveedor.class,c1);         
     }
 
@@ -74,7 +78,7 @@ public class ExpertoRealizarPedido implements Experto{
         pedidos.addColumn("Proveedor");
         pedidos.addColumn("Producto");
         pedidos.addColumn("Cantidad");
-        s = "Se realizarÃ¡n el siguiente pedido de productos: \n";
+        s = "Se debe recibir los siguientes pedidos de productos: \n";
         for(int i = 0; i < proveedor.size(); i++){
             for(int j = 0; j < producto.size(); j++){
                 String idProvCatalogo = ((AgenteCatalogo)catalogo.get(j)).getOIDProveedor();
