@@ -4,6 +4,7 @@
  */
 package Experto;
 
+import Agentes.AgenteCatalogo;
 import Agentes.AgenteProducto;
 import Agentes.AgenteProductoProveedor;
 import Agentes.AgenteProveedor;
@@ -12,9 +13,11 @@ import Persistencia.Criterio;
 import Persistencia.Fachada;
 import java.util.ArrayList;
 import Excepciones.NoProductoExcepcion;
+import Interfaces.Catalogo;
 import Interfaces.ProductoProveedor;
 import Interfaces.Proveedor;
 import Interfaces.Stock;
+import Persistencia.FachadaInterna;
 import Persistencia.ObjetoPersistente;
 import java.util.List;
 
@@ -137,6 +140,20 @@ public class ExpertoProducto implements Experto {
         resultado = Fachada.getInstancia().guardar((ObjetoPersistente) producto);
         return resultado;
     }
-
+    
+    public ArrayList<Producto> buscarEnCatalogo(Proveedor p){
+        ArrayList<Producto> productos = new ArrayList<Producto>();
+        ArrayList<Catalogo> catalogo;
+        AgenteProveedor ap = (AgenteProveedor) p;
+        Criterio c1 = Fachada.getInstancia().crearCriterio("OIDProveedor", "=", ap.getoid());
+        catalogo = Fachada.getInstancia().buscar(Catalogo.class, c1);
+        for(int i=0; i<catalogo.size();i++){
+            Producto aux;
+            AgenteCatalogo ac= (AgenteCatalogo) catalogo.get(i);
+            aux = (Producto) FachadaInterna.getInstancia().buscarOID(Producto.class,ac.getOIDProducto());
+            productos.add(aux);
+        }
+        return productos;
+    }
     
 }

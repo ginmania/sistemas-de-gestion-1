@@ -97,7 +97,6 @@ public class ControladorVenta {
         
         //SELECCIONAMOS UN PROVEEDOR
         pantallaVta.getJbSelecProducto().addActionListener(new java.awt.event.ActionListener() {
-
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
                     productos = expProducto.buscarProducto("", "");
@@ -122,7 +121,6 @@ public class ControladorVenta {
         });
 
         pantallaVta.getJbConfirma().addActionListener(new java.awt.event.ActionListener() {
-
             public void actionPerformed(ActionEvent ae) {
                 String seleccion = pantallaVta.getJlCliente();
                 Cliente cliente = ctrlSeleccion.recuperarCliente(seleccion);
@@ -138,7 +136,6 @@ public class ControladorVenta {
         });
 
         pantallaVta.getmBuscar().addActionListener(new java.awt.event.ActionListener() {
-
             public void actionPerformed(ActionEvent ae) {
                 try {
                     inicializarPantallaBusqueda();
@@ -152,7 +149,6 @@ public class ControladorVenta {
         });
 
         pantallaBus.getJbBuscar().addActionListener(new java.awt.event.ActionListener() {
-
             public void actionPerformed(ActionEvent ae) {
                 SimpleDateFormat formato = new SimpleDateFormat("DD/mm/yyyy");
                 formato.applyPattern("dd/MM/yyyy");
@@ -169,7 +165,6 @@ public class ControladorVenta {
         });
 
         pantallaBus.getTablaVentas().getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-
             public void valueChanged(ListSelectionEvent lse) {
                 int s = pantallaBus.getTablaVentas().getSelectedRow();
                 System.out.println("buscar nro venta de la fila");
@@ -226,7 +221,6 @@ public class ControladorVenta {
     private void inicializarPantalla() {
         Date fechaHoy = new Date();
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-
         pantallaVta.setNroFactura(String.valueOf(expVenta.NroFactura()));
         pantallaVta.setFecha(formato.format(fechaHoy));
         pantallaVta.getJbSelecProducto().setVisible(false);
@@ -237,7 +231,6 @@ public class ControladorVenta {
     private void LimpiarPantalla() {
         Date fechaHoy = new Date();
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-
         pantallaVta.setNroFactura(String.valueOf(expVenta.NroFactura()));
         pantallaVta.setFecha(formato.format(fechaHoy));
         pantallaVta.getJbSelecProducto().setVisible(false);

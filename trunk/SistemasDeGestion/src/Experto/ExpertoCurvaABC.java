@@ -151,7 +151,7 @@ private void historial(){
         }
 
 
-        /* for (int i = 0; i == a; i++){
+        /*for (int i = 0; i == a; i++){
             clasifABC[i].setCodProducto(arregloABC[i].getCodigoDeProducto());
             clasifABC[i].setClasifABC('a');
         }

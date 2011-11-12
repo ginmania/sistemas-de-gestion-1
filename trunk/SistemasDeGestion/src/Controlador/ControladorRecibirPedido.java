@@ -60,7 +60,7 @@ public class ControladorRecibirPedido {
     }
 
     private void iniciar() {
-        Criterio c1 = fachada.crearCriterio("pendiente", "=", 1);
+        Criterio c1 = fachada.crearCriterio("pend", "=", 1);
         pendientes = fachada.buscar(Pedido.class, c1);   
         for(int i=0; i<pendientes.size();i++)
          pantalla.getJcPedidoPendiente().addItem(pendientes.get(i).getNroPedido());

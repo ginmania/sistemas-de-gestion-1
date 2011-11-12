@@ -156,7 +156,7 @@ public final class ControladorPrincipal {
         jInternalFrame.moveToFront();
         jInternalFrame.setMaximizable(true);
         pantallaPrincipal.getjDesktopPane1().add(jInternalFrame);
-        pantallaPrincipal.getjDesktopPane1().getDesktopManager().maximizeFrame(jInternalFrame);
+        //pantallaPrincipal.getjDesktopPane1().getDesktopManager().maximizeFrame(jInternalFrame);
         
     }
 

@@ -31,6 +31,7 @@ public class ControladorRealizarPedido {
             public void actionPerformed(ActionEvent e) {
                 pantalla.setVisible(false);
                 ppal.remove(pantalla);
+               //para recibir los pedidos.
                 ctrlRecibir = new ControladorRecibirPedido(ppal);
             }
         });
