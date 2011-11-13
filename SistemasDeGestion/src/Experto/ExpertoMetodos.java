@@ -72,6 +72,25 @@ public class ExpertoMetodos implements Experto {
         return vectorDTOProducto;
     }
 
+    public String[][] buscarDemandaPronosticada(String seleccionado) {
+        String[][] vectorDTODemanda = new String[vectorDTOProducto.get(0).getDemandas().size()][4];
+        for (Producto producto : vectorDTOProducto) {
+            if (seleccionado.equalsIgnoreCase(producto.getNombreProducto())) {
+                List<Demanda> listaDemanda = producto.getDemandas();
+                Collections.sort(listaDemanda, new OrdenarDemandas());
+                System.out.println("tamaño producto:  " + listaDemanda.size());
+                for (int i = 0; i < listaDemanda.size(); i++) {
+                    vectorDTODemanda[i][0] = String.valueOf(listaDemanda.get(i).getDemandareal());
+                    vectorDTODemanda[i][1] = String.valueOf(listaDemanda.get(i).getDemandapronosticada());
+                    vectorDTODemanda[i][2] = String.valueOf(listaDemanda.get(i).getPeriodo());
+                    vectorDTODemanda[i][3] = String.valueOf(listaDemanda.get(i).getAnio());
+                }
+               
+            }
+        }
+        return vectorDTODemanda;
+    }
+
     public String[][] calcularsimple(double alfa, int valorperiodo, String productoSeleccionado, int valorperiodoinicial, int valorperiodofinal, int periodosapredecir) {
         a = alfa;
         //  System.out.println("Cantidad de Periodos a predecir:   " + periodosapredecir);

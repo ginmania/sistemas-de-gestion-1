@@ -7,6 +7,7 @@ package Controlador;
 import Excepciones.NoProductoExcepcion;
 import Experto.ExpertoMetodos;
 import Experto.FabricaExperto;
+import Interfaces.Demanda;
 import Interfaces.Producto;
 import Metodo.Periodo;
 import Pantalla.PantallaMetodos;
@@ -41,18 +42,46 @@ public class ControladorMetodos {
     private String[][] resultadotendencia;
     private String[][] resultadoestacionalidad;
     private List<Producto> vectorProductos = new ArrayList<Producto>();
+    private String[][] vectorDemandas = null;
+    private List<Demanda> vectorDemandas2 = new ArrayList<Demanda>();
     private List<Producto> productobuscado = new ArrayList<Producto>();
     private String valorItemSeleccionado = "";
     private String[][] vectorDemandaensimple = null;
     private String[][] vectorDemandaentendencia = null;
     private String[][] vectorDemandaenestacionalidad = null;
     private ControladorParametros controladorParametros;
+    private String seleccionado;
 
     public ControladorMetodos(ControladorPrincipal controladorPrincipal) {
         this.controladorPrincipal = controladorPrincipal;
         expertoMetodos = (ExpertoMetodos) FabricaExperto.getInstancia().FabricarExperto("ExpertoMetodos");
         pantallaMetodos = new PantallaMetodos(null, true);
         pantallaMetodos.setLocationRelativeTo(null);
+
+        /////////BOTON METODO CONSULTAR//////////
+        pantallaMetodos.getBotonConsultar().addActionListener(new java.awt.event.ActionListener() {
+
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                try {
+                    seleccionado = pantallaMetodos.getComboProductos().getSelectedItem().toString();
+                    vectorDemandas = buscarDemandaPronosticada(seleccionado);
+                    String auxiliar1 = "";
+                    String auxiliar2 = "";
+                    String auxiliar3 = "Demanda real: ";
+                    String auxiliar4 = "  Demanda pronosticada: ";
+                    String auxiliar5 = "  periodo: ";
+                    String auxiliar6 = "  año: ";
+                    for (int i = 0; i < vectorDemandas.length; i++) {
+ auxiliar1 = auxiliar3 + vectorDemandas[i][0] + auxiliar4 + vectorDemandas[i][1] + auxiliar5 + vectorDemandas[i][2] + auxiliar6 + vectorDemandas[i][3] + "    \n";
+                            auxiliar2 += auxiliar1;
+                    }
+                    pantallaMetodos.getAreaResultado().setText(auxiliar2);
+
+                } catch (Exception ex) {
+                    Logger.getLogger(ControladorProducto.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
 
         /////////BOTON METODO CANCELAR//////////
         pantallaMetodos.getBotonCancelarMetodos().addActionListener(new java.awt.event.ActionListener() {
@@ -356,5 +385,10 @@ public class ControladorMetodos {
     private String[][] calcularestacionalidad(double alfa, int valorperiodo, String productoSeleccionado, int valorperiodoinicial, int valorperiodofinal, int periodosapredecir) {
         vectorDemandaenestacionalidad = expertoMetodos.calcularestacionalidad(alfa, valorperiodo, productoSeleccionado, valorperiodoinicial, valorperiodofinal, periodosapredecir);
         return vectorDemandaenestacionalidad;
+    }
+
+    private String[][] buscarDemandaPronosticada(String seleccionado) throws NoProductoExcepcion {
+        vectorDemandas = expertoMetodos.buscarDemandaPronosticada(seleccionado);
+        return vectorDemandas;
     }
 }
