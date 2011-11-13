@@ -21,7 +21,7 @@ public class IntermediarioDetallePedido extends IntermediarioRelacional{
 
     @Override
     public String generarSQLOID(String oid) {
-        return "SELECT * FROM " + tabla + " WHERE OIDDetalllePedido= " + oid;
+        return "SELECT * FROM " + "DetallePedido" + " WHERE OIDDetalllePedido= " + oid;
 
     }
 
@@ -32,7 +32,7 @@ public class IntermediarioDetallePedido extends IntermediarioRelacional{
         rs.addCampo(new Campo("OIDDetallePedido", "'" + detallepedido.getoid() + "'"));
         rs.addCampo(new Campo("OIDProducto", "'" + detallepedido.getOIDProducto() + "'"));
         rs.addCampo(new Campo("OIDPedido", "'" + detallepedido.getOIDPedido() + "'"));
-        rs.addCampo(new Campo("cantidad", String.valueOf(detallepedido.getCantidad())));
+        rs.addCampo(new Campo("cantidad","'"+ String.valueOf(detallepedido.getCantidad())+ "'"));
         rs.addCampo(new Campo("baja", "'" + String.valueOf(detallepedido.getBaja() + "'")));
         return rs;
 
@@ -49,7 +49,7 @@ public class IntermediarioDetallePedido extends IntermediarioRelacional{
                 temp.setoid(registro.getCampo("OIDDetallePedido").getValor());
                 temp.setOIDProducto(registro.getCampo("OIDProducto").getValor());
                 temp.setOIDPedido(registro.getCampo("OIDPedido").getValor());
-                temp.setCantidad(Integer.parseInt(registro.getCampo("cantidad").getValor()));
+                temp.setCantidad((Integer) registro.getCampo("cantidad").getValor(Integer.class));
                 temp.setBaja(Integer.parseInt(registro.getCampo("baja").getValor()));
                 detallepedido.add(temp);
             }

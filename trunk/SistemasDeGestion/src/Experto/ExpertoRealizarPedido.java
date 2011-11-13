@@ -86,7 +86,8 @@ public class ExpertoRealizarPedido implements Experto{
     private DefaultTableModel mostrarPorProveedor(){
         String s = new String();
         DefaultTableModel pedidos = new DefaultTableModel();
-        String[] fila = new String[4];
+        String[] fila = new String[5];
+        pedidos.addColumn("Nro Pedido");
         pedidos.addColumn("Proveedor");
         pedidos.addColumn("FechaEmisión");
         pedidos.addColumn("Producto");
@@ -95,10 +96,11 @@ public class ExpertoRealizarPedido implements Experto{
         for(int i = 0; i < pedido.size(); i++){
             detalle = (ArrayList<DetallePedido>) pedido.get(i).getDetallePedido();
             for(int j = 0; j < detalle.size(); j++){
-                    fila[0]=pedido.get(i).getProveedor().getNombre();
+                    fila[0]=pedido.get(i).getNroPedido();
                     fila[1]= pedido.get(i).getFechaEmision();
-                    fila[2]= detalle.get(j).getProducto().getCodigoProducto()+"-"+ detalle.get(j).getProducto().getNombreProducto();
-                    fila[3]=String.valueOf(detalle.get(j).getCantidad()) ;
+                    fila[2]=pedido.get(i).getProveedor().getNombre();                    
+                    fila[3]= detalle.get(j).getProducto().getCodigoProducto()+"-"+ detalle.get(j).getProducto().getNombreProducto();
+                    fila[4]=String.valueOf(detalle.get(j).getCantidad()) ;
                     s = fila[0]+"\t"+fila[1]+"\t"+fila[2];
                     pedidos.addRow(fila);                
                     s =  s + "\n";
@@ -112,7 +114,7 @@ public class ExpertoRealizarPedido implements Experto{
         Pedido pedido = (Pedido) FabricaEntidad.getInstancia().FabricarEntidad(Pedido.class);        
         AgenteProveedor aprov = (AgenteProveedor) prov;
         AgentePedido aped = (AgentePedido) pedido;
-        String fechaEmi = String.valueOf(fecha.getYear())+"-"+String.valueOf(fecha.getMonth())+"-"+String.valueOf(fecha.getDay());
+        String fechaEmi = fecha.toGMTString();
         //armo el pedido
         aped.setOIDProveedor(aprov.getoid());
         pedido.setProveedor(prov);

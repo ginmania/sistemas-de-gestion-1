@@ -28,8 +28,9 @@ public class ControladorRealizarPedido {
         
         pantalla.getJbRecibirPedido().addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                pantalla.setVisible(false);
-                ppal.remove(pantalla);
+               // pantalla.setVisible(false);
+               // ppal.remove(pantalla);
+                pantalla.moveToBack();
                //para recibir los pedidos.
                 ctrlRecibir = new ControladorRecibirPedido(ppal);
             }
