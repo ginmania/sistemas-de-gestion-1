@@ -10,6 +10,8 @@ import Experto.ExpertoPoliticaSQ;
 import Experto.ExpertoPoliticaSR;
 import Experto.ExpertoProducto;
 import Experto.ExpertoProveedor;
+import Experto.ExpertoRealizarPedido;
+import Experto.FabricaEntidad;
 import Experto.FabricaExperto;
 import Interfaces.Producto;
 import Interfaces.Proveedor;
@@ -19,8 +21,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Hashtable;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -34,6 +38,7 @@ public class ControladorPoliticaSR {
     private ExpertoPoliticaSQ objEPSQ;
     private ExpertoProveedor expProv; 
     private ExpertoProducto expProd;
+    private ExpertoRealizarPedido expPed;
     private ArrayList<Proveedor> provs;
     private Hashtable proveedores;
     private Hashtable productos;
@@ -42,7 +47,10 @@ public class ControladorPoliticaSR {
     public ControladorPoliticaSR(ControladorPrincipal obj){
         this.objCG = obj;
         proveedores = new Hashtable();
-        productos = new Hashtable();        
+        productos = new Hashtable();       
+        Object[][] data = new Object[0][6];
+        String[] columnNames = {"Codigo","Nombre","Politica", "Precio", "Stock Actual", "Lote"};
+         dtm = new javax.swing.table.DefaultTableModel(data, columnNames);
         objEPSR = (ExpertoPoliticaSR)FabricaExperto.getInstancia().FabricarExperto("ExpertoPoliticaSR");
         objEPSQ = (ExpertoPoliticaSQ)FabricaExperto.getInstancia().FabricarExperto("ExpertoPoliticaSQ");
         expProd = (ExpertoProducto)FabricaExperto.getInstancia().FabricarExperto("ExpertoProducto");
@@ -74,7 +82,7 @@ public class ControladorPoliticaSR {
         objGUIPolSR.getJbCrearPedido().addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
                //hay que hacer que lo haga para un producto en particular.
-                objEPSR.verificarPolitica();
+                CrearPedidoPendiente();
             }
         });
     }
@@ -119,18 +127,18 @@ public class ControladorPoliticaSR {
     private void buscarProductos(Object selectedItem) {
        String prov = (String) selectedItem;
        ArrayList<Producto> prods;
+       //limpio la tabla al cambiar de proveedor
+       limpiarTabla();
        Proveedor P = (Proveedor) proveedores.get(prov);
        prods = expProd.buscarEnCatalogo(P);
+       objGUIPolSR.getJcProductos().removeAllItems();
        for(int i=0; i< prods.size();i++){
            objGUIPolSR.getJcProductos().addItem(prods.get(i).getNombreProducto());
            productos.put(prods.get(i).getNombreProducto(),prods.get(i));
        }
     }
     
-    private void llenarTabla(){
-        Object[][] data = new Object[0][6];
-        String[] columnNames = {"Codigo","Descripcion","Politica", "Precio", "Stock Actual", "Lote"};
-         dtm = new javax.swing.table.DefaultTableModel(data, columnNames);
+    private void llenarTabla(){        
         //......................................................................
         String index = (String) objGUIPolSR.getJcProveedores().getSelectedItem();
         Proveedor P = (Proveedor) proveedores.get(index);
@@ -139,7 +147,7 @@ public class ControladorPoliticaSR {
         AgenteProducto ap = (AgenteProducto) p;
         String politica = new String();
         //cambiar para permitir el envio de un producto y de un proveedor en particular
-        float lote = -1;
+        int lote = -1;
         //lote = objEPSR.calcularLote(p,P);
         if(ap.getOIDPolitica().equals("1")){
            lote = objEPSR.calcularLote(p,P);
@@ -152,7 +160,7 @@ public class ControladorPoliticaSR {
         //lleno la tabla del detalle en pantalla
         Object[] newRow = new Object[6];
         newRow[0] = p.getCodigoProducto();
-        newRow[1] = p.getDescripcionProducto();
+        newRow[1] = p.getNombreProducto();
         newRow[2] = politica;
         newRow[3] = p.getPrecioCompra();
         newRow[4] = p.getStock().getCantidad() + p.getStock().getStockPendiente();        
@@ -160,5 +168,37 @@ public class ControladorPoliticaSR {
         dtm.addRow(newRow);
         
         objGUIPolSR.getJtTabla().setModel(dtm);
+    }
+    
+    private void CrearPedidoPendiente(){
+        expPed = (ExpertoRealizarPedido)FabricaExperto.getInstancia().FabricarExperto("ExpertoRealizarPedido");
+        ArrayList<Producto> prods = new ArrayList<Producto>();
+        Hashtable cantidad = new Hashtable();
+        String cbProv = (String) objGUIPolSR.getJcProveedores().getSelectedItem();
+        Proveedor proveedor = (Proveedor) proveedores.get(cbProv);
+        Date fechaEmision = objGUIPolSR.getJdFecha().getDate();
+        int detalles = objGUIPolSR.getJtTabla().getRowCount();
+        for(int i=0; i< detalles;i++){
+            //el producto
+           String prod = (String) objGUIPolSR.getJtTabla().getValueAt(i, 1);
+           Producto p = (Producto) FabricaEntidad.getInstancia().FabricarEntidad(Producto.class);
+           p = (Producto) productos.get(prod);
+           prods.add(p);
+           //el lote
+           int cant = (Integer) objGUIPolSR.getJtTabla().getValueAt(i, 5);
+           cantidad.put(p.getCodigoProducto(), cant);
+        }
+        if(expPed.CrearPedidoPendiente(fechaEmision, proveedor, prods, cantidad)){
+            JOptionPane.showMessageDialog(objGUIPolSR, "Se creo un pedido pendiente", "Generar Pedido", JOptionPane.INFORMATION_MESSAGE);
+            limpiarTabla();
+        }else
+            JOptionPane.showMessageDialog(objGUIPolSR, "Error al generar pedido", "Generar Pedido", JOptionPane.ERROR_MESSAGE);
+        /*CrearPedidoPendiente(String fecha,Proveedor prov, ArrayList<Producto> prod, Hashtable cantidad)*/
+    }
+    
+    private void limpiarTabla(){
+       int t= dtm.getRowCount();
+       for(int j=0; j<t;j++)
+           dtm.removeRow(j);
     }
 }
