@@ -31,6 +31,7 @@ public class ExpertoRealizarPedido implements Experto{
     private ArrayList<Producto> producto;
     private ArrayList<Proveedor> proveedor;
     private ArrayList<Catalogo> catalogo;
+    private ArrayList<DetallePedido> detalle;
     private Fachada obFP;
     private ArrayList<Pedido> pedido;
     private ArrayList<Object> objRta;
@@ -44,6 +45,14 @@ public class ExpertoRealizarPedido implements Experto{
             this.buscarProductos();
             this.buscarProveedores();
             dp = this.mostrarPorProveedor();
+           /* for(int i=0; i< pedido.size();i++){
+            Object[] newRow = new Object[3];
+            newRow[0] = pedido.get(i).getNroPedido();
+            newRow[1] = pedido.get(i).getFechaEmision();
+            newRow[2] = pedido.get(i).getProveedor().getNombre();           
+            
+            dp.addRow(newRow);
+            }*/
         }
         return dp;
     }
@@ -77,28 +86,25 @@ public class ExpertoRealizarPedido implements Experto{
     private DefaultTableModel mostrarPorProveedor(){
         String s = new String();
         DefaultTableModel pedidos = new DefaultTableModel();
-        String[] fila = new String[3];
+        String[] fila = new String[4];
         pedidos.addColumn("Proveedor");
+        pedidos.addColumn("FechaEmisión");
         pedidos.addColumn("Producto");
         pedidos.addColumn("Cantidad");
         s = "Se debe recibir los siguientes pedidos de productos: \n";
-        for(int i = 0; i < proveedor.size(); i++){
-            for(int j = 0; j < producto.size(); j++){
-                String idProvCatalogo = ((AgenteCatalogo)catalogo.get(j)).getOIDProveedor();
-                String idProveedor = ((AgenteProveedor)proveedor.get(i)).getoid();
-                if(idProveedor.equals(idProvCatalogo)){ //si el proveedor trae ese producto
-                    s.concat("Para el Proveedor " + proveedor.get(i).getNombre() + " se deben pedir del producto "
-                            + producto.get(j).getCodigoProducto() + " " + producto.get(j).getDescripcionProducto() +
-                            " la cantidad " + String.valueOf(producto.get(j).getStock().getStockPendiente()));
-                    fila[0]=proveedor.get(i).getNombre();
-                    fila[1]=producto.get(j).getCodigoProducto() + " " + producto.get(j).getDescripcionProducto();
-                    fila[2]=String.valueOf(producto.get(j).getStock().getStockPendiente());
-                    pedidos.addRow(fila);
-                }
-                s =  s + "\n";
+        for(int i = 0; i < pedido.size(); i++){
+            detalle = (ArrayList<DetallePedido>) pedido.get(i).getDetallePedido();
+            for(int j = 0; j < detalle.size(); j++){
+                    fila[0]=pedido.get(i).getProveedor().getNombre();
+                    fila[1]= pedido.get(i).getFechaEmision();
+                    fila[2]= detalle.get(j).getProducto().getCodigoProducto()+"-"+ detalle.get(j).getProducto().getNombreProducto();
+                    fila[3]=String.valueOf(detalle.get(j).getCantidad()) ;
+                    s = fila[0]+"\t"+fila[1]+"\t"+fila[2];
+                    pedidos.addRow(fila);                
+                    s =  s + "\n";
+                    System.out.println(s);
             }
-        }
-        System.out.println(s);
+        }        
         return pedidos;
     }
     
@@ -106,10 +112,11 @@ public class ExpertoRealizarPedido implements Experto{
         Pedido pedido = (Pedido) FabricaEntidad.getInstancia().FabricarEntidad(Pedido.class);        
         AgenteProveedor aprov = (AgenteProveedor) prov;
         AgentePedido aped = (AgentePedido) pedido;
+        String fechaEmi = String.valueOf(fecha.getYear())+"-"+String.valueOf(fecha.getMonth())+"-"+String.valueOf(fecha.getDay());
         //armo el pedido
         aped.setOIDProveedor(aprov.getoid());
         pedido.setProveedor(prov);
-        pedido.setFechaEmision(fecha.toString());
+        pedido.setFechaEmision(fechaEmi);
         pedido.setPendiente(1);
         //armo los detalles
         for(int i=0; i< prod.size();i++){

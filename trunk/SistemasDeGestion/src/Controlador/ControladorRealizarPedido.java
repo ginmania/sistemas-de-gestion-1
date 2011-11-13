@@ -27,7 +27,6 @@ public class ControladorRealizarPedido {
         p.add(pantalla);
         
         pantalla.getJbRecibirPedido().addActionListener(new java.awt.event.ActionListener() {
-
             public void actionPerformed(ActionEvent e) {
                 pantalla.setVisible(false);
                 ppal.remove(pantalla);
