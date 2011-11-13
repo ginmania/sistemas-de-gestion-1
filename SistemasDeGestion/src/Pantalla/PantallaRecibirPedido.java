@@ -13,6 +13,7 @@ package Pantalla;
 import com.toedter.calendar.JDateChooser;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 /**
@@ -45,9 +46,11 @@ public class PantallaRecibirPedido extends javax.swing.JInternalFrame {
         jbAceptar = new javax.swing.JButton();
         jbCancelar = new javax.swing.JButton();
         jtProveedor = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        jtCantidadRecibida = new javax.swing.JTextField();
+        jlDescripcion = new javax.swing.JLabel();
 
         setClosable(true);
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setText("Proveedor");
 
@@ -61,7 +64,10 @@ public class PantallaRecibirPedido extends javax.swing.JInternalFrame {
 
         jbCancelar.setText("Cancelar");
 
-        jtProveedor.setText("Proveedor");
+        jLabel3.setText("Cant. Recibida");
+
+        jlDescripcion.setFont(new java.awt.Font("Dialog", 0, 10));
+        jlDescripcion.setText("descripcion...");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -73,21 +79,39 @@ public class PantallaRecibirPedido extends javax.swing.JInternalFrame {
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel4)
                             .addComponent(lbNroPedido))
-                        .addGap(40, 40, 40)
+                        .addGap(59, 59, 59)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jtProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jcPedidoPendiente, 0, 182, Short.MAX_VALUE)
-                            .addComponent(jdFechaEntrega, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jcProductosPedidos, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(jtProveedor)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(68, 68, 68)
+                        .addGap(71, 71, 71)
                         .addComponent(jbAceptar)
-                        .addGap(47, 47, 47)
+                        .addGap(36, 36, 36)
                         .addComponent(jbCancelar)))
                 .addContainerGap(64, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(142, 142, 142)
+                        .addComponent(jcProductosPedidos, 0, 182, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 260, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(64, 64, 64))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel3))
+                .addGap(40, 40, 40)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jlDescripcion)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jtCantidadRecibida)
+                        .addComponent(jdFechaEntrega, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap(147, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -101,23 +125,25 @@ public class PantallaRecibirPedido extends javax.swing.JInternalFrame {
                             .addComponent(jLabel1)
                             .addComponent(jtProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jcPedidoPendiente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(16, 16, 16)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jcProductosPedidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jlDescripcion)
+                .addGap(4, 4, 4)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(jtCantidadRecibida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(17, 17, 17)
-                        .addComponent(jLabel4))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jdFechaEntrega, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(34, 34, 34)
+                    .addComponent(jLabel4)
+                    .addComponent(jdFechaEntrega, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 75, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbAceptar)
                     .addComponent(jbCancelar))
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addGap(23, 23, 23))
         );
 
         pack();
@@ -127,12 +153,15 @@ public class PantallaRecibirPedido extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JButton jbAceptar;
     private javax.swing.JButton jbCancelar;
     private javax.swing.JComboBox jcPedidoPendiente;
     private javax.swing.JComboBox jcProductosPedidos;
     private com.toedter.calendar.JDateChooser jdFechaEntrega;
+    private javax.swing.JLabel jlDescripcion;
+    private javax.swing.JTextField jtCantidadRecibida;
     private javax.swing.JTextField jtProveedor;
     private javax.swing.JLabel lbNroPedido;
     // End of variables declaration//GEN-END:variables
@@ -185,4 +214,21 @@ public class PantallaRecibirPedido extends javax.swing.JInternalFrame {
         this.jtProveedor = jtProveedor;
     }
 
+    public JTextField getJtCantidadRecibida() {
+        return jtCantidadRecibida;
+    }
+
+    public void setJtCantidadRecibida(JTextField jtCantidadRecibida) {
+        this.jtCantidadRecibida = jtCantidadRecibida;
+    }
+
+    public JLabel getJlDescripcion() {
+        return jlDescripcion;
+    }
+
+    public void setJlDescripcion(JLabel jlDescripcion) {
+        this.jlDescripcion = jlDescripcion;
+    }
+
+    
 }
