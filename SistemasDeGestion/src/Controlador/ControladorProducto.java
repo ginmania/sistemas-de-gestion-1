@@ -31,7 +31,6 @@ import javax.swing.event.ListSelectionListener;
 public class ControladorProducto {
 
     private ControladorPrincipal controladorPrincipal;
-    private ControladorMetodos controladormetodos;
     
     private ExpertoProducto expertoProducto;
     private ExpertoProveedor expProveedor;

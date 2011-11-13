@@ -45,15 +45,9 @@ public class PantallaMetodos extends javax.swing.JDialog {
         grupoDeMetodos = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
         BotonCancelarMetodos = new javax.swing.JButton();
-        campoAlfa = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
         botonSimple = new javax.swing.JRadioButton();
         botonTendencia = new javax.swing.JRadioButton();
         botonEstacionalidad = new javax.swing.JRadioButton();
-        campoBeta = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        campoGama = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
         botonCalcularMetodos = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         comboProductos = new javax.swing.JComboBox();
@@ -78,8 +72,6 @@ public class PantallaMetodos extends javax.swing.JDialog {
 
         BotonCancelarMetodos.setText("Cancelar");
 
-        jLabel2.setText("Alfa");
-
         grupoDeMetodos.add(botonSimple);
         botonSimple.setText("Simple");
 
@@ -88,10 +80,6 @@ public class PantallaMetodos extends javax.swing.JDialog {
 
         grupoDeMetodos.add(botonEstacionalidad);
         botonEstacionalidad.setText("Estacionalidad");
-
-        jLabel3.setText("Beta");
-
-        jLabel4.setText("Gama");
 
         botonCalcularMetodos.setText("Calcular");
 
@@ -145,23 +133,8 @@ public class PantallaMetodos extends javax.swing.JDialog {
                                         .addComponent(BotonCancelarMetodos))
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(botonEstacionalidad)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addGroup(layout.createSequentialGroup()
-                                                        .addGap(15, 15, 15)
-                                                        .addComponent(jLabel2))
-                                                    .addGroup(layout.createSequentialGroup()
-                                                        .addGap(9, 9, 9)
-                                                        .addComponent(jLabel3))
-                                                    .addComponent(jLabel4))
-                                                .addGap(20, 20, 20)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                    .addComponent(campoGama)
-                                                    .addComponent(campoBeta)
-                                                    .addComponent(campoAlfa, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                            .addComponent(comboProductos, 0, 238, Short.MAX_VALUE)
+                                            .addComponent(botonEstacionalidad)
+                                            .addComponent(comboProductos, 0, 240, Short.MAX_VALUE)
                                             .addGroup(layout.createSequentialGroup()
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                     .addComponent(botonSimple)
@@ -204,18 +177,7 @@ public class PantallaMetodos extends javax.swing.JDialog {
                         .addGap(5, 5, 5)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(campoAlfa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel2))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(campoBeta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel3))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(campoGama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel4))
-                                .addGap(18, 18, 18)
+                                .addGap(81, 81, 81)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(BotonCancelarMetodos)
                                     .addComponent(botonCalcularMetodos)
@@ -241,8 +203,8 @@ public class PantallaMetodos extends javax.swing.JDialog {
                             .addComponent(txPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 268, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 268, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -267,15 +229,9 @@ private void txPeriodoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:ev
     private javax.swing.JCheckBox botonSR;
     private javax.swing.JRadioButton botonSimple;
     private javax.swing.JRadioButton botonTendencia;
-    private javax.swing.JTextField campoAlfa;
-    private javax.swing.JTextField campoBeta;
-    private javax.swing.JTextField campoGama;
     private javax.swing.JComboBox comboProductos;
     private javax.swing.ButtonGroup grupoDeMetodos;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -389,30 +345,6 @@ private void txPeriodoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:ev
 
     public void setBotonTendencia(JRadioButton botonTendencia) {
         this.botonTendencia = botonTendencia;
-    }
-
-    public JTextField getCampoAlfa() {
-        return campoAlfa;
-    }
-
-    public void setCampoAlfa(JTextField campoAlfa) {
-        this.campoAlfa = campoAlfa;
-    }
-
-    public JTextField getCampoBeta() {
-        return campoBeta;
-    }
-
-    public void setCampoBeta(JTextField campoBeta) {
-        this.campoBeta = campoBeta;
-    }
-
-    public JTextField getCampoGama() {
-        return campoGama;
-    }
-
-    public void setCampoGama(JTextField campoGama) {
-        this.campoGama = campoGama;
     }
 
     public ButtonGroup getGrupoDeMetodos() {
