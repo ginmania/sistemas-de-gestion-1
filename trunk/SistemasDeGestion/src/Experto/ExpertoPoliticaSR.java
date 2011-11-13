@@ -336,7 +336,7 @@ public class ExpertoPoliticaSR implements Experto {
         return rtaK;
     }
 
- public float calcularLote(Producto p, Proveedor P) {
+ public int calcularLote(Producto p, Proveedor P) {
         tablaK[0][0] = 0.50f;
         tablaK[0][1] = 0f;
         tablaK[1][0] = 0.60f;
@@ -412,7 +412,7 @@ public class ExpertoPoliticaSR implements Experto {
               te = cat.get(i).getDemora();
           }           
            //Registro el pedido pendiente
-            float loteS = getLoteS(nivelServicio,demanda,R,te,MSE, (int) StockDisp);           
+            int loteS = (int) getLoteS(nivelServicio,demanda,R,te,MSE, (int) StockDisp);           
           return loteS;
     }
 }

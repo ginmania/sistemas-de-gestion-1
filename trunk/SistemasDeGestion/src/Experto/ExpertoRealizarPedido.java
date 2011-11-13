@@ -17,7 +17,10 @@ import Interfaces.Proveedor;
 import Persistencia.Criterio;
 import Persistencia.Fachada;
 import Persistencia.FachadaInterna;
+import Persistencia.ObjetoPersistente;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Hashtable;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -97,6 +100,34 @@ public class ExpertoRealizarPedido implements Experto{
         }
         System.out.println(s);
         return pedidos;
+    }
+    
+    public boolean CrearPedidoPendiente(Date fecha,Proveedor prov, ArrayList<Producto> prod, Hashtable cantidad){
+        Pedido pedido = (Pedido) FabricaEntidad.getInstancia().FabricarEntidad(Pedido.class);        
+        AgenteProveedor aprov = (AgenteProveedor) prov;
+        AgentePedido aped = (AgentePedido) pedido;
+        //armo el pedido
+        aped.setOIDProveedor(aprov.getoid());
+        pedido.setProveedor(prov);
+        pedido.setFechaEmision(fecha.toString());
+        pedido.setPendiente(1);
+        //armo los detalles
+        for(int i=0; i< prod.size();i++){
+            DetallePedido dpedido = (DetallePedido) FabricaEntidad.getInstancia().FabricarEntidad(DetallePedido.class);
+            AgenteDetallePedido adp = (AgenteDetallePedido) dpedido;
+            AgenteProducto aProd = (AgenteProducto) prod.get(i);
+            adp.setOIDPedido(aped.getoid());
+            adp.setOIDProducto(aProd.getoid());
+            dpedido.setPedido(pedido);
+            dpedido.setProducto(aProd);            
+            int cant = (Integer) cantidad.get(adp.getProducto().getCodigoProducto());
+            adp.setCantidad(cant);
+            adp.setBaja(0);
+            pedido.setDetallePedido(dpedido);
+        }
+        //el pedido se encarga de guardar los detalles
+        obFP = Fachada.getInstancia();
+        return obFP.guardar((ObjetoPersistente) pedido);
     }
 
 }

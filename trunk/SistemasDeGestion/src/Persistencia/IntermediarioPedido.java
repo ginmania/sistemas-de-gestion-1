@@ -38,7 +38,7 @@ public class IntermediarioPedido extends IntermediarioRelacional {
         rs.addCampo(new Campo("fechaemision", "'" + pedido.getFechaEmision() + "'"));
         rs.addCampo(new Campo("fechaentrega", "'" + pedido.getFechaEntrega() + "'"));
         rs.addCampo(new Campo("pend", "'" + String.valueOf(pedido.getPendiente()) + "'"));
-        rs.addCampo(new Campo("NroPedido", "'" + pedido.getNroPedido() + "'"));
+        //rs.addCampo(new Campo("NroPedido", "'" + pedido.getNroPedido() + "'"));
         return rs;
     }
 
@@ -68,8 +68,9 @@ public class IntermediarioPedido extends IntermediarioRelacional {
 
     @Override
     public boolean guardar(ObjetoPersistente objeto) {
-        boolean guardado = true;
+        boolean guardado = false;
         if (super.guardar(objeto)) {
+            guardado = true;
             List<DetallePedido> detallespedido = ((Pedido) objeto).getDetallePedido();
             //para guardar el detalle necesito el OIDPedido y el OIDProducto
             for (int i=0; i<detallespedido.size();i++) {
@@ -86,7 +87,7 @@ public class IntermediarioPedido extends IntermediarioRelacional {
                 if (res == false) {
                     guardado = false;                    
                 }
-            }
+            }            
         }
         return guardado;
     }
