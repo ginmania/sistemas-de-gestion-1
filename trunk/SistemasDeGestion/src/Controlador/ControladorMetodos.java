@@ -18,6 +18,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import sun.security.pkcs.ParsingException;
 
 /**
@@ -39,7 +40,6 @@ public class ControladorMetodos {
     private String[][] resultadosimple;
     private String[][] resultadotendencia;
     private String[][] resultadoestacionalidad;
-    private String a;
     private List<Producto> vectorProductos = new ArrayList<Producto>();
     private List<Producto> productobuscado = new ArrayList<Producto>();
     private String valorItemSeleccionado = "";
@@ -53,9 +53,6 @@ public class ControladorMetodos {
         expertoMetodos = (ExpertoMetodos) FabricaExperto.getInstancia().FabricarExperto("ExpertoMetodos");
         pantallaMetodos = new PantallaMetodos(null, true);
         pantallaMetodos.setLocationRelativeTo(null);
-        alfa = controladorParametros.getAlfa();
-        beta = controladorParametros.getBeta();
-        gama = controladorParametros.getGama();
 
         /////////BOTON METODO CANCELAR//////////
         pantallaMetodos.getBotonCancelarMetodos().addActionListener(new java.awt.event.ActionListener() {
@@ -74,23 +71,12 @@ public class ControladorMetodos {
         pantallaMetodos.getBotonSimple().addActionListener(new java.awt.event.ActionListener() {
 
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                pantallaMetodos.getCampoAlfa().setEditable(true);
-                pantallaMetodos.getCampoBeta().setEditable(false);
-                pantallaMetodos.getCampoBeta().setVisible(false);
-                pantallaMetodos.getCampoGama().setEditable(false);
-                pantallaMetodos.getCampoGama().setVisible(false);
             }
         });
         /////////BOTON METODO TENDENCIA//////////
         pantallaMetodos.getBotonTendencia().addActionListener(new java.awt.event.ActionListener() {
 
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                pantallaMetodos.getCampoAlfa().setEditable(true);
-                pantallaMetodos.getCampoBeta().setVisible(true);
-                pantallaMetodos.getCampoBeta().setEditable(true);
-                pantallaMetodos.getCampoGama().setEditable(false);
-                pantallaMetodos.getCampoGama().setVisible(false);
-
             }
         });
 
@@ -98,11 +84,6 @@ public class ControladorMetodos {
         pantallaMetodos.getBotonEstacionalidad().addActionListener(new java.awt.event.ActionListener() {
 
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                pantallaMetodos.getCampoAlfa().setEditable(true);
-                pantallaMetodos.getCampoBeta().setEditable(false);
-                pantallaMetodos.getCampoBeta().setVisible(false);
-                pantallaMetodos.getCampoGama().setEditable(true);
-                pantallaMetodos.getCampoGama().setVisible(true);
             }
         });
 
@@ -119,8 +100,6 @@ public class ControladorMetodos {
                     Object itemSeleccionado = pantallaMetodos.getComboProductos().getSelectedItem();
                     valorItemSeleccionado = itemSeleccionado.toString();
                     System.out.println("El producto seleccionado es: " + valorItemSeleccionado);
-                    a = pantallaMetodos.getCampoAlfa().getText();
-                    alfa = Double.parseDouble(a);
                     fechadesde = pantallaMetodos.getTxFechadesde().getDate();
                     fechahasta = pantallaMetodos.getTxFechahasta().getDate();
                     try {
@@ -193,8 +172,6 @@ public class ControladorMetodos {
                     Object itemSeleccionado = pantallaMetodos.getComboProductos().getSelectedItem();
                     valorItemSeleccionado = itemSeleccionado.toString();
                     System.out.println("El producto seleccionado es: " + valorItemSeleccionado);
-                    a = pantallaMetodos.getCampoAlfa().getText();
-                    alfa = Double.parseDouble(a);
                     //obtener los datos de las fechas y calculo de periodos y luego llamar a metodosimple
                     fechadesde = pantallaMetodos.getTxFechadesde().getDate();
                     fechahasta = pantallaMetodos.getTxFechahasta().getDate();
@@ -267,8 +244,6 @@ public class ControladorMetodos {
                     Object itemSeleccionado = pantallaMetodos.getComboProductos().getSelectedItem();
                     valorItemSeleccionado = itemSeleccionado.toString();
                     System.out.println("El producto seleccionado es: " + valorItemSeleccionado);
-                    a = pantallaMetodos.getCampoAlfa().getText();
-                    alfa = Double.parseDouble(a);
                     fechadesde = pantallaMetodos.getTxFechadesde().getDate();
                     fechahasta = pantallaMetodos.getTxFechahasta().getDate();
                     try {
@@ -338,9 +313,6 @@ public class ControladorMetodos {
 
             }
         });
-
-
-
     }
 
     private List<Producto> buscarProducto() throws NoProductoExcepcion {
@@ -349,15 +321,25 @@ public class ControladorMetodos {
     }
 
     public void agregarMetodos() throws NoProductoExcepcion {
-        productobuscado = buscarProducto();
-        if (!productobuscado.isEmpty()) {
-            for (int i = 0; i < productobuscado.size(); i++) {
-                pantallaMetodos.getComboProductos().addItem(productobuscado.get(i).getNombreProducto());
-            }
-            pantallaMetodos.setTitle("Metodos");
-            pantallaMetodos.setVisible(true);
+
+        alfa = ControladorParametros.alfa;
+        beta = ControladorParametros.beta;
+        gama = ControladorParametros.gama;
+        System.out.println("Alfa: " + alfa + " Beta: " + beta + " Gama: " + gama);
+        if (alfa == 0.0) {
+            JOptionPane.showMessageDialog(pantallaMetodos, "Debe establecer los parametros del sistema", "¡Atención!", JOptionPane.INFORMATION_MESSAGE);
+            pantallaMetodos.dispose();
         } else {
-            System.out.println("No hay productos");
+            productobuscado = buscarProducto();
+            if (!productobuscado.isEmpty()) {
+                for (int i = 0; i < productobuscado.size(); i++) {
+                    pantallaMetodos.getComboProductos().addItem(productobuscado.get(i).getNombreProducto());
+                }
+                pantallaMetodos.setTitle("Metodos");
+                pantallaMetodos.setVisible(true);
+            } else {
+                System.out.println("No hay productos");
+            }
         }
     }
 

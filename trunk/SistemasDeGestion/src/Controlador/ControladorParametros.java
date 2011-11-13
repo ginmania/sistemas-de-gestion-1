@@ -19,9 +19,9 @@ public class ControladorParametros {
     private ExpertoParametros expertoParametros;
     private ControladorPrincipal controladorPrincipal;
     private PantallaParametros pantallaParametros;
-    private double alfa = 0.0;
-    private double beta = 0.0;
-    private double gama = 0.0;
+    public static double alfa = 0.0;
+    public static double beta = 0.0;
+    public static double gama = 0.0;
     private String a;
 
     public ControladorParametros(ControladorPrincipal controladorPrincipal) {
@@ -49,7 +49,6 @@ public class ControladorParametros {
                     setAlfa(Double.parseDouble(pantallaParametros.getCampoAlfa().getText()));
                     setBeta(Double.parseDouble(pantallaParametros.getCampoBeta().getText()));
                     setGama(Double.parseDouble(pantallaParametros.getCampoGama().getText()));
-                    System.out.println("Alfa: " + getAlfa() + "Beta: " + getBeta() + "Gama: " + getGama());
                     pantallaParametros.dispose();
                 } catch (Exception ex) {
                     Logger.getLogger(ControladorParametros.class.getName()).log(Level.SEVERE, null, ex);
@@ -89,27 +88,27 @@ public class ControladorParametros {
         pantallaParametros.setVisible(true);
     }
 
-    public double getAlfa() {
+    public static double getAlfa() {
         return alfa;
     }
 
-    public void setAlfa(double alfa) {
-        this.alfa = alfa;
+    public static void setAlfa(double alfa) {
+        ControladorParametros.alfa = alfa;
     }
 
-    public double getBeta() {
+    public static double getBeta() {
         return beta;
     }
 
-    public void setBeta(double beta) {
-        this.beta = beta;
+    public static void setBeta(double beta) {
+        ControladorParametros.beta = beta;
     }
 
-    public double getGama() {
+    public static double getGama() {
         return gama;
     }
 
-    public void setGama(double gama) {
-        this.gama = gama;
+    public static void setGama(double gama) {
+        ControladorParametros.gama = gama;
     }
 }

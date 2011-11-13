@@ -27,9 +27,9 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         Salir = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jmPedidos = new javax.swing.JMenuItem();
-        jmRealizarPedido = new javax.swing.JMenuItem();
         menuParametros = new javax.swing.JMenu();
         itemEstablecer = new javax.swing.JMenuItem();
+        jmRealizarPedido = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistemas de Gestion 1");
@@ -52,35 +52,41 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         jMenu1.setMargin(new java.awt.Insets(0, 10, 0, 0));
 
         MenuCliente.setText("Cliente");
+        MenuCliente.setMargin(new java.awt.Insets(0, 10, 0, 0));
         jMenu1.add(MenuCliente);
 
         MenuProducto.setText("Producto");
+        MenuProducto.setMargin(new java.awt.Insets(0, 10, 0, 0));
         jMenu1.add(MenuProducto);
 
         MenuProveedor.setText("Proveedor");
+        MenuProveedor.setMargin(new java.awt.Insets(0, 10, 0, 0));
         jMenu1.add(MenuProveedor);
 
         Ventas.setText("Ventas");
+        Ventas.setMargin(new java.awt.Insets(0, 10, 0, 0));
         jMenu1.add(Ventas);
 
         Metodo.setText("Metodo");
+        Metodo.setMargin(new java.awt.Insets(0, 10, 0, 0));
         jMenu1.add(Metodo);
 
         ABC.setText("ABC");
+        ABC.setMargin(new java.awt.Insets(0, 10, 0, 0));
         jMenu1.add(ABC);
 
         Salir.setText("Salir");
+        Salir.setMargin(new java.awt.Insets(0, 10, 0, 0));
         jMenu1.add(Salir);
 
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Stock");
+        jMenu2.setMargin(new java.awt.Insets(0, 10, 0, 0));
 
         jmPedidos.setText("Politicas Stock");
+        jmPedidos.setMargin(new java.awt.Insets(0, 10, 0, 0));
         jMenu2.add(jmPedidos);
-
-        jmRealizarPedido.setText("Pedido");
-        jMenu2.add(jmRealizarPedido);
 
         jMenuBar1.add(jMenu2);
 
@@ -88,7 +94,12 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         menuParametros.setMargin(new java.awt.Insets(0, 10, 0, 0));
 
         itemEstablecer.setText("Establecer");
+        itemEstablecer.setMargin(new java.awt.Insets(0, 10, 0, 0));
         menuParametros.add(itemEstablecer);
+
+        jmRealizarPedido.setText("Pedido");
+        jmRealizarPedido.setMargin(new java.awt.Insets(0, 10, 0, 0));
+        menuParametros.add(jmRealizarPedido);
 
         jMenuBar1.add(menuParametros);
 
