@@ -197,7 +197,7 @@ public class ControladorPoliticaSR {
     }
     
     private void limpiarTabla(){
-       int t= dtm.getRowCount();
+       int t= dtm.getRowCount()-1;
        for(int j=0; j<t;j++)
            dtm.removeRow(j);
     }
