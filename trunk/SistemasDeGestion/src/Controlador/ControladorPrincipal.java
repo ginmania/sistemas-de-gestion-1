@@ -13,9 +13,13 @@ import javax.swing.JInternalFrame;
 public final class ControladorPrincipal {
 
     private PantallaPrincipal pantallaPrincipal;
+    private static ControladorParametros controladorParametros;
 
     public ControladorPrincipal() {
         pantallaPrincipal = new PantallaPrincipal(this);
+        pantallaPrincipal.getLabelAlfa().setVisible(false);
+        pantallaPrincipal.getLabelBeta().setVisible(false);
+        pantallaPrincipal.getLabelGama().setVisible(false);
         pantallaPrincipal.setVisible(true);
         pantallaPrincipal.setLocationRelativeTo(null);
         pantallaPrincipal.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -114,6 +118,12 @@ public final class ControladorPrincipal {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
                     establecerParametros();
+                    pantallaPrincipal.getLabelAlfa().setText("Alfa: " + String.valueOf(controladorParametros.alfa));
+                    pantallaPrincipal.getLabelBeta().setText("Beta: " + String.valueOf(controladorParametros.beta));
+                    pantallaPrincipal.getLabelGama().setText("Gama: " + String.valueOf(controladorParametros.gama));
+                    pantallaPrincipal.getLabelAlfa().setVisible(true);
+                    pantallaPrincipal.getLabelBeta().setVisible(true);
+                    pantallaPrincipal.getLabelGama().setVisible(true);
                 } catch (NoProductoExcepcion ex) {
                     Logger.getLogger(ControladorPrincipal.class.getName()).log(Level.SEVERE, null, ex);
                 }

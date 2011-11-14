@@ -7,8 +7,10 @@ package Controlador;
 import Experto.ExpertoParametros;
 import Experto.FabricaExperto;
 import Pantalla.PantallaParametros;
+import Pantalla.PantallaPrincipal;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JLabel;
 
 /**
  *
@@ -19,6 +21,7 @@ public class ControladorParametros {
     private ExpertoParametros expertoParametros;
     private ControladorPrincipal controladorPrincipal;
     private PantallaParametros pantallaParametros;
+    private PantallaPrincipal pantallaPrincipal;
     public static double alfa = 0.0;
     public static double beta = 0.0;
     public static double gama = 0.0;
@@ -43,7 +46,7 @@ public class ControladorParametros {
             }
         });
         pantallaParametros.getBotonGuardarParametros().addActionListener(new java.awt.event.ActionListener() {
-
+            
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
                     setAlfa(Double.parseDouble(pantallaParametros.getCampoAlfa().getText()));

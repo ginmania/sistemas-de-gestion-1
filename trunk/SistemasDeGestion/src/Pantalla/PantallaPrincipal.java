@@ -2,6 +2,7 @@ package Pantalla;
 
 import Controlador.ControladorPrincipal;
 import javax.swing.JDesktopPane;
+import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 
 public class PantallaPrincipal extends javax.swing.JFrame {
@@ -16,6 +17,9 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         java.awt.GridBagConstraints gridBagConstraints;
 
         jDesktopPane1 = new javax.swing.JDesktopPane();
+        labelAlfa = new javax.swing.JLabel();
+        labelBeta = new javax.swing.JLabel();
+        labelGama = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         MenuCliente = new javax.swing.JMenuItem();
@@ -39,6 +43,22 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
         jDesktopPane1.setBackground(new java.awt.Color(172, 150, 102));
+
+        labelAlfa.setForeground(new java.awt.Color(255, 0, 0));
+        labelAlfa.setText("Alfa:");
+        labelAlfa.setBounds(1276, 10, 120, 17);
+        jDesktopPane1.add(labelAlfa, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        labelBeta.setForeground(new java.awt.Color(255, 0, 0));
+        labelBeta.setText("Beta:");
+        labelBeta.setBounds(1270, 30, 110, 17);
+        jDesktopPane1.add(labelBeta, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        labelGama.setForeground(new java.awt.Color(255, 0, 0));
+        labelGama.setText("Gama:");
+        labelGama.setBounds(1262, 50, 100, 17);
+        jDesktopPane1.add(labelGama, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -122,8 +142,35 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jmPedidos;
     private javax.swing.JMenuItem jmRealizarPedido;
+    private javax.swing.JLabel labelAlfa;
+    private javax.swing.JLabel labelBeta;
+    private javax.swing.JLabel labelGama;
     private javax.swing.JMenu menuParametros;
     // End of variables declaration//GEN-END:variables
+
+    public JLabel getLabelAlfa() {
+        return labelAlfa;
+    }
+
+    public void setLabelAlfa(JLabel labelAlfa) {
+        this.labelAlfa = labelAlfa;
+    }
+
+    public JLabel getLabelBeta() {
+        return labelBeta;
+    }
+
+    public void setLabelBeta(JLabel labelBeta) {
+        this.labelBeta = labelBeta;
+    }
+
+    public JLabel getLabelGama() {
+        return labelGama;
+    }
+
+    public void setLabelGama(JLabel labelGama) {
+        this.labelGama = labelGama;
+    }
 
     public JMenuItem getItemEstablecer() {
         return itemEstablecer;
