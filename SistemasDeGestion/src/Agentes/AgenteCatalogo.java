@@ -92,5 +92,13 @@ public class AgenteCatalogo implements Catalogo, ObjetoPersistente{
     public void setOIDProveedor(String valor) {
         this.OIDProv = valor;
     }
+
+    public int getbaja() {
+        return impl.getbaja();
+    }
+
+    public void setbaja(int baja) {
+        impl.setbaja(baja);
+    }
     
 }

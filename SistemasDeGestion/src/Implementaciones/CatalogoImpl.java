@@ -20,6 +20,7 @@ public class CatalogoImpl implements Catalogo {
     //Objetos relacionados...    
     private Proveedor proveedor;    
     private Producto producto;
+    private int baja;
 
     public CatalogoImpl(){}    
 
@@ -64,4 +65,13 @@ public class CatalogoImpl implements Catalogo {
     public void setProducto(Producto producto) {
         this.producto = producto;        
     }
+
+    public int getbaja() {
+        return baja;
+    }
+
+    public void setbaja(int baja) {
+        this.baja = baja;
+    }
+    
 }

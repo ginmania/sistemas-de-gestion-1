@@ -30,6 +30,7 @@ class IntermediarioCatalogo extends IntermediarioRelacional {
         rs.addCampo(new Campo("Fecha", "'" + pp.getFecha() + "'"));
         rs.addCampo(new Campo("Demora", "'" + String.valueOf(pp.getDemora()) + "'"));
         rs.addCampo(new Campo("PrecioCompra", "'" + String.valueOf(pp.getPrecioCompra()) + "'"));
+        rs.addCampo(new Campo("baja", "'" + String.valueOf(pp.getbaja() + "'")));
         return rs;
     }
 
@@ -45,8 +46,9 @@ class IntermediarioCatalogo extends IntermediarioRelacional {
                 temp.setOIDProducto(registro.getCampo("OIDProducto").getValor());
                 temp.setOIDProveedor(registro.getCampo("OIDProveedor").getValor());
                 temp.setFecha(registro.getCampo("Fecha").getValor());
-                temp.setDemora(Integer.parseInt(registro.getCampo("Demora").getValor()));
-                temp.setPrecioCompra(Double.valueOf(registro.getCampo("PrecioCompra").getValor()));
+                temp.setDemora((Integer)registro.getCampo("Demora").getValor(Integer.class));
+                temp.setPrecioCompra((Double)registro.getCampo("PrecioCompra").getValor(Double.class));
+                temp.setbaja((Integer)registro.getCampo("baja").getValor(Integer.class));
                 prodprovs.add(temp);
             }
         } catch (Exception ex) {

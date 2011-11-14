@@ -65,6 +65,12 @@ public class ControladorRecibirPedido {
                 ActualizarPedido();
             }
         });
+        
+        pantalla.getJbCancelar().addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                salir();
+            }
+        });
     }
 
     private void iniciar() {
@@ -113,6 +119,11 @@ public class ControladorRecibirPedido {
             JOptionPane.showMessageDialog(pantalla, "pedido no actualizado", "Recibir Pedido", JOptionPane.ERROR_MESSAGE);;
         }
         return false;
+    }
+    
+    private void salir(){
+        pantalla.dispose();
+        principal.remove(pantalla);
     }
     
 }

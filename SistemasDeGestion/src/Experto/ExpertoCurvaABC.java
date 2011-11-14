@@ -29,12 +29,12 @@ public class ExpertoCurvaABC implements Experto{
     private Producto prod[];
     private Fachada obFP;
     
-      public void iniciar(){
+   public void iniciar(){
         System.out.println("  Experto Realizar Informe ABC...");
         obFP = Fachada.getInstancia();
-       
+        
         this.historial();
-        this.calcularDemandaAV(arregloABC);
+        this.calcularDemandaAVA(arregloABC);
         this.ordenarArreglo(arregloABC);
         this.calcularDemandaAVA(arregloABC);
         this.calcularCAP(arregloABC);
@@ -44,8 +44,7 @@ public class ExpertoCurvaABC implements Experto{
         this.mostrarEnPantallaInformeABC(arregloABC, prod);
         
     }
-private void historial(){
-       
+private void historial(){       
         respBD = obFP.buscar_todo(Producto.class);
         prod = new Producto[respBD.size()];
         ArrayList<Demanda> temp;
@@ -69,7 +68,8 @@ private void historial(){
             arregloABC[i] = new InformeABC();
             arregloABC[i].setCodigoDeProducto(String.valueOf(prod[i].getCodigoProducto()));
             arregloABC[i].setCostoUnitario(prod[i].getPrecioVenta());
-            arregloABC[i].setDemandaAnual(temp.get(i).getDemandareal());
+            if(temp.size()>=i)
+                arregloABC[i].setDemandaAnual(temp.get(i).getDemandareal());
         }
     }
 
@@ -77,8 +77,8 @@ private void historial(){
         for (int i = 0; i < arregloABC.length; i++){
             arregloABC[i].setDemandaAV();
         }
-    } 
-    
+    }
+
     private void ordenarArreglo(InformeABC[] arregloABC){
         InformeABC auxiliar = new InformeABC();
         boolean bandera = true;
@@ -109,7 +109,8 @@ private void historial(){
     private void calcularDemandaAVA(InformeABC arregloABC[]){
         double dava = 0;
         for (int i = 0; i < arregloABC.length; i++){
-            dava = arregloABC[i].getDemandaAV() + dava;
+            //if(i != 0)
+            dava = arregloABC[i].getDemandaAVA() + dava;
             System.out.println("DAVA :  " + dava);
             arregloABC[i].setDemandaAVA(dava);
         }
@@ -207,12 +208,13 @@ private void historial(){
                             + arregloABC[i].getDemandaAVA() + "                " 
                             + String.valueOf(arregloABC[i].getPorcentajeAcumulado()) 
                             + "%            " + String.valueOf(prod[j].getClasifABC());
-                }
-                bw.write(s);
+                    bw.write(s);
+                }                
             }
         bw.close();
 
         }catch (IOException ioe){
+            
         }
         //obFP.confirmarTransaccion();
     }
