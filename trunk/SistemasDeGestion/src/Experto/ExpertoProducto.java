@@ -19,6 +19,7 @@ import Interfaces.Proveedor;
 import Interfaces.Stock;
 import Persistencia.FachadaInterna;
 import Persistencia.ObjetoPersistente;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
@@ -85,25 +86,41 @@ public class ExpertoProducto implements Experto {
     
      public boolean insertarProducto(int codigo, String nombre, String descripcion, double precioCompra,
             double precioVenta, int baja, int cantidadminima, int cantidad, char ABC, Proveedor prov) throws NoProductoExcepcion {
-        boolean resultado = false;
+        boolean resultado = false;        
+        GregorianCalendar fechaActual = new GregorianCalendar();
+        String fechaSistema = String.valueOf(fechaActual.get(GregorianCalendar.DAY_OF_MONTH))
+                       .concat("-")
+                       .concat(String.valueOf(fechaActual.get(GregorianCalendar.MONTH) + 1))
+                       .concat("-")
+                       .concat(String.valueOf(fechaActual.get(GregorianCalendar.YEAR)));
         Producto producto = (Producto) FabricaEntidad.getInstancia().FabricarEntidad(Producto.class);
-        ProductoProveedor asocia = (ProductoProveedor) FabricaEntidad.getInstancia().FabricarEntidad(ProductoProveedor.class);
+        Catalogo asocia = (Catalogo) FabricaEntidad.getInstancia().FabricarEntidad(Catalogo.class);
         Stock stock = (Stock) FabricaEntidad.getInstancia().FabricarEntidad(Stock.class);
         AgenteProducto ap = (AgenteProducto) producto;
         AgenteProveedor aP = (AgenteProveedor) prov;
-        AgenteProductoProveedor APP= (AgenteProductoProveedor) asocia;
+        AgenteCatalogo APP= (AgenteCatalogo) asocia;
+        //produtco
         producto.setCodigoProducto(codigo);
         producto.setNombreProducto(nombre);
         producto.setDescripcionProducto(descripcion);
         producto.setPrecioCompra(precioCompra);
         producto.setPrecioVenta(precioVenta);
         producto.setClasifABC(ABC);
-        producto.setbaja(baja);        
+        producto.setbaja(baja);       
+        //stock
+        stock.setStockPendiente(0);
         stock.setCantdidadMinima(cantidadminima);
         stock.setCantdidad(cantidad);
+        //catalogo
+        APP.setOIDProducto(aP.getoid());
+        APP.setOIDProducto(ap.getoid());
         asocia.setProducto(producto);
         asocia.setProveedor(prov);
+        asocia.setPrecioCompra(precioCompra);
+        asocia.setFecha(fechaSistema);
+        asocia.setDemora(2);
         asocia.setbaja(baja);
+        
         resultado = Fachada.getInstancia().guardar((ObjetoPersistente) stock);
         producto.setStock(stock);
         resultado = Fachada.getInstancia().guardar((ObjetoPersistente) producto);
@@ -146,7 +163,9 @@ public class ExpertoProducto implements Experto {
         ArrayList<Catalogo> catalogo;
         AgenteProveedor ap = (AgenteProveedor) p;
         Criterio c1 = Fachada.getInstancia().crearCriterio("OIDProveedor", "=", ap.getoid());
-        catalogo = Fachada.getInstancia().buscar(Catalogo.class, c1);
+        Criterio c2 = Fachada.getInstancia().crearCriterio("baja", "=", 0);
+        Criterio c3 = Fachada.getInstancia().crearCriterioCompuesto(c1, "and", c2);
+        catalogo = Fachada.getInstancia().buscar(Catalogo.class, c3);
         for(int i=0; i<catalogo.size();i++){
             Producto aux;
             AgenteCatalogo ac= (AgenteCatalogo) catalogo.get(i);

@@ -29,4 +29,8 @@ public interface Catalogo {
 
     public void setProducto(Producto producto);
     
+    public int getbaja();
+    
+    public void setbaja(int baja);
+    
 }

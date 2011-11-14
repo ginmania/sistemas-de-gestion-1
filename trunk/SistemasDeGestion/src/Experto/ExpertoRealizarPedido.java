@@ -72,8 +72,10 @@ public class ExpertoRealizarPedido implements Experto{
           for(int j=0;j<dp.size();j++){
               //trae los productos incluido en cada pedido
             Criterio c1 = obFP.crearCriterio("OIDProducto", "=", ((AgenteDetallePedido)dp.get(j)).getOIDProducto());
-            producto = obFP.buscar(Producto.class,c1);  
-            catalogo = obFP.buscar(Catalogo.class, c1);
+            Criterio c2 = obFP.crearCriterio("baja", "=", 0);
+            Criterio c3 = obFP.crearCriterioCompuesto(c1, "and", c2);
+            producto = obFP.buscar(Producto.class,c3);  
+            catalogo = obFP.buscar(Catalogo.class, c3);
         }}
     }
 
