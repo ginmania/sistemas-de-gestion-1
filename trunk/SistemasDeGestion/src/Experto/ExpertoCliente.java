@@ -89,6 +89,7 @@ public class ExpertoCliente implements Experto {
         }
         cliente.setbaja(1);
         resultado = Fachada.getInstancia().guardar((ObjetoPersistente) cliente);
+        vectorDTOCliente.clear();
         return resultado;
     }
 
