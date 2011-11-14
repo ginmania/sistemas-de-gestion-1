@@ -13,6 +13,7 @@ import Metodo.Simple;
 import Metodo.Tendencia;
 import Persistencia.Criterio;
 import Persistencia.Fachada;
+import Persistencia.ObjetoPersistente;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -34,6 +35,7 @@ public class ExpertoMetodos implements Experto {
     private int cantpertendencia = 0;
     private int cantperestacionalidad = 0;
     private List<Producto> vectorDTOProducto = new ArrayList();
+    private List<Demanda> vectorDTODemanda2 = null;
     private double[] resultadosimple;
     private double[] demandarealsimple;
     private double[] resultadotendencia;
@@ -47,13 +49,16 @@ public class ExpertoMetodos implements Experto {
     private double a = 0.1;
     private double b = 0.1;
     private double g = 0.1;
+    private double[] auxsimple;
+    private Demanda demanda;
+    private List<Producto> productos = null;
 
     public ExpertoMetodos() {
+        this.demanda = (Demanda) FabricaEntidad.getInstancia().FabricarEntidad(Demanda.class);
     }
 
     public List<Producto> buscarProducto() throws NoProductoExcepcion {
         vectorDTOProducto.clear();
-        List<Producto> productos = null;
         Criterio c1 = new Criterio();
         Criterio c2 = new Criterio();
         Criterio c3 = new Criterio();
@@ -66,7 +71,6 @@ public class ExpertoMetodos implements Experto {
             throw new NoProductoExcepcion();
         }
         for (Producto producto : productos) {
-
             vectorDTOProducto.add(producto);
         }
         return vectorDTOProducto;
@@ -85,7 +89,7 @@ public class ExpertoMetodos implements Experto {
                     vectorDTODemanda[i][2] = String.valueOf(listaDemanda.get(i).getPeriodo());
                     vectorDTODemanda[i][3] = String.valueOf(listaDemanda.get(i).getAnio());
                 }
-               
+
             }
         }
         return vectorDTODemanda;
@@ -93,14 +97,12 @@ public class ExpertoMetodos implements Experto {
 
     public String[][] calcularsimple(double alfa, int valorperiodo, String productoSeleccionado, int valorperiodoinicial, int valorperiodofinal, int periodosapredecir) {
         a = alfa;
-        //  System.out.println("Cantidad de Periodos a predecir:   " + periodosapredecir);
-        //System.out.println("SUMA :  " + (periodosapredecir + valorperiodofinal - valorperiodoinicial));
-        //System.out.println("Valor Inicial:  " + valorperiodoinicial + "  Valor Final:  " + valorperiodofinal);
         String seleccion = productoSeleccionado;
         demandahistorica = new double[1][13];
         demandarealsimple = new double[1 + valorperiodofinal - valorperiodoinicial];
         periodosimple = new int[periodosapredecir + (valorperiodofinal - valorperiodoinicial)];
         cantpersimple = valorperiodofinal - valorperiodoinicial;
+        auxsimple = new double[cantpersimple + periodosapredecir];
         String valorsimple[][] = new String[cantpersimple + periodosapredecir][4];
         for (Producto producto : vectorDTOProducto) {
             List<Demanda> listaDemanda = producto.getDemandas();
@@ -129,6 +131,7 @@ public class ExpertoMetodos implements Experto {
         for (int i = 1; i < periodosapredecir + 1; i++) {
             resultadosimple[i] = redondear(resultadosimple[i], 2);
             valorsimple[i - 1][0] = "Demanda Pronosticada: " + String.valueOf(resultadosimple[i] + "  En el periodo:  " + (i + valorperiodofinal));
+            auxsimple[i] = resultadosimple[i];
             calculo.DatosIniciales(demandahistorica[0][i - 1], resultadosimple[i], demandahistorica[0][1], demandahistorica[0][1], 0, 0, 0, 0, 0, a, 0.3, cantpersimple, 0, 0);
             promedio[i] = calculo.actualizacion();
             promedio[i] = calculo.getPrediccionfn();
@@ -143,6 +146,7 @@ public class ExpertoMetodos implements Experto {
             promedio[i] = calculo.getsenal();
             valorsimple[i - 1][3] = " Señal rastreo: " + String.valueOf(promedio[i]);
         }
+        
         return valorsimple;
     }
 
@@ -195,7 +199,6 @@ public class ExpertoMetodos implements Experto {
             promedio[i] = calculo.getDesviacionEstandarError();
             promedio[i] = calculo.getsenal();
             valortendencia[i - 1][3] = " Señal rastreo: " + String.valueOf(promedio[i]);
-
         }
         return valortendencia;
     }
@@ -230,7 +233,8 @@ public class ExpertoMetodos implements Experto {
             Collections.sort(listaDemanda, new OrdenarDemandas());
             if (producto.getNombreProducto().equalsIgnoreCase(seleccion)) {
                 for (int k = 0; k < 12; k++) {
-                    demandahistorica[0][k] = listaDemanda.get(k).getDemandapronosticada();
+                    //cambie demanda pronostica por actualizada
+                    demandahistorica[0][k] = listaDemanda.get(k).getDemandaactualizada();
                 }
             }
         }
@@ -256,6 +260,10 @@ public class ExpertoMetodos implements Experto {
             valorestacionalidad[i - 1][3] = " Señal rastreo: " + String.valueOf(promedio[i]);
         }
         return valorestacionalidad;
+    }
+
+    public void guardar() {
+        System.out.println("Se habra grabado???");
     }
 
     public static double redondear(double num, int ndecimal) {

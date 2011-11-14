@@ -12,6 +12,8 @@ import Interfaces.Producto;
 import Metodo.Periodo;
 import Pantalla.PantallaMetodos;
 import Persistencia.ConvertirFechas;
+import Persistencia.Fachada;
+import Persistencia.ObjetoPersistente;
 import java.awt.event.ActionEvent;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -72,11 +74,23 @@ public class ControladorMetodos {
                     String auxiliar5 = "  periodo: ";
                     String auxiliar6 = "  año: ";
                     for (int i = 0; i < vectorDemandas.length; i++) {
- auxiliar1 = auxiliar3 + vectorDemandas[i][0] + auxiliar4 + vectorDemandas[i][1] + auxiliar5 + vectorDemandas[i][2] + auxiliar6 + vectorDemandas[i][3] + "    \n";
-                            auxiliar2 += auxiliar1;
+                        auxiliar1 = auxiliar3 + vectorDemandas[i][0] + auxiliar4 + vectorDemandas[i][1] + auxiliar5 + vectorDemandas[i][2] + auxiliar6 + vectorDemandas[i][3] + "    \n";
+                        auxiliar2 += auxiliar1;
                     }
                     pantallaMetodos.getAreaResultado().setText(auxiliar2);
 
+                } catch (Exception ex) {
+                    Logger.getLogger(ControladorProducto.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+
+        /////////BOTON METODO GUARDAR//////////
+        pantallaMetodos.getBotonGuardar().addActionListener(new java.awt.event.ActionListener() {
+
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                try {
+                    guardar();
                 } catch (Exception ex) {
                     Logger.getLogger(ControladorProducto.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -122,9 +136,14 @@ public class ControladorMetodos {
         pantallaMetodos.getBotonCalcularMetodos().addActionListener(new java.awt.event.ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
-
+                if (pantallaMetodos.getTxPeriodo().getText().equalsIgnoreCase("")) {
+                    JOptionPane.showMessageDialog(pantallaMetodos, "Debe ingresar la cantidad de periodos a predecir", "¡Atención!", JOptionPane.INFORMATION_MESSAGE);
+                }
                 ///PARA EL METODO SIMPLE ///
-
+                if(!pantallaMetodos.getBotonSimple().isSelected() && !pantallaMetodos.getBotonTendencia().isSelected() && !pantallaMetodos.getBotonTendencia().isSelected()) {
+                JOptionPane.showMessageDialog(pantallaMetodos, "Debe seleccionar un metodo!", "¡Atención!", JOptionPane.INFORMATION_MESSAGE);    
+                }
+                
                 if (pantallaMetodos.getBotonSimple().isSelected()) {
                     Object itemSeleccionado = pantallaMetodos.getComboProductos().getSelectedItem();
                     valorItemSeleccionado = itemSeleccionado.toString();
@@ -194,6 +213,8 @@ public class ControladorMetodos {
                     cadena4 = "";
 
                 }
+                 
+
 
                 ///PARA EL METODO TENDENCIA ///
 
@@ -341,6 +362,9 @@ public class ControladorMetodos {
                 }
 
             }
+       
+            
+            
         });
     }
 
@@ -349,12 +373,15 @@ public class ControladorMetodos {
         return vectorProductos;
     }
 
+    private void guardar() {
+        expertoMetodos.guardar();
+    }
+
     public void agregarMetodos() throws NoProductoExcepcion {
 
         alfa = ControladorParametros.alfa;
         beta = ControladorParametros.beta;
         gama = ControladorParametros.gama;
-        System.out.println("Alfa: " + alfa + " Beta: " + beta + " Gama: " + gama);
         if (alfa == 0.0) {
             JOptionPane.showMessageDialog(pantallaMetodos, "Debe establecer los parametros del sistema", "¡Atención!", JOptionPane.INFORMATION_MESSAGE);
             pantallaMetodos.dispose();
