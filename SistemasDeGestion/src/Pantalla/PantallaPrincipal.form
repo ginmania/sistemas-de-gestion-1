@@ -7,6 +7,7 @@
         <Menu class="javax.swing.JMenu" name="jMenu1">
           <Properties>
             <Property name="text" type="java.lang.String" value="Sistema"/>
+            <Property name="delay" type="int" value="0"/>
             <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
               <Insets value="[0, 10, 0, 0]"/>
             </Property>
@@ -52,14 +53,6 @@
                 </Property>
               </Properties>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="ABC">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="ABC"/>
-                <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
-                  <Insets value="[0, 10, 0, 0]"/>
-                </Property>
-              </Properties>
-            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="Salir">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Salir"/>
@@ -86,6 +79,14 @@
                 </Property>
               </Properties>
             </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jmRealizarPedido">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Pedido"/>
+                <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+                  <Insets value="[0, 10, 0, 0]"/>
+                </Property>
+              </Properties>
+            </MenuItem>
           </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="menuParametros">
@@ -104,9 +105,51 @@
                 </Property>
               </Properties>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jmRealizarPedido">
+          </SubComponents>
+        </Menu>
+        <Menu class="javax.swing.JMenu" name="jMenu3">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Reportes"/>
+            <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+              <Insets value="[0, 10, 0, 0]"/>
+            </Property>
+          </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="ABC">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Pedido"/>
+                <Property name="text" type="java.lang.String" value="ABC"/>
+                <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+                  <Insets value="[0, 10, 0, 0]"/>
+                </Property>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="menuClientes">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Clientes"/>
+                <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+                  <Insets value="[0, 10, 0, 0]"/>
+                </Property>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="menuPedidos">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Pedidos"/>
+                <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+                  <Insets value="[0, 10, 0, 0]"/>
+                </Property>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="menuProductos">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Productos"/>
+                <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+                  <Insets value="[0, 10, 0, 0]"/>
+                </Property>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="menuVentas">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Ventas"/>
                 <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
                   <Insets value="[0, 10, 0, 0]"/>
                 </Property>

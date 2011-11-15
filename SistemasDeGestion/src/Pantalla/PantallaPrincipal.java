@@ -27,13 +27,18 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         MenuProveedor = new javax.swing.JMenuItem();
         Ventas = new javax.swing.JMenuItem();
         Metodo = new javax.swing.JMenuItem();
-        ABC = new javax.swing.JMenuItem();
         Salir = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jmPedidos = new javax.swing.JMenuItem();
+        jmRealizarPedido = new javax.swing.JMenuItem();
         menuParametros = new javax.swing.JMenu();
         itemEstablecer = new javax.swing.JMenuItem();
-        jmRealizarPedido = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
+        ABC = new javax.swing.JMenuItem();
+        menuClientes = new javax.swing.JMenuItem();
+        menuPedidos = new javax.swing.JMenuItem();
+        menuProductos = new javax.swing.JMenuItem();
+        menuVentas = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistemas de Gestion 1");
@@ -69,6 +74,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         getContentPane().add(jDesktopPane1, gridBagConstraints);
 
         jMenu1.setText("Sistema");
+        jMenu1.setDelay(0);
         jMenu1.setMargin(new java.awt.Insets(0, 10, 0, 0));
 
         MenuCliente.setText("Cliente");
@@ -91,10 +97,6 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         Metodo.setMargin(new java.awt.Insets(0, 10, 0, 0));
         jMenu1.add(Metodo);
 
-        ABC.setText("ABC");
-        ABC.setMargin(new java.awt.Insets(0, 10, 0, 0));
-        jMenu1.add(ABC);
-
         Salir.setText("Salir");
         Salir.setMargin(new java.awt.Insets(0, 10, 0, 0));
         jMenu1.add(Salir);
@@ -108,6 +110,10 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         jmPedidos.setMargin(new java.awt.Insets(0, 10, 0, 0));
         jMenu2.add(jmPedidos);
 
+        jmRealizarPedido.setText("Pedido");
+        jmRealizarPedido.setMargin(new java.awt.Insets(0, 10, 0, 0));
+        jMenu2.add(jmRealizarPedido);
+
         jMenuBar1.add(jMenu2);
 
         menuParametros.setText("Parametros");
@@ -117,11 +123,32 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         itemEstablecer.setMargin(new java.awt.Insets(0, 10, 0, 0));
         menuParametros.add(itemEstablecer);
 
-        jmRealizarPedido.setText("Pedido");
-        jmRealizarPedido.setMargin(new java.awt.Insets(0, 10, 0, 0));
-        menuParametros.add(jmRealizarPedido);
-
         jMenuBar1.add(menuParametros);
+
+        jMenu3.setText("Reportes");
+        jMenu3.setMargin(new java.awt.Insets(0, 10, 0, 0));
+
+        ABC.setText("ABC");
+        ABC.setMargin(new java.awt.Insets(0, 10, 0, 0));
+        jMenu3.add(ABC);
+
+        menuClientes.setText("Clientes");
+        menuClientes.setMargin(new java.awt.Insets(0, 10, 0, 0));
+        jMenu3.add(menuClientes);
+
+        menuPedidos.setText("Pedidos");
+        menuPedidos.setMargin(new java.awt.Insets(0, 10, 0, 0));
+        jMenu3.add(menuPedidos);
+
+        menuProductos.setText("Productos");
+        menuProductos.setMargin(new java.awt.Insets(0, 10, 0, 0));
+        jMenu3.add(menuProductos);
+
+        menuVentas.setText("Ventas");
+        menuVentas.setMargin(new java.awt.Insets(0, 10, 0, 0));
+        jMenu3.add(menuVentas);
+
+        jMenuBar1.add(jMenu3);
 
         setJMenuBar(jMenuBar1);
 
@@ -139,13 +166,18 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jmPedidos;
     private javax.swing.JMenuItem jmRealizarPedido;
     private javax.swing.JLabel labelAlfa;
     private javax.swing.JLabel labelBeta;
     private javax.swing.JLabel labelGama;
+    private javax.swing.JMenuItem menuClientes;
     private javax.swing.JMenu menuParametros;
+    private javax.swing.JMenuItem menuPedidos;
+    private javax.swing.JMenuItem menuProductos;
+    private javax.swing.JMenuItem menuVentas;
     // End of variables declaration//GEN-END:variables
 
     public JLabel getLabelAlfa() {

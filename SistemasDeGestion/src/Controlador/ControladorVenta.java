@@ -134,16 +134,29 @@ public class ControladorVenta {
                 }
             }
         });
+        
+                pantallaVta.getJbConfirma().addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(ActionEvent ae) {
+                String seleccion = pantallaVta.getJlCliente();
+                Cliente cliente = ctrlSeleccion.recuperarCliente(seleccion);
+                int nroFactura = Integer.parseInt(pantallaVta.getNroFactura().getText());
+                String fch = pantallaVta.getFecha().getText();
+                boolean GuardarVenta = expVenta.GuardarVenta(nroFactura, fch, cliente);
+                if (GuardarVenta == true) {
+                    System.out.println("Se genero la venta");
+                    JOptionPane.showMessageDialog(pantallaVta, "Se registro la venta", "Nueva Venta", JOptionPane.INFORMATION_MESSAGE);
+                    LimpiarPantalla();
+                }
+            }
+        });
 
-        pantallaVta.getmBuscar().addActionListener(new java.awt.event.ActionListener() {
+        //////Boton CANCELAR
+        pantallaVta.getJbCancela().addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent ae) {
                 try {
-                    inicializarPantallaBusqueda();
-                    pantallaBus.setVisible(true);
-                    ctrlPrincipal.add(pantallaBus);
-                } catch (ParseException ex) {
+                        pantallaVta.dispose();
+                    } catch (Exception ex) {
                     Logger.getLogger(ControladorVenta.class.getName()).log(Level.SEVERE, null, ex);
-                    System.out.println("Error inicializar pantalla busqueda");
                 }
             }
         });
