@@ -28,15 +28,14 @@ public class FabricaExperto {
             return new DecoradorCurvaABC();
         } else if (experto.equals("ExpertoPoliticaSR")) {
             return new DecoradorPoliticaSR();
-    }else if(experto.equals("ExpertoPoliticaSQ"))
-        {
+        } else if (experto.equals("ExpertoPoliticaSQ")) {
             return new DecoradorPoliticaSQ();
-    }else if(experto.equals("ExpertoRealizarPedido"))
-        {
+        } else if (experto.equals("ExpertoRealizarPedido")) {
             return new DecoradorRealizarPedido();
-        }else if(experto.equals("ExpertoRecibirPedido"))
-        {
+        } else if (experto.equals("ExpertoRecibirPedido")) {
             return new DecoradorRecibirPedido();
+        } else if (experto.equals("ExpertoReportes")) {
+            return new DecoradorReportes();
         }
         return null;
     }

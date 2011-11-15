@@ -12,8 +12,6 @@ import Interfaces.Producto;
 import Metodo.Periodo;
 import Pantalla.PantallaMetodos;
 import Persistencia.ConvertirFechas;
-import Persistencia.Fachada;
-import Persistencia.ObjetoPersistente;
 import java.awt.event.ActionEvent;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -22,7 +20,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import sun.security.pkcs.ParsingException;
 
 /**
  *
@@ -152,17 +149,13 @@ public class ControladorMetodos {
                     fechahasta = pantallaMetodos.getTxFechahasta().getDate();
                     try {
                         diferenciadeperiodos = periodo.getPeriodos(fechadesde, fechahasta);
-                    } catch (ParsingException ex) {
-                        Logger.getLogger(ControladorMetodos.class.getName()).log(Level.SEVERE, null, ex);
-                    } catch (ParseException ex) {
+                    } catch (Exception ex) {
                         Logger.getLogger(ControladorMetodos.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     perinicial = ConvertirFechas.stringAFecha(periodoinicial);
                     try {
                         valorperiodoinicial = periodo.getPeriodos(perinicial, fechadesde) + 1;
-                    } catch (ParsingException ex) {
-                        Logger.getLogger(ControladorMetodos.class.getName()).log(Level.SEVERE, null, ex);
-                    } catch (ParseException ex) {
+                    } catch (Exception ex) {
                         Logger.getLogger(ControladorMetodos.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     perfinal = ConvertirFechas.stringAFecha(periodofinal);
@@ -227,17 +220,13 @@ public class ControladorMetodos {
                     fechahasta = pantallaMetodos.getTxFechahasta().getDate();
                     try {
                         diferenciadeperiodos = periodo.getPeriodos(fechadesde, fechahasta);
-                    } catch (ParsingException ex) {
-                        Logger.getLogger(ControladorMetodos.class.getName()).log(Level.SEVERE, null, ex);
-                    } catch (ParseException ex) {
+                    } catch (Exception ex) {
                         Logger.getLogger(ControladorMetodos.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     perinicial = ConvertirFechas.stringAFecha(periodoinicial);
                     try {
                         valorperiodoinicial = periodo.getPeriodos(perinicial, fechadesde) + 1;
-                    } catch (ParsingException ex) {
-                        Logger.getLogger(ControladorMetodos.class.getName()).log(Level.SEVERE, null, ex);
-                    } catch (ParseException ex) {
+                    } catch (Exception ex) {
                         Logger.getLogger(ControladorMetodos.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     perfinal = ConvertirFechas.stringAFecha(periodofinal);
@@ -298,17 +287,13 @@ public class ControladorMetodos {
                     fechahasta = pantallaMetodos.getTxFechahasta().getDate();
                     try {
                         diferenciadeperiodos = periodo.getPeriodos(fechadesde, fechahasta);
-                    } catch (ParsingException ex) {
-                        Logger.getLogger(ControladorMetodos.class.getName()).log(Level.SEVERE, null, ex);
-                    } catch (ParseException ex) {
+                    } catch (Exception ex) {
                         Logger.getLogger(ControladorMetodos.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     perinicial = ConvertirFechas.stringAFecha(periodoinicial);
                     try {
                         valorperiodoinicial = periodo.getPeriodos(perinicial, fechadesde) + 1;
-                    } catch (ParsingException ex) {
-                        Logger.getLogger(ControladorMetodos.class.getName()).log(Level.SEVERE, null, ex);
-                    } catch (ParseException ex) {
+                    } catch (Exception ex) {
                         Logger.getLogger(ControladorMetodos.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     perfinal = ConvertirFechas.stringAFecha(periodofinal);

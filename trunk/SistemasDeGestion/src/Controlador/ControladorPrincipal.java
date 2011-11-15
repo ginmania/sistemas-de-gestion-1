@@ -1,5 +1,6 @@
 package Controlador;
 
+import Excepciones.NoClienteExcepcion;
 import Excepciones.NoProductoExcepcion;
 import Pantalla.*;
 import Persistencia.AdministradorTx;
@@ -24,7 +25,66 @@ public final class ControladorPrincipal {
         pantallaPrincipal.setLocationRelativeTo(null);
         pantallaPrincipal.setExtendedState(JFrame.MAXIMIZED_BOTH);
         crearConexion("jdbc:mysql://localhost:3306/sg1", "root", "duendecito");
+        
+        //////////Generar Reporte datos de la Curva ABC
+        pantallaPrincipal.getMenuABC().addActionListener(new java.awt.event.ActionListener() {
 
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                try {
+                    reportes("ABC");
+                } catch (Exception ex) {
+                    Logger.getLogger(ControladorPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+        
+        //////////Generar Reporte Clientes
+        pantallaPrincipal.getMenuClientes().addActionListener(new java.awt.event.ActionListener() {
+
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                try {
+                    reportes("Cliente");
+                } catch (Exception ex) {
+                    Logger.getLogger(ControladorPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+        
+//////////Generar Reporte Pedidos
+        pantallaPrincipal.getMenuPedidos().addActionListener(new java.awt.event.ActionListener() {
+
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                try {
+                    reportes("Pedido");
+                } catch (Exception ex) {
+                    Logger.getLogger(ControladorPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+        
+        //////////Generar Reporte Productos
+        pantallaPrincipal.getMenuProductos().addActionListener(new java.awt.event.ActionListener() {
+
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                try {
+                    reportes("Producto");
+                } catch (Exception ex) {
+                    Logger.getLogger(ControladorPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+        
+        //////////Generar Reporte Ventas
+        pantallaPrincipal.getMenuVentas().addActionListener(new java.awt.event.ActionListener() {
+
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                try {
+                    reportes("Venta");
+                } catch (Exception ex) {
+                    Logger.getLogger(ControladorPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
         pantallaPrincipal.getItemCliente().addActionListener(new java.awt.event.ActionListener() {
 
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -163,6 +223,10 @@ public final class ControladorPrincipal {
 
     private void establecerParametros() throws NoProductoExcepcion {
         new ControladorParametros(this).agregarParametros();
+    }
+    
+    private void reportes(String nombreReporte) throws NoClienteExcepcion {
+        new ControladorReportes(this).generarReporte(nombreReporte);
     }
 
     private void curvaABC() throws PropertyVetoException {

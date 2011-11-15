@@ -1,5 +1,6 @@
 package Metodo;
 
+import Interfaces.Cliente;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Paragraph;
@@ -18,13 +19,13 @@ public class ArmarPDF {
     private String nombreArchivo;
     private String mensaje;
 
-    public void armar(List<String> herramientas) {
+    public void armarCliente(List<Cliente> cliente) {
         Document documento = new Document();
         Date fechasistema = new Date();
         //TODO lo genera en el directorio infind
         nombreArchivo = fechasistema + ".pdf";
-        for (String herramientas1 : herramientas) {
-            mensaje = "Herramienta: " + herramientas1.toString() + ":\n" + "bla bla bla";
+        for (Cliente clientes : cliente) {
+            mensaje = "Clientes: " + clientes.toString() + ":\n" + "bla bla bla";
         }
         try {
             PdfWriter.getInstance(documento, new FileOutputStream(nombreArchivo));
@@ -39,33 +40,3 @@ public class ArmarPDF {
         documento.close();
     }
 }
-
-/*
- * private static File WORKING_DIRECTORY;
-private static String PATH;
-
-public static String getPath() {
-String Recurso = WorkingDirectory.class.getSimpleName() + ".class";
-if (PATH == null) {
-try {
-URL url = WorkingDirectory.class.getResource(Recurso);
-if (url.getProtocol().equals("file")) {
-File f = new File(url.toURI());
-PATH = f.getParentFile().getPath();
-System.out.println("1_ "+PATH);
-} else if (url.getProtocol().equals("jar")) {
-String expected = "!/" + WorkingDirectory.class.getCanonicalName()+".class";
-String s = url.toString();
-s = s.substring(4);
-s = s.substring(0, s.length() - expected.length());
-File f = new File(new URL(s).toURI());
-PATH = f.getParentFile().getPath();
-System.out.println("2_ "+PATH);
-}
-} catch (Exception ex) {
-PATH=".";
-}
-}
-return PATH;
-}
- */
