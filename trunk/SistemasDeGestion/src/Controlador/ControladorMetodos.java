@@ -13,7 +13,6 @@ import Metodo.Periodo;
 import Pantalla.PantallaMetodos;
 import Persistencia.ConvertirFechas;
 import java.awt.event.ActionEvent;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

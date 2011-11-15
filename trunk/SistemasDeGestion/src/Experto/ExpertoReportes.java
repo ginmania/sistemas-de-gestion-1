@@ -6,10 +6,11 @@ package Experto;
 
 import Excepciones.NoClienteExcepcion;
 import Interfaces.Cliente;
-import Interfaces.Demanda;
+import Interfaces.Pedido;
+import Interfaces.Producto;
+import Interfaces.Venta;
 import Persistencia.Criterio;
 import Persistencia.Fachada;
-import Persistencia.ObjetoPersistente;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +21,9 @@ import java.util.List;
 public class ExpertoReportes implements Experto {
 
     private List<Cliente> vectorDTOCliente = new ArrayList();
+    private List<Pedido> vectorDTOPedido = new ArrayList();
+    private List<Producto> vectorDTOProducto = new ArrayList();
+    private List<Venta> vectorDTOVenta = new ArrayList();
 
     public ExpertoReportes() {
     }
@@ -27,7 +31,8 @@ public class ExpertoReportes implements Experto {
     public List<Cliente> buscarCliente() throws NoClienteExcepcion {
         vectorDTOCliente.clear();
         List<Cliente> clientes = null;
-        clientes = Fachada.getInstancia().buscarAll(Cliente.class);
+        Criterio c1 = new Criterio("1", "=", "1");
+        clientes = Fachada.getInstancia().buscar(Cliente.class, c1);
         if (clientes.isEmpty()) {
             throw new NoClienteExcepcion();
         }
@@ -37,6 +42,22 @@ public class ExpertoReportes implements Experto {
             }
         }
         return vectorDTOCliente;
+    }
+    
+    public List<Pedido> buscarPedido() throws NoClienteExcepcion {
+        vectorDTOPedido.clear();
+        List<Pedido> pedidos = null;
+        Criterio c1 = new Criterio("1", "=", "1");
+        pedidos = Fachada.getInstancia().buscar(Pedido.class, c1);
+        if (pedidos.isEmpty()) {
+            throw new NoClienteExcepcion();
+        }
+        for (Pedido pedido : pedidos) {
+//            if (pedido.getbaja() == 0) {
+                vectorDTOPedido.add(pedido);
+  //          }
+        }
+        return vectorDTOPedido;
     }
 
     public boolean iniciar(){
