@@ -9,7 +9,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import sun.security.pkcs.ParsingException;
 
 /**
  *
@@ -50,7 +49,7 @@ public class Periodo {
         }
     }
 
-    public int getPeriodos(Date fechainicio, Date fechafin) throws ParsingException, ParseException {
+    public int getPeriodos(Date fechainicio, Date fechafin) throws Exception, ParseException {
         Calendar greg = Calendar.getInstance();
         Calendar greg1 = Calendar.getInstance();
         greg.setTime(fechainicio);
@@ -60,7 +59,7 @@ public class Periodo {
         return periodos;
     }
 
-    public GregorianCalendar convertDateString(String dateString) throws ParsingException, ParseException {
+    public GregorianCalendar convertDateString(String dateString) throws Exception, ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("ddMMyyyy");
         java.util.Date date = sdf.parse(dateString);
         Calendar calender = new GregorianCalendar();

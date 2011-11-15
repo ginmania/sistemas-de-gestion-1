@@ -34,7 +34,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         menuParametros = new javax.swing.JMenu();
         itemEstablecer = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
-        ABC = new javax.swing.JMenuItem();
+        menuABC = new javax.swing.JMenuItem();
         menuClientes = new javax.swing.JMenuItem();
         menuPedidos = new javax.swing.JMenuItem();
         menuProductos = new javax.swing.JMenuItem();
@@ -128,9 +128,9 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         jMenu3.setText("Reportes");
         jMenu3.setMargin(new java.awt.Insets(0, 10, 0, 0));
 
-        ABC.setText("ABC");
-        ABC.setMargin(new java.awt.Insets(0, 10, 0, 0));
-        jMenu3.add(ABC);
+        menuABC.setText("ABC");
+        menuABC.setMargin(new java.awt.Insets(0, 10, 0, 0));
+        jMenu3.add(menuABC);
 
         menuClientes.setText("Clientes");
         menuClientes.setMargin(new java.awt.Insets(0, 10, 0, 0));
@@ -154,8 +154,8 @@ public class PantallaPrincipal extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem ABC;
     private javax.swing.JMenuItem MenuCliente;
     private javax.swing.JMenuItem MenuProducto;
     private javax.swing.JMenuItem MenuProveedor;
@@ -173,12 +173,53 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel labelAlfa;
     private javax.swing.JLabel labelBeta;
     private javax.swing.JLabel labelGama;
+    private javax.swing.JMenuItem menuABC;
     private javax.swing.JMenuItem menuClientes;
     private javax.swing.JMenu menuParametros;
     private javax.swing.JMenuItem menuPedidos;
     private javax.swing.JMenuItem menuProductos;
     private javax.swing.JMenuItem menuVentas;
     // End of variables declaration//GEN-END:variables
+
+    public JMenuItem getMenuABC() {
+        return menuABC;
+    }
+
+    public void setMenuABC(JMenuItem menuABC) {
+        this.menuABC = menuABC;
+    }
+
+    public JMenuItem getMenuClientes() {
+        return menuClientes;
+    }
+
+    public void setMenuClientes(JMenuItem menuClientes) {
+        this.menuClientes = menuClientes;
+    }
+
+    public JMenuItem getMenuPedidos() {
+        return menuPedidos;
+    }
+
+    public void setMenuPedidos(JMenuItem menuPedidos) {
+        this.menuPedidos = menuPedidos;
+    }
+
+    public JMenuItem getMenuProductos() {
+        return menuProductos;
+    }
+
+    public void setMenuProductos(JMenuItem menuProductos) {
+        this.menuProductos = menuProductos;
+    }
+
+    public JMenuItem getMenuVentas() {
+        return menuVentas;
+    }
+
+    public void setMenuVentas(JMenuItem menuVentas) {
+        this.menuVentas = menuVentas;
+    }
 
     public JLabel getLabelAlfa() {
         return labelAlfa;
@@ -265,11 +306,11 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     }
 
     public JMenuItem getABC() {
-        return ABC;
+        return menuABC;
     }
 
-    public void setABC(JMenuItem ABC) {
-        this.ABC = ABC;
+    public void setABC(JMenuItem menuABC) {
+        this.menuABC = menuABC;
     }
 
     public JMenuItem getJmPedidos() {
