@@ -16,9 +16,9 @@ public class ConvertirFechas {
     }
 
     public static String fechaAString(Date fecha) {
-        SimpleDateFormat sdf = new SimpleDateFormat("ddMMyyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         String fechaSt = sdf.format(fecha);
-        return "'" + fechaSt + "'";
+        return fechaSt;
     }
 
     public static Date stringAFecha(String fecha) {
