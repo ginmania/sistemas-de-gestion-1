@@ -25,6 +25,7 @@ public class InformeABC {
     }
 
     public void setDemandaAV(){
+        //precio de compra * demanda real
         this.demandaAV = this.costoUnitario * this.getDemandaAnual();
 
     }

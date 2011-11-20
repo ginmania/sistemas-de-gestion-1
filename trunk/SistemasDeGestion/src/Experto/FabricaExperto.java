@@ -36,6 +36,8 @@ public class FabricaExperto {
             return new DecoradorRecibirPedido();
         } else if (experto.equals("ExpertoReportes")) {
             return new DecoradorReportes();
+        } else if (experto.equals("ExpertoReloj")) {
+            return new DecoradorReloj();
         }
         return null;
     }

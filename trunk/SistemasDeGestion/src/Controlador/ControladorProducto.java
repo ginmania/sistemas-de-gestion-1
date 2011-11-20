@@ -124,7 +124,7 @@ public class ControladorProducto {
                 nuevoProducto.getTxNombre().setEditable(true);
                 nuevoProducto.getTxCodigo().setEditable(true);                
                 nuevoProducto.getTxCantidad().setEditable(true);
-                nuevoProducto.getTxCantidadMinima().setEditable(true);
+               // nuevoProducto.getTxCantidadMinima().setEditable(true);
                 nuevoProducto.getTxDescripcion().setEditable(true);
                 nuevoProducto.getTxPrecioCompra().setEditable(true);
                 nuevoProducto.getTxPrecioVenta().setEditable(true);
@@ -142,7 +142,7 @@ public class ControladorProducto {
         nuevoProducto.getTxDescripcion().setText("");
         nuevoProducto.getTxPrecioCompra().setText("");
         nuevoProducto.getTxPrecioVenta().setText("");
-        nuevoProducto.getTxCantidadMinima().setText("");
+       // nuevoProducto.getTxCantidadMinima().setText("");
         nuevoProducto.getTxCantidad().setText("");
         nuevoProducto.setTitle("NUEVO PRODUCTO");
         provs = ExpertoProveedor.ListarProveedor();
@@ -153,7 +153,7 @@ public class ControladorProducto {
         nuevoProducto.getTxCodigo().setEditable(false);
         nuevoProducto.getTxNombre().setEditable(false);
         nuevoProducto.getTxCantidad().setEditable(false);
-        nuevoProducto.getTxCantidadMinima().setEditable(false);
+       // nuevoProducto.getTxCantidadMinima().setEditable(false);
         nuevoProducto.getTxDescripcion().setEditable(false);
         nuevoProducto.getTxPrecioCompra().setEditable(false);
         nuevoProducto.getTxPrecioVenta().setEditable(false);
@@ -167,7 +167,7 @@ public class ControladorProducto {
         nuevoProducto.getTxDescripcion().setText(producto.getDescripcionProducto());
         nuevoProducto.getTxPrecioCompra().setText(String.valueOf(producto.getPrecioCompra()));
         nuevoProducto.getTxPrecioVenta().setText(String.valueOf(producto.getPrecioVenta()));
-        nuevoProducto.getTxCantidadMinima().setText(String.valueOf(producto.getStock().getCantidadMinima()));
+       // nuevoProducto.getTxCantidadMinima().setText(String.valueOf(producto.getStock().getCantidadMinima()));
         nuevoProducto.getTxCantidad().setText(String.valueOf(producto.getStock().getCantidad()));
         nuevoProducto.getCbClasificacion().addItem(producto.getClasifABC());
         nuevoProducto.setTitle("MODIFICAR PRODUCTO");
@@ -180,7 +180,7 @@ public class ControladorProducto {
         productoSeleccionado.setDescripcionProducto(nuevoProducto.getTxDescripcion().getText());
         productoSeleccionado.setPrecioCompra(Double.parseDouble(nuevoProducto.getTxPrecioCompra().getText()));
         productoSeleccionado.setPrecioVenta(Double.parseDouble(nuevoProducto.getTxPrecioVenta().getText()));
-        productoSeleccionado.getStock().setCantdidadMinima(Integer.parseInt(nuevoProducto.getTxCantidadMinima().getText()));
+       // productoSeleccionado.getStock().setCantdidadMinima(Integer.parseInt(nuevoProducto.getTxCantidadMinima().getText()));
         productoSeleccionado.getStock().setCantdidad(Integer.parseInt(nuevoProducto.getTxCantidad().getText()));
         String ABC = nuevoProducto.getCbClasificacion().getSelectedItem().toString();
         productoSeleccionado.setClasifABC(ABC.charAt(0));
@@ -193,7 +193,7 @@ public class ControladorProducto {
                         Integer.parseInt(nuevoProducto.getTxCodigo().getText()), nuevoProducto.getTxNombre().getText(),
                         nuevoProducto.getTxDescripcion().getText(), Double.parseDouble(nuevoProducto.getTxPrecioCompra().getText()),
                         Double.parseDouble(nuevoProducto.getTxPrecioVenta().getText()), 0,
-                        Integer.parseInt(nuevoProducto.getTxCantidadMinima().getText()), 
+                        0, 
                         Integer.parseInt(nuevoProducto.getTxCantidad().getText()),
 			nuevoProducto.getCbClasificacion().getSelectedItem().toString(),
                         (String) nuevoProducto.getCbProveedor().getSelectedItem()) == true) {

@@ -167,7 +167,7 @@ public class ExpertoPoliticaSR implements Experto {
                    float nivelServicio = aux.getNivelServicio();
                    float StockDisp = aux.getStock().getCantidad() + aux.getStock().getStockPendiente();
                    
-                   //busco la demanda para el producto - año - periodo
+                   //Prediccion de la demanda
                    c1 = objFP.crearCriterio("OIDProducto", "=",((AgenteProducto)aux).getoid());
                    Criterio c2 = objFP.crearCriterio("periodo", "=", String.valueOf(periodo));
                    Criterio c3 = objFP.crearCriterio("anio","=",String.valueOf(fechaActual.get(GregorianCalendar.YEAR)-1));
@@ -184,7 +184,7 @@ public class ExpertoPoliticaSR implements Experto {
                    //busco la demora en el hashtable para este producto
                     int te = Integer.parseInt(demora.get(aux.getDescripcionProducto()).toString());
                    //Registro el pedido pendiente
-                    int loteS = (int)getLoteS(nivelServicio,demanda,R,te,MSE, (int) StockDisp);
+                    int loteS = getLoteS(nivelServicio,demanda,R,te,MSE, (int) StockDisp,aux);
                     ((AgenteDetallePedido)objDP).setOIDPedido(((AgentePedido)objPP).getoid());
                     ((AgenteDetallePedido)objDP).setOIDProducto(((AgenteProducto)aux).getoid());
                     ((AgenteDetallePedido)objDP).setCantidad(loteS); 
@@ -290,21 +290,22 @@ public class ExpertoPoliticaSR implements Experto {
         }
     }
 
-    private float getLoteS(float nivelServ, float demanda, int R, int te, float desvEstandar, int stockDisp) {
+    private int getLoteS(float nivelServ, float demanda, int R, int te, float desvEstandar, int stockDisp,Producto p) {
         System.out.println("Nivel Servicio:"+ nivelServ);
-        float k = getK(nivelServ);
+        int k = (int) getK(nivelServ);
         System.out.println("  K = " + k + " Demanda: " + demanda + " R: " + R + " te: " + te + " Oe: " + desvEstandar + " Stock Disponible: " + stockDisp);
 
-        float Ue = demanda * (float) (R + te) / 52;
+        int Ue = (int) (demanda * (R + te) / 52);
         System.out.println("  Ue(R+te): " + Ue + " unidades");
 
         float Oe = desvEstandar * (float) (R + te) / 52;
         System.out.println("  Oe(R+te): " + Oe + " unidades");
 
-        float S = Ue + (k * Oe);
+        int S = (int) (Ue + (k * Oe));
         System.out.println("  S: " + S + " unidades");
+        p.getStock().setCantdidadMinima(S);
 
-        float total = S - stockDisp;
+        int total = S - stockDisp;
         System.out.println("  S - Stock Disponible: " + total + " unidades");
 
         return total;
@@ -326,17 +327,6 @@ public class ExpertoPoliticaSR implements Experto {
      Stock Disponible = Cant_Stock + StockPend //Tabla Productos. $$$$$
      */
     private float getK(float nivelServ){
-        float rtaK = 0;
-        for (int i = 0; i < tablaK.length; i++) {
-            if (nivelServ == tablaK[i][0]) {
-                rtaK = tablaK[i][1];
-                break;
-            }
-        }
-        return rtaK;
-    }
-
- public int calcularLote(Producto p, Proveedor P) {
         tablaK[0][0] = 0.50f;
         tablaK[0][1] = 0f;
         tablaK[1][0] = 0.60f;
@@ -356,6 +346,17 @@ public class ExpertoPoliticaSR implements Experto {
         tablaK[8][0] = 0.9998f;
         tablaK[8][1] = 3.6f;
         
+        float rtaK = 0;
+        for (int i = 0; i < tablaK.length; i++) {
+            if (nivelServ == tablaK[i][0]) {
+                rtaK = tablaK[i][1];
+                break;
+            }
+        }
+        return rtaK;
+    }
+
+ public int calcularLote(Producto p, Proveedor P) {               
         GregorianCalendar fechaActual = new GregorianCalendar();
         int tiemR = 1;     //Valor por defecto...
         int perActual = 1; //Valor por defecto...
@@ -412,7 +413,9 @@ public class ExpertoPoliticaSR implements Experto {
               te = cat.get(i).getDemora();
           }           
            //Registro el pedido pendiente
-            int loteS = (int) getLoteS(nivelServicio,demanda,R,te,MSE, (int) StockDisp);           
+            int loteS = (int) getLoteS(nivelServicio,demanda,R,te,MSE, (int) StockDisp,p);
+            p.setNivelServicio(nivelServicio);
+            objFP.guardar((ObjetoPersistente)p);
           return loteS;
     }
 }

@@ -4,6 +4,7 @@ import Controlador.ControladorPrincipal;
 import javax.swing.JDesktopPane;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
+import javax.swing.JTable;
 
 public class PantallaPrincipal extends javax.swing.JFrame {
 
@@ -20,6 +21,10 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         labelAlfa = new javax.swing.JLabel();
         labelBeta = new javax.swing.JLabel();
         labelGama = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        bandejaProductos = new javax.swing.JTable();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        bandejaPedidos = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         MenuCliente = new javax.swing.JMenuItem();
@@ -47,22 +52,72 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         setName("Pantalla Principal"); // NOI18N
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
-        jDesktopPane1.setBackground(new java.awt.Color(172, 150, 102));
+        jDesktopPane1.setBackground(new java.awt.Color(204, 204, 255));
 
         labelAlfa.setForeground(new java.awt.Color(255, 0, 0));
         labelAlfa.setText("Alfa:");
-        labelAlfa.setBounds(1276, 10, 120, 17);
+        labelAlfa.setBounds(1276, 10, 120, 15);
         jDesktopPane1.add(labelAlfa, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         labelBeta.setForeground(new java.awt.Color(255, 0, 0));
         labelBeta.setText("Beta:");
-        labelBeta.setBounds(1270, 30, 110, 17);
+        labelBeta.setBounds(1270, 30, 110, 15);
         jDesktopPane1.add(labelBeta, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         labelGama.setForeground(new java.awt.Color(255, 0, 0));
         labelGama.setText("Gama:");
-        labelGama.setBounds(1262, 50, 100, 17);
+        labelGama.setBounds(1262, 50, 100, 15);
         jDesktopPane1.add(labelGama, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        jScrollPane1.setBackground(new java.awt.Color(204, 204, 255));
+        jScrollPane1.setViewportBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(153, 153, 255), new java.awt.Color(153, 153, 153)));
+
+        bandejaProductos.setBackground(new java.awt.Color(204, 204, 255));
+        bandejaProductos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        bandejaProductos.setGridColor(new java.awt.Color(204, 204, 204));
+        bandejaProductos.setRowSelectionAllowed(false);
+        bandejaProductos.setSelectionBackground(new java.awt.Color(204, 204, 255));
+        bandejaProductos.setSelectionForeground(new java.awt.Color(204, 204, 204));
+        jScrollPane1.setViewportView(bandejaProductos);
+        bandejaProductos.getAccessibleContext().setAccessibleName("Bandeja");
+        bandejaProductos.getAccessibleContext().setAccessibleDescription("bandeja de entrada");
+
+        jScrollPane1.setBounds(60, 170, 510, 140);
+        jDesktopPane1.add(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        jScrollPane2.setBackground(new java.awt.Color(204, 204, 255));
+        jScrollPane2.setViewportBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(153, 153, 255), new java.awt.Color(153, 153, 153)));
+
+        bandejaPedidos.setBackground(new java.awt.Color(204, 204, 255));
+        bandejaPedidos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        bandejaPedidos.setGridColor(new java.awt.Color(204, 204, 204));
+        bandejaPedidos.setRowSelectionAllowed(false);
+        bandejaPedidos.setSelectionBackground(new java.awt.Color(204, 204, 255));
+        bandejaPedidos.setSelectionForeground(new java.awt.Color(204, 204, 204));
+        jScrollPane2.setViewportView(bandejaPedidos);
+
+        jScrollPane2.setBounds(60, 10, 510, 140);
+        jDesktopPane1.add(jScrollPane2, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -162,12 +217,16 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem Metodo;
     private javax.swing.JMenuItem Salir;
     private javax.swing.JMenuItem Ventas;
+    private javax.swing.JTable bandejaPedidos;
+    private javax.swing.JTable bandejaProductos;
     private javax.swing.JMenuItem itemEstablecer;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JMenuItem jmPedidos;
     private javax.swing.JMenuItem jmRealizarPedido;
     private javax.swing.JLabel labelAlfa;
@@ -328,4 +387,22 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     public void setJmRealizarPedido(JMenuItem jmRealizarPedido) {
         this.jmRealizarPedido = jmRealizarPedido;
     }
+
+    public JTable getBandejaEntrada() {
+        return bandejaPedidos;
+    }
+
+    public void setBandejaEntrada(JTable bandejaEntrada) {
+        this.bandejaPedidos = bandejaEntrada;
+    }
+
+    public JTable getBandejaProductos() {
+        return bandejaProductos;
+    }
+
+    public void setBandejaProductos(JTable bandejaProductos) {
+        this.bandejaProductos = bandejaProductos;
+    }
+     
+    
 }
