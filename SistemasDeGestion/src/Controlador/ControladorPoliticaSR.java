@@ -139,7 +139,7 @@ public class ControladorPoliticaSR {
     }
     
     private void llenarTabla(){        
-        //......................................................................
+        //llena la tabla de acuerdo a como deberia hacerse el pedido
         String index = (String) objGUIPolSR.getJcProveedores().getSelectedItem();
         Proveedor P = (Proveedor) proveedores.get(index);
         String item = (String) objGUIPolSR.getJcProductos().getSelectedItem();

@@ -2,6 +2,8 @@ package Controlador;
 
 import Excepciones.NoClienteExcepcion;
 import Excepciones.NoProductoExcepcion;
+import Experto.ExpertoReloj;
+import Experto.FabricaExperto;
 import Pantalla.*;
 import Persistencia.AdministradorTx;
 import java.awt.event.ActionEvent;
@@ -15,6 +17,7 @@ public final class ControladorPrincipal {
 
     private PantallaPrincipal pantallaPrincipal;
     private static ControladorParametros controladorParametros;
+    private ExpertoReloj clock;
 
     public ControladorPrincipal() {
         pantallaPrincipal = new PantallaPrincipal(this);
@@ -25,6 +28,9 @@ public final class ControladorPrincipal {
         pantallaPrincipal.setLocationRelativeTo(null);
         pantallaPrincipal.setExtendedState(JFrame.MAXIMIZED_BOTH);
         crearConexion("jdbc:mysql://localhost:3306/sg1", "root", "duendecito");
+        //cargamos bandeja de entrada
+        clock = (ExpertoReloj) FabricaExperto.getInstancia().FabricarExperto("ExpertoReloj");
+        clock.iniciar(pantallaPrincipal);
         
         //////////Generar Reporte datos de la Curva ABC
         pantallaPrincipal.getMenuABC().addActionListener(new java.awt.event.ActionListener() {

@@ -14,6 +14,10 @@ import Persistencia.Fachada;
 import java.util.ArrayList;
 import Excepciones.NoProductoExcepcion;
 import Interfaces.Catalogo;
+import Interfaces.DayOfYear;
+import Interfaces.Demanda;
+import Interfaces.DetallePedido;
+import Interfaces.Pedido;
 import Interfaces.ProductoProveedor;
 import Interfaces.Proveedor;
 import Interfaces.Stock;
@@ -29,6 +33,7 @@ import java.util.List;
 public class ExpertoProducto implements Experto {
 
     private List<Producto> vectorDTOProducto = new ArrayList();
+    private float[][] tablaK = new float[9][2];
 
     public ExpertoProducto() {
     }
@@ -86,7 +91,8 @@ public class ExpertoProducto implements Experto {
     
      public boolean insertarProducto(int codigo, String nombre, String descripcion, double precioCompra,
             double precioVenta, int baja, int cantidadminima, int cantidad, char ABC, Proveedor prov) throws NoProductoExcepcion {
-        boolean resultado = false;        
+        boolean resultado = false;      
+        double nivel = 0.0;
         GregorianCalendar fechaActual = new GregorianCalendar();
         String fechaSistema = String.valueOf(fechaActual.get(GregorianCalendar.DAY_OF_MONTH))
                        .concat("-")
@@ -99,13 +105,15 @@ public class ExpertoProducto implements Experto {
         AgenteProducto ap = (AgenteProducto) producto;
         AgenteProveedor aP = (AgenteProveedor) prov;
         AgenteCatalogo APP= (AgenteCatalogo) asocia;
-        //produtco
+        //producto
+        nivel = this.CalcularNivelServicio(producto, prov);
         producto.setCodigoProducto(codigo);
         producto.setNombreProducto(nombre);
         producto.setDescripcionProducto(descripcion);
         producto.setPrecioCompra(precioCompra);
         producto.setPrecioVenta(precioVenta);
         producto.setClasifABC(ABC);
+        producto.setNivelServicio((float) nivel);
         producto.setbaja(baja);       
         //stock
         stock.setStockPendiente(0);
@@ -174,5 +182,45 @@ public class ExpertoProducto implements Experto {
         }
         return productos;
     }
+    
+    public double CalcularNivelServicio(Producto p, Proveedor P){
+        // 1 - (costo anual de almacenamiento * cantidad pedido)/(Demanda * costo emisión pedido)
+        double res; 
+        int agotamiento, cantPedida = 0;
+        double costoemi,costoalmac = 0;
+        Fachada fac = Fachada.getInstancia();
+        AgenteProducto ap = (AgenteProducto) p;
+        AgenteProveedor AP = (AgenteProveedor) P;
+        ArrayList<Demanda> demanda;
+        ArrayList<Proveedor> proveedors;
+        ArrayList<Pedido> pedidos;
+         Criterio d = fac.crearCriterio("OIDProducto", "=", ap.getoid());
+         demanda = fac.buscar(Demanda.class, d);
+         float dem = (float) 0.0; 
+         float MSE = (float) 0.0;
+         for(int i=0; i < demanda.size();i++){
+              dem = (float) (dem + demanda.get(i).getDemandapronosticada());
+              MSE = (float) demanda.get(i).getMse();
+           }
+         costoemi = P.getCostoEmision();
+         if (dem != 0.0){ //el producto no es nuevo
+             Criterio ped = fac.crearCriterio("OIDProveedor", "=", AP.getoid());
+             Criterio p2 = fac.crearCriterio("pend", "=", 1);
+             Criterio c = fac.crearCriterioCompuesto(ped, "AND", p2);
+             //buscamos el pedido pendiente
+             pedidos = fac.buscar(Pedido.class, c);
+             for(int j=0; j < pedidos.size();j++){
+                 List<DetallePedido> dets = pedidos.get(j).getDetallePedido();
+                 for(int k=0;k < dets.size();k++){
+                     if(dets.get(k).getProducto().getCodigoProducto() == p.getCodigoProducto())
+                         cantPedida = dets.get(k).getCantidad();
+                 }             
+             }
+          }
+         res = (1 - ((costoalmac * cantPedida)/(dem*costoemi)));
+         
+        return res;
+    }
+    
     
 }
