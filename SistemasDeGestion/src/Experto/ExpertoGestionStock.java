@@ -33,7 +33,8 @@ public class ExpertoGestionStock implements Experto{
         Criterio c1 = new Criterio();
         c1 = Fachada.getInstancia().crearCriterio("OIDStock", "=", prod.getStock());
         stock = (Stock) FachadaInterna.getInstancia().buscarOID(Stock.class, prod.getOIDStock());
-        stock.setCantdidad(nuevo);
+        int cant = stock.getCantidad();
+        stock.setCantdidad(cant + nuevo);
         Fachada.getInstancia().guardar((ObjetoPersistente)stock);
     }
 }

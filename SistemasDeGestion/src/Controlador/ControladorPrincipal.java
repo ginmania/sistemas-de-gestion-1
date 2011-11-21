@@ -8,6 +8,7 @@ import Pantalla.*;
 import Persistencia.AdministradorTx;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyVetoException;
+import java.util.GregorianCalendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
@@ -16,11 +17,14 @@ import javax.swing.JInternalFrame;
 public final class ControladorPrincipal {
 
     private PantallaPrincipal pantallaPrincipal;
+    private PantallaFechaSistema pantallaFecha;
     private static ControladorParametros controladorParametros;
     private ExpertoReloj clock;
+    public GregorianCalendar fechaSistema;
 
     public ControladorPrincipal() {
         pantallaPrincipal = new PantallaPrincipal(this);
+        fechaSistema = new GregorianCalendar();
         pantallaPrincipal.getLabelAlfa().setVisible(false);
         pantallaPrincipal.getLabelBeta().setVisible(false);
         pantallaPrincipal.getLabelGama().setVisible(false);
@@ -30,11 +34,10 @@ public final class ControladorPrincipal {
         crearConexion("jdbc:mysql://localhost:3306/sg1", "root", "duendecito");
         //cargamos bandeja de entrada
         clock = (ExpertoReloj) FabricaExperto.getInstancia().FabricarExperto("ExpertoReloj");
-        clock.iniciar(pantallaPrincipal);
+        clock.iniciar(this);
         
         //////////Generar Reporte datos de la Curva ABC
         pantallaPrincipal.getMenuABC().addActionListener(new java.awt.event.ActionListener() {
-
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
                     reportes("ABC");
@@ -58,7 +61,6 @@ public final class ControladorPrincipal {
         
 //////////Generar Reporte Pedidos
         pantallaPrincipal.getMenuPedidos().addActionListener(new java.awt.event.ActionListener() {
-
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
                     reportes("Pedido");
@@ -70,7 +72,6 @@ public final class ControladorPrincipal {
         
         //////////Generar Reporte Productos
         pantallaPrincipal.getMenuProductos().addActionListener(new java.awt.event.ActionListener() {
-
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
                     reportes("Producto");
@@ -82,7 +83,6 @@ public final class ControladorPrincipal {
         
         //////////Generar Reporte Ventas
         pantallaPrincipal.getMenuVentas().addActionListener(new java.awt.event.ActionListener() {
-
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
                     reportes("Venta");
@@ -92,7 +92,6 @@ public final class ControladorPrincipal {
             }
         });
         pantallaPrincipal.getItemCliente().addActionListener(new java.awt.event.ActionListener() {
-
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
                     agregarCliente();
@@ -103,7 +102,6 @@ public final class ControladorPrincipal {
         });
 
         pantallaPrincipal.getItemProducto().addActionListener(new java.awt.event.ActionListener() {
-
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
                     agregarProducto();
@@ -115,7 +113,6 @@ public final class ControladorPrincipal {
 
 
         pantallaPrincipal.getItemProveedor().addActionListener(new java.awt.event.ActionListener() {
-
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
                     AdministrarProveedores();
@@ -126,7 +123,6 @@ public final class ControladorPrincipal {
         });
 
         pantallaPrincipal.getVentas().addActionListener(new java.awt.event.ActionListener() {
-
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
                     AdministrarVentas();
@@ -147,7 +143,6 @@ public final class ControladorPrincipal {
         });
 
         pantallaPrincipal.getABC().addActionListener(new java.awt.event.ActionListener() {
-
             public void actionPerformed(ActionEvent e) {
                 try {
                     curvaABC();
@@ -158,7 +153,6 @@ public final class ControladorPrincipal {
         });
 
         pantallaPrincipal.getJmPedidos().addActionListener(new java.awt.event.ActionListener() {
-
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Politica();
             }
@@ -172,7 +166,6 @@ public final class ControladorPrincipal {
         });
 
         pantallaPrincipal.getSalir().addActionListener(new java.awt.event.ActionListener() {
-
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 pantallaPrincipal.dispose();
                 System.exit(0);
@@ -180,7 +173,6 @@ public final class ControladorPrincipal {
         });
 
         pantallaPrincipal.getItemEstablecer().addActionListener(new java.awt.event.ActionListener() {
-
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
                     establecerParametros();
@@ -195,7 +187,20 @@ public final class ControladorPrincipal {
                 }
             }
         });
-
+      /*  pantallaPrincipal.getFechaSistema().addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+               pantallaFecha = new PantallaFechaSistema();
+               pantallaFecha.setVisible(true);
+               add(pantallaFecha);
+            }
+        });
+        pantallaFecha.getJbAceptarFecha().addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                fechaSistema.setGregorianChange(pantallaFecha.getJd_FechaSistema().getDate());
+            }
+        });*/
+        
+        
     }
 
     public void crearConexion(String dir, String usuario, String pass) {
@@ -249,8 +254,11 @@ public final class ControladorPrincipal {
 
     public void add(JInternalFrame jInternalFrame) {
         System.out.println("AGREGA");
+        pantallaPrincipal.getBandejaEntrada().setVisible(false);
+        pantallaPrincipal.getBandejaProductos().setVisible(false);
         jInternalFrame.moveToFront();
         jInternalFrame.setMaximizable(true);
+        jInternalFrame.moveToFront();        
         pantallaPrincipal.getjDesktopPane1().add(jInternalFrame);
         //pantallaPrincipal.getjDesktopPane1().getDesktopManager().maximizeFrame(jInternalFrame);
 
@@ -263,5 +271,18 @@ public final class ControladorPrincipal {
     public void remove(JInternalFrame jInternalFrame) {
         System.out.println("Quita");
         pantallaPrincipal.getjDesktopPane1().remove(jInternalFrame);
+        pantallaPrincipal.getBandejaEntrada().setVisible(true);
+        pantallaPrincipal.getBandejaProductos().setVisible(true);
+        clock.iniciar(this);
     }
+
+    public PantallaPrincipal getPantallaPrincipal() {
+        return pantallaPrincipal;
+    }
+
+    public void setPantallaPrincipal(PantallaPrincipal pantallaPrincipal) {
+        this.pantallaPrincipal = pantallaPrincipal;
+    }
+    
+    
 }

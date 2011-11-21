@@ -4,7 +4,9 @@
  */
 package Experto;
 
+import Agentes.AgenteCatalogo;
 import Agentes.AgenteProducto;
+import Agentes.AgenteProveedor;
 import Controlador.ControladorPrincipal;
 import Interfaces.Catalogo;
 import Interfaces.DayOfYear;
@@ -15,6 +17,7 @@ import Interfaces.Stock;
 import Pantalla.PantallaPrincipal;
 import Persistencia.Criterio;
 import Persistencia.Fachada;
+import Persistencia.FachadaInterna;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.Hashtable;
@@ -30,7 +33,7 @@ public class ExpertoReloj implements Experto{
     private Fachada fac;
     private GregorianCalendar fechaSistema;
     private DayOfYear dia;
-    private PantallaPrincipal ppal;
+    private ControladorPrincipal ppal;
     private ExpertoMetodos expMetodos;
     private ExpertoVentas expVentas;
     private ExpertoGestionStock expStock;
@@ -52,11 +55,12 @@ public class ExpertoReloj implements Experto{
         
         
     }
-    public void iniciar(PantallaPrincipal pant){
+    public void iniciar(ControladorPrincipal pant){
         ppal = pant;
-        buscarPedidosPendientes();
-        buscarProductosPuntoPedido();
+        fechaSistema = pant.fechaSistema;
         //calculoDemanda();
+        buscarPedidosPendientes();
+        buscarProductosPuntoPedido();        
     }
     /*Este experto carga el informe inicial o bandeja de entrada de pedidos pendientes*/
     /*carga los avisos de productos por debajo del stock*/
@@ -80,7 +84,7 @@ public class ExpertoReloj implements Experto{
             newRow[3] = peds.get(i).getProveedor().getNombre();            
             md.addRow(newRow);
         }
-        ppal.getBandejaEntrada().setModel(md);
+        ppal.getPantallaPrincipal().getBandejaEntrada().setModel(md);
     }
 
     private boolean buscarProductosPuntoPedido() {
@@ -164,14 +168,41 @@ public class ExpertoReloj implements Experto{
 
     private void calculoDemanda() {
         expMetodos = (ExpertoMetodos) FabricaExperto.getInstancia().FabricarExperto("ExpertoMetodos") ;
+        Criterio Pr = fac.crearCriterio("baja", "=", 0);
+        ArrayList<Proveedor> APR = fac.buscar(Proveedor.class, Pr);
         
-        Criterio pp = fac.crearCriterio("baja", "=", 0);
-        prods = fac.buscar(Producto.class, pp);
-        for(int i=0;i<prods.size();i++){
-            Producto sel = (Producto) FabricaEntidad.getInstancia().FabricarEntidad(Producto.class);
-            sel = prods.get(i);
-            expMetodos.calcularestacionalidad(i, i, sel.getNombreProducto(), diaActual, diaActual, diaActual);
+        for(int j = 0; j<APR.size();j++){
+            AgenteProveedor agPr= (AgenteProveedor) APR.get(j);
+            DayOfYear objDia = new DayOfYear();
+            int diaDelAnio = objDia.getDiaDelAnio();
+            int diasTotalAnio = (objDia.esBisiesto()) ? 366 : 365;
+            int tiemR = 1;     //Valor por defecto...
+            int perActual = 1; //Valor por defecto...
+            float diaTemp = 0; //Valor por defecto...
+            tiemR = APR.get(j).getTiempoR();
+            if (tiemR == 0) {
+                diaTemp = 0;
+            } else {
+                diaTemp = diaDelAnio / tiemR;
+            }
+            int periodo = (int) diaTemp;
+            //..................................................................
+            if (diaTemp - periodo != 0) {
+                if (diaTemp < (int) (diasTotalAnio / tiemR)) {
+                    ++periodo;
+                }
+            }
+            Criterio cc = fac.crearCriterio("OIDProveedor","=", agPr.getoid());
+            ArrayList<Catalogo> cat = fac.buscar(Catalogo.class, cc);
+          for(int c=0; c < cat.size();c++){ 
+            AgenteCatalogo agC = (AgenteCatalogo) cat.get(c);
+            Producto prod = (Producto) FabricaEntidad.getInstancia().FabricarEntidad(Producto.class);
+            prod = (Producto) FachadaInterna.getInstancia().buscarOID(Producto.class,agC.getOIDProducto());
+            /*Deberia calcular demanda*/
+            
+          }
         }
+       
     }
 
     private Proveedor SeleccionarProveedor(List<Proveedor> pr) {

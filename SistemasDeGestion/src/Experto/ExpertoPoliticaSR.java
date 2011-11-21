@@ -23,6 +23,7 @@ import Persistencia.Fachada;
 import Persistencia.FachadaInterna;
 import Persistencia.ObjetoPersistente;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Hashtable;
 
@@ -51,16 +52,21 @@ public class ExpertoPoliticaSR implements Experto {
     public ExpertoPoliticaSR() {
     }
 
-    public void iniciar() {
+    public void iniciar(GregorianCalendar fechaS) {
         objFP = Fachada.getInstancia();
         GregorianCalendar fechaActual = new GregorianCalendar();
         //Busco todos los proveedores...........................................
         objProv = objFP.buscar_todo(Proveedor.class);
-        fechaSistema = String.valueOf(fechaActual.get(GregorianCalendar.DAY_OF_MONTH))
+       /* fechaSistema = String.valueOf(fechaActual.get(GregorianCalendar.DAY_OF_MONTH))
                 .concat("-")
                 .concat(String.valueOf(fechaActual.get(GregorianCalendar.MONTH) + 1))
                 .concat("-")
-                .concat(String.valueOf(fechaActual.get(GregorianCalendar.YEAR)));
+                .concat(String.valueOf(fechaActual.get(GregorianCalendar.YEAR)));*/
+        fechaSistema = String.valueOf(fechaS.get(GregorianCalendar.DAY_OF_MONTH))
+                .concat("-")
+                .concat(String.valueOf(fechaS.get(GregorianCalendar.MONTH) + 1))
+                .concat("-")
+                .concat(String.valueOf(fechaS.get(GregorianCalendar.YEAR)));
 
         //verificarPolitica();
         //......................................................................o

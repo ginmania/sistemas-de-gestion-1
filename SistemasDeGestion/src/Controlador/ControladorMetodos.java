@@ -58,7 +58,6 @@ public class ControladorMetodos {
 
         /////////BOTON METODO CONSULTAR//////////
         pantallaMetodos.getBotonConsultar().addActionListener(new java.awt.event.ActionListener() {
-
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
                     seleccionado = pantallaMetodos.getComboProductos().getSelectedItem().toString();
@@ -83,7 +82,6 @@ public class ControladorMetodos {
 
         /////////BOTON METODO GUARDAR//////////
         pantallaMetodos.getBotonGuardar().addActionListener(new java.awt.event.ActionListener() {
-
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
                     guardar();
@@ -95,7 +93,6 @@ public class ControladorMetodos {
 
         /////////BOTON METODO CANCELAR//////////
         pantallaMetodos.getBotonCancelarMetodos().addActionListener(new java.awt.event.ActionListener() {
-
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
                     pantallaMetodos.dispose();
@@ -108,20 +105,17 @@ public class ControladorMetodos {
 
         /////////BOTON METODO SIMPLE//////////
         pantallaMetodos.getBotonSimple().addActionListener(new java.awt.event.ActionListener() {
-
             public void actionPerformed(java.awt.event.ActionEvent evt) {
             }
         });
         /////////BOTON METODO TENDENCIA//////////
         pantallaMetodos.getBotonTendencia().addActionListener(new java.awt.event.ActionListener() {
-
             public void actionPerformed(java.awt.event.ActionEvent evt) {
             }
         });
 
         /////////BOTON METODO ESTACIONALIDAD//////////
         pantallaMetodos.getBotonEstacionalidad().addActionListener(new java.awt.event.ActionListener() {
-
             public void actionPerformed(java.awt.event.ActionEvent evt) {
             }
         });
@@ -130,7 +124,6 @@ public class ControladorMetodos {
 
         /////////BOTON CALCULAR CALCULO METODO//////////
         pantallaMetodos.getBotonCalcularMetodos().addActionListener(new java.awt.event.ActionListener() {
-
             public void actionPerformed(ActionEvent e) {
                 if (pantallaMetodos.getTxPeriodo().getText().equalsIgnoreCase("")) {
                     JOptionPane.showMessageDialog(pantallaMetodos, "Debe ingresar la cantidad de periodos a predecir", "¡Atención!", JOptionPane.INFORMATION_MESSAGE);
