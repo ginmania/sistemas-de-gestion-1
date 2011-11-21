@@ -105,6 +105,11 @@
                 </Property>
               </Properties>
             </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="FechaSistema">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Fecha Sistema"/>
+              </Properties>
+            </MenuItem>
           </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="jMenu3">

@@ -39,7 +39,7 @@ public class ExpertoRealizarPedido implements Experto{
 
     public DefaultTableModel iniciar(){
         obFP = Fachada.getInstancia();
-        dp = null;
+        dp = new DefaultTableModel();
         this.buscarPedidosPendientes();
         if(!pedido.isEmpty()){
             this.buscarProductos();

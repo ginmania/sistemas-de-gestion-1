@@ -40,7 +40,7 @@ public class ControladorRealizarPedido {
     void iniciar() {
         pantalla.getJbRealizarPedido().addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
-               pantalla.getJtPedidos().setModel( experto.iniciar());
+               pantalla.getJtPedidos().setModel(experto.iniciar());
             }
         });        
     }

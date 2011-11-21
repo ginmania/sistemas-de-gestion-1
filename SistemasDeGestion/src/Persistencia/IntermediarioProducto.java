@@ -71,13 +71,15 @@ public class IntermediarioProducto extends IntermediarioRelacional {
                 temp.setPrecioVenta((Double) (registro.getCampo("nivelServicio").getValor(Double.class)));
                 temp.setOIDPolitica(registro.getCampo("politica").getValor());
                 ArrayList<Stock> buscarStock;
-                buscarStock= FachadaInterna.getInstancia().buscar(Stock.class,FabricaCriterio.getInstancia().crearCriterio("OIDStock", "=", registro.getCampo("OIDStock").getValor()));
-                if(!buscarStock.isEmpty())
+                if(registro.getCampo("OIDStock").getValor() != null){
+                    buscarStock= FachadaInterna.getInstancia().buscar(Stock.class,FabricaCriterio.getInstancia().crearCriterio("OIDStock", "=", registro.getCampo("OIDStock").getValor()));
                     temp.setStock(buscarStock.get(0));
+                }
                 ArrayList<Demanda> buscar; 
-                buscar = Fachada.getInstancia().buscar(Demanda.class, FabricaCriterio.getInstancia().crearCriterio("OIDProducto", "=", temp.getoid()));
-                if(!buscar.isEmpty())
+                if(temp.getoid() != null){
+                    buscar = Fachada.getInstancia().buscar(Demanda.class, FabricaCriterio.getInstancia().crearCriterio("OIDProducto", "=", temp.getoid()));
                     temp.setDemandas(buscar);
+                }
                 //busquedaoidquenoexisten(temp);
                 //proveedor deberia tener siempre
                // ArrayList<ProductoProveedor> pp = Fachada.getInstancia().buscar(ProductoProveedor.class, FabricaCriterio.getInstancia().crearCriterio("OIDProducto", "=", temp.getoid()));

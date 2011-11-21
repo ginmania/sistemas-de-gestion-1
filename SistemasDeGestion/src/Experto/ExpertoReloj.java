@@ -68,6 +68,7 @@ public class ExpertoReloj implements Experto{
 
     private void buscarPedidosPendientes() {
         DefaultTableModel md = new DefaultTableModel();
+        ppal.getPantallaPrincipal().getBandejaEntrada().removeAll();
         Criterio cp = fac.crearCriterio("pend", "=", 1);
         peds = fac.buscar(Pedido.class, cp);
         md.addColumn("NroPedido");        
@@ -89,6 +90,7 @@ public class ExpertoReloj implements Experto{
 
     private boolean buscarProductosPuntoPedido() {
         DefaultTableModel tprod = new DefaultTableModel();
+        ppal.getPantallaPrincipal().getBandejaProductos().removeAll();
         Criterio p1 = fac.crearCriterio("baja", "=",0);
         ArrayList<Producto> pp = new ArrayList();
         List<Proveedor> pr;        
@@ -107,7 +109,7 @@ public class ExpertoReloj implements Experto{
             Stock s = prods.get(i).getStock();
             int ss = s.getCantidadMinima();
             int actual = s.getCantidad();
-            if(actual <= ss){
+            if(actual<ss){
                 pp.add(prods.get(i));
                 Object[] newRow = new Object[4];
                 newRow[0] = prods.get(i).getCodigoProducto();
@@ -117,7 +119,7 @@ public class ExpertoReloj implements Experto{
                 tprod.addRow(newRow);
             }
         }
-        
+        ppal.getPantallaPrincipal().getBandejaProductos().setModel(tprod);
         if(diaActual != 28) return false;
         if(pp.size()== 0) return false;
         //si tenemos productos con stock bajo y es fin de mes        
@@ -199,7 +201,8 @@ public class ExpertoReloj implements Experto{
             Producto prod = (Producto) FabricaEntidad.getInstancia().FabricarEntidad(Producto.class);
             prod = (Producto) FachadaInterna.getInstancia().buscarOID(Producto.class,agC.getOIDProducto());
             /*Deberia calcular demanda*/
-            
+            /*public String[][] calcularestacionalidad(double alfa, int valorperiodo, String productoSeleccionado, int valorperiodoinicial, int valorperiodofinal, int periodosapredecir) {*/
+            expMetodos.calcularestacionalidad(0.1, periodo,prod.getNombreProducto(), periodo, periodo, periodo);
           }
         }
        
