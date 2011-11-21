@@ -95,7 +95,7 @@ public class ExpertoVentas implements Experto{
         NroFactura = vta.getNumero();        
         //deberia imprimir por impresora la factura
         System.out.println("\n Se guardo la factura nro"+String.valueOf(nroFactura)); 
-        System.out.println("\n Cliente"+cli.getNombre()+"-"+cli.getApellido()+" -CUIT "+cli.getCUIT());       
+  //      System.out.println("\n Cliente"+cli.getNombre()+"-"+cli.getApellido()+" -CUIT "+cli.getCUIT());       
         
         return res;
     }
