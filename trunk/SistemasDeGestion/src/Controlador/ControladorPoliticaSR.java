@@ -68,8 +68,8 @@ public class ControladorPoliticaSR {
         
         objGUIPolSR.getJcProveedores().addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if(objGUIPolSR.getJcProveedores().getItemCount() > 3)
-                buscarProductos(objGUIPolSR.getJcProveedores().getSelectedItem());
+                if(objGUIPolSR.getJcProveedores().getItemCount() >= 3)
+                 buscarProductos(objGUIPolSR.getJcProveedores().getSelectedItem());
             }
         });
         

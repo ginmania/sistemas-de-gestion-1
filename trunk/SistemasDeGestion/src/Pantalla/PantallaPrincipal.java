@@ -39,6 +39,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         jmRealizarPedido = new javax.swing.JMenuItem();
         menuParametros = new javax.swing.JMenu();
         itemEstablecer = new javax.swing.JMenuItem();
+        FechaSistema = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         menuABC = new javax.swing.JMenuItem();
         menuClientes = new javax.swing.JMenuItem();
@@ -179,6 +180,9 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         itemEstablecer.setMargin(new java.awt.Insets(0, 10, 0, 0));
         menuParametros.add(itemEstablecer);
 
+        FechaSistema.setText("Fecha Sistema");
+        menuParametros.add(FechaSistema);
+
         jMenuBar1.add(menuParametros);
 
         jMenu3.setText("Reportes");
@@ -212,6 +216,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem FechaSistema;
     private javax.swing.JMenuItem MenuCliente;
     private javax.swing.JMenuItem MenuProducto;
     private javax.swing.JMenuItem MenuProveedor;
@@ -403,6 +408,14 @@ public class PantallaPrincipal extends javax.swing.JFrame {
 
     public void setBandejaProductos(JTable bandejaProductos) {
         this.bandejaProductos = bandejaProductos;
+    }
+
+    public JMenuItem getFechaSistema() {
+        return FechaSistema;
+    }
+
+    public void setFechaSistema(JMenuItem FechaSistema) {
+        this.FechaSistema = FechaSistema;
     }
 
     
