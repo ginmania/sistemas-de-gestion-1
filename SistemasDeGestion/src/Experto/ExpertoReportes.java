@@ -43,7 +43,7 @@ public class ExpertoReportes implements Experto {
         }
         return vectorDTOCliente;
     }
-    
+
     public List<Pedido> buscarPedido() throws NoClienteExcepcion {
         vectorDTOPedido.clear();
         List<Pedido> pedidos = null;
@@ -53,16 +53,43 @@ public class ExpertoReportes implements Experto {
             throw new NoClienteExcepcion();
         }
         for (Pedido pedido : pedidos) {
-//            if (pedido.getbaja() == 0) {
-                vectorDTOPedido.add(pedido);
-  //          }
+            vectorDTOPedido.add(pedido);
         }
         return vectorDTOPedido;
     }
 
-    public boolean iniciar(){
+    public List<Producto> buscarProducto() throws NoClienteExcepcion {
+        vectorDTOProducto.clear();
+        List<Producto> productos = null;
+        Criterio c1 = new Criterio("1", "=", "1");
+        productos = Fachada.getInstancia().buscar(Producto.class, c1);
+        if (productos.isEmpty()) {
+            throw new NoClienteExcepcion();
+        }
+        for (Producto producto : productos) {
+            vectorDTOProducto.add(producto);
+        }
+        return vectorDTOProducto;
+    }
+    
+    public List<Venta> buscarVenta() throws NoClienteExcepcion {
+        vectorDTOVenta.clear();
+        List<Venta> ventas = null;
+        Criterio c1 = new Criterio("1", "=", "1");
+        ventas = Fachada.getInstancia().buscar(Venta.class, c1);
+        if (ventas.isEmpty()) {
+            throw new NoClienteExcepcion();
+        }
+        for (Venta venta : ventas) {
+            vectorDTOVenta.add(venta);
+        }
+        return vectorDTOVenta;
+    }
+
+    public boolean iniciar() {
         return true;
     }
+
     public boolean confirmar() {
         return true;
     }

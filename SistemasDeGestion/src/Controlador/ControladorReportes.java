@@ -52,6 +52,16 @@ public class ControladorReportes {
             nombreArchivo = pdf.armarPedido(pedidos);
             JOptionPane.showMessageDialog(pantallaPrincipal, "Reporte de Pedidos creado satisfactoriamente", "¡Atención!", JOptionPane.INFORMATION_MESSAGE);
             abrir(nombreArchivo);
+        } else if (nombreReporte.equalsIgnoreCase("Producto")) {
+            productos = expertoReportes.buscarProducto();
+            nombreArchivo = pdf.armarProducto(productos);
+            JOptionPane.showMessageDialog(pantallaPrincipal, "Reporte de Productos creado satisfactoriamente", "¡Atención!", JOptionPane.INFORMATION_MESSAGE);
+            abrir(nombreArchivo);
+        } else if (nombreReporte.equalsIgnoreCase("Venta")) {
+            ventas = expertoReportes.buscarVenta();
+            nombreArchivo = pdf.armarVenta(ventas);
+            JOptionPane.showMessageDialog(pantallaPrincipal, "Reporte de Ventas creado satisfactoriamente", "¡Atención!", JOptionPane.INFORMATION_MESSAGE);
+            abrir(nombreArchivo);
         }
 
     }

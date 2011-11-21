@@ -2,6 +2,8 @@ package Metodo;
 
 import Interfaces.Cliente;
 import Interfaces.Pedido;
+import Interfaces.Producto;
+import Interfaces.Venta;
 import Persistencia.ConvertirFechas;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -29,31 +31,67 @@ public class ArmarPDF {
         mensaje = "";
         cabecera = "";
         nombreArchivo = "";
-        nombreArchivo = fecha + ".pdf";
+        nombreArchivo = fecha + "Clientes.pdf";
         cabecera = "                                             LA CABAÑA CHOCOLATES S.A. \n";
-        cabecera+= "                                                Reporte de clientes " + fecha +"\n\n" ;
-        cabecera+= "____________________________________________________________________________" +"\n\n";
+        cabecera += "                                                Reporte de clientes " + fecha + "\n\n";
+        cabecera += "____________________________________________________________________________" + "\n\n";
         for (Cliente clientes : cliente) {
-            mensaje += "Apellido: " + clientes.getApellido() + "  Nombre: " + clientes.getNombre() + "  Celular: " + clientes.getCelular() + "  Direccion: " +
-                    clientes.getDireccion() + "  email: " + clientes.getemail() + "\n\n";
+            mensaje += "Apellido: " + clientes.getApellido() + "  Nombre: " + clientes.getNombre() + "  Celular: " + clientes.getCelular() + "  Direccion: "
+                    + clientes.getDireccion() + "  email: " + clientes.getemail() + "\n\n";
         }
         generar(nombreArchivo);
         return nombreArchivo;
     }
-    
-        public String armarPedido(List<Pedido> pedido) {
+
+    public String armarPedido(List<Pedido> pedido) {
         Date fechasistema = new Date();
         fecha = ConvertirFechas.fechaAString(fechasistema);
         mensaje = "";
         cabecera = "";
         nombreArchivo = "";
-        nombreArchivo = fecha + ".pdf";
+        nombreArchivo = fecha + "Pedidos.pdf";
         cabecera = "                                             LA CABAÑA CHOCOLATES S.A. \n";
-        cabecera+= "                                                Reporte de pedidos " + fecha +"\n\n" ;
-        cabecera+= "____________________________________________________________________________" +"\n\n";
+        cabecera += "                                                Reporte de pedidos " + fecha + "\n\n";
+        cabecera += "____________________________________________________________________________" + "\n\n";
         for (Pedido pedidos : pedido) {
-            mensaje += "Apellido: " + pedidos.getNroPedido() + "  Nombre: " + pedidos.getProveedor() + "  Celular: " + pedidos.getFechaEmision() + "  Direccion: " +
-                    pedidos.getFechaEntrega()+ "  email: " + pedidos.getPendiente() + "\n\n";
+            mensaje += "Nº: " + pedidos.getNroPedido() + "  Fecha de entrega: " + pedidos.getFechaEntrega() + "  Fecha de emision: " + pedidos.getFechaEmision() + "  Pendiente: "
+                    + pedidos.getPendiente() + "\n\n";
+        }
+        generar(nombreArchivo);
+        return nombreArchivo;
+    }
+
+    public String armarProducto(List<Producto> producto) {
+        Date fechasistema = new Date();
+        fecha = ConvertirFechas.fechaAString(fechasistema);
+        mensaje = "";
+        cabecera = "";
+        nombreArchivo = "";
+        nombreArchivo = fecha + "Productos.pdf";
+        cabecera = "                                             LA CABAÑA CHOCOLATES S.A. \n";
+        cabecera += "                                                Reporte de productos " + fecha + "\n\n";
+        cabecera += "____________________________________________________________________________" + "\n\n";
+        for (Producto productos : producto) {
+            mensaje += "Codigo: " + productos.getCodigoProducto() + "  Nombre: " + productos.getNombreProducto() + "  Descripcion: " + productos.getDescripcionProducto() + "  Precio compra: "
+                    + productos.getPrecioCompra() + "  Precio Venta: " + productos.getPrecioVenta() + "  Stock: " + productos.getStock().getCantidad() + "\n\n";
+        }
+        generar(nombreArchivo);
+        return nombreArchivo;
+    }
+
+    public String armarVenta(List<Venta> venta) {
+        Date fechasistema = new Date();
+        fecha = ConvertirFechas.fechaAString(fechasistema);
+        mensaje = "";
+        cabecera = "";
+        nombreArchivo = "";
+        nombreArchivo = fecha + "Ventas.pdf";
+        cabecera = "                                             LA CABAÑA CHOCOLATES S.A. \n";
+        cabecera += "                                                Reporte de ventas " + fecha + "\n\n";
+        cabecera += "____________________________________________________________________________" + "\n\n";
+        for (Venta ventas : venta) {
+            mensaje += "Nº: " + ventas.getNumero() + "  Fecha venta: " + ventas.getFechaventa() + "  Total: " + ventas.getTotal() + "  Cliente: "
+                    + ventas.getCliente().getApellido() + " " + ventas.getCliente().getNombre() + "\n\n";
         }
         generar(nombreArchivo);
         return nombreArchivo;
