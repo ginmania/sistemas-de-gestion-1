@@ -102,12 +102,12 @@ public class ControladorPoliticaSR {
     public void iniciarVPsr(){ //Verifica la polÃ­tica(s,r)...
         //expProv = new ExpertoProveedor();
         //this.iniciar();
-        objEPSR.iniciar();
+        objEPSR.iniciar(objCG.fechaSistema);
         objEPSR.verificarPolitica();
     }
 
     public void iniciar() {    
-        objEPSR.iniciar();
+        objEPSR.iniciar(objCG.fechaSistema);
         provs = expProv.ListarProveedor();         
         for(int i=0; i< provs.size();i++){
             objGUIPolSR.getJcProveedores().addItem(provs.get(i).getNombre());

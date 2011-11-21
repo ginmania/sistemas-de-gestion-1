@@ -262,7 +262,7 @@
           </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JLayeredPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JLayeredPaneSupportLayout$JLayeredPaneConstraintsDescription">
-              <JLayeredPaneConstraints x="60" y="170" width="510" height="140" layer="0" position="-1"/>
+              <JLayeredPaneConstraints x="80" y="210" width="510" height="140" layer="0" position="-1"/>
             </Constraint>
           </Constraints>
 
@@ -313,7 +313,7 @@
           </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JLayeredPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JLayeredPaneSupportLayout$JLayeredPaneConstraintsDescription">
-              <JLayeredPaneConstraints x="60" y="10" width="510" height="140" layer="0" position="-1"/>
+              <JLayeredPaneConstraints x="80" y="60" width="510" height="140" layer="0" position="-1"/>
             </Constraint>
           </Constraints>
 

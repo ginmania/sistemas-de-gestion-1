@@ -39,14 +39,13 @@ public class ControladorRecibirPedido {
     public ControladorRecibirPedido(ControladorPrincipal ctrl) {
         this.principal = ctrl;
         fachada = Fachada.getInstancia();
-        pantalla = new PantallaRecibirPedido();
-        iniciar();
+        pantalla = new PantallaRecibirPedido();        
         pantalla.setVisible(true);
-        principal.add(pantalla);
+        principal.add(pantalla);        
         experto = (ExpertoRecibirPedido) FabricaExperto.getInstancia().FabricarExperto("ExpertoRecibirPedido");
         det = new Hashtable();
         detalle= (DetallePedido) FabricaEntidad.getInstancia().FabricarEntidad(DetallePedido.class);
-        
+        iniciar();
         pantalla.getJcPedidoPendiente().addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 pedidoSeleccionado(pantalla.getJcPedidoPendiente().getSelectedIndex());
@@ -78,7 +77,7 @@ public class ControladorRecibirPedido {
         pendientes = fachada.buscar(Pedido.class, c1);   
         for(int i=0; i<pendientes.size();i++)
          pantalla.getJcPedidoPendiente().addItem(pendientes.get(i).getNroPedido());
-        pantalla.getJcPedidoPendiente().setSelectedIndex(1);
+         //pantalla.getJcPedidoPendiente().setSelectedIndex(1);
     }
     
     private void pedidoSeleccionado(int p){

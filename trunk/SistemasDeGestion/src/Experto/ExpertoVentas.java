@@ -160,5 +160,6 @@ public class ExpertoVentas implements Experto{
             int cantN = detalles.get(i).getCantidad();            
             es.ActualizarStock(cantN,(AgenteProducto)detalles.get(i).getProducto());
         }
+        
     }
 }

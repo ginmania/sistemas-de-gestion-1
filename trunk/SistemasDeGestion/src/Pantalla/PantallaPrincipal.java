@@ -1,6 +1,7 @@
 package Pantalla;
 
 import Controlador.ControladorPrincipal;
+import com.toedter.calendar.JDateChooser;
 import javax.swing.JDesktopPane;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
@@ -92,7 +93,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         bandejaProductos.getAccessibleContext().setAccessibleName("Bandeja");
         bandejaProductos.getAccessibleContext().setAccessibleDescription("bandeja de entrada");
 
-        jScrollPane1.setBounds(60, 170, 510, 140);
+        jScrollPane1.setBounds(80, 210, 510, 140);
         jDesktopPane1.add(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         jScrollPane2.setBackground(new java.awt.Color(204, 204, 255));
@@ -116,7 +117,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         bandejaPedidos.setSelectionForeground(new java.awt.Color(204, 204, 204));
         jScrollPane2.setViewportView(bandejaPedidos);
 
-        jScrollPane2.setBounds(60, 10, 510, 140);
+        jScrollPane2.setBounds(80, 60, 510, 140);
         jDesktopPane1.add(jScrollPane2, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -403,6 +404,6 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     public void setBandejaProductos(JTable bandejaProductos) {
         this.bandejaProductos = bandejaProductos;
     }
-     
+
     
 }

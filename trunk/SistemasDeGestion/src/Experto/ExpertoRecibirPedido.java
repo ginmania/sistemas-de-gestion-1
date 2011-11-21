@@ -34,7 +34,8 @@ public class ExpertoRecibirPedido implements Experto{
         p.getStock().setCantdidad(aux + cant);
         detalle.setProducto(p);
         detalle.setPedido(pedido);
-        detalle.setCantidad(cant);
+        if(detalle.getCantidad() > cant)
+            detalle.setCantidad(detalle.getCantidad()-cant);
         detalle.setBaja(1);
         //guardo el nuevo stock del producto y doy de baja el detalle, si es necesario el pedido lo paso a no pendiente
         if(fachada.guardar((ObjetoPersistente)p.getStock()))
