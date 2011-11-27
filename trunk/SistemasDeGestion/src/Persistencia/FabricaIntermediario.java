@@ -20,9 +20,10 @@ public class FabricaIntermediario {
         Stock, AgenteStock, StockImpl,
         Pedido, AgentePedido, PedidoImpl,
         DetallePedido, AgenteDetallePedido, DetallePedidoImpl,
-        ProductoProveedor,AgenteProductoProveedor,ProductoProveedorImpl,
-        Catalogo,CatalogoImpl,AgenteCatalogo,
-        PoliticaStock,PoliticaStockImpl,AgentePoliticaStock
+        ProductoProveedor, AgenteProductoProveedor, ProductoProveedorImpl,
+        Catalogo, CatalogoImpl, AgenteCatalogo,
+        PoliticaStock, PoliticaStockImpl, AgentePoliticaStock,
+        Parametros, ParametrosImpl, AgenteParametros
     }
 
     public FabricaIntermediario() {
@@ -107,6 +108,11 @@ public class FabricaIntermediario {
             case AgentePoliticaStock:
             case PoliticaStockImpl:
                 obj = new IntermediarioPoliticaStock();
+                break;
+            case Parametros:
+            case AgenteParametros:
+            case ParametrosImpl:
+                obj = new IntermediarioParametros();
                 break;
             default:
                 return null;

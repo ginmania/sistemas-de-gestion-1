@@ -13,7 +13,7 @@ import java.util.List;
  *
  * @author diego
  */
-class IntermediarioStock extends IntermediarioRelacional {
+public class IntermediarioStock extends IntermediarioRelacional {
 
     public IntermediarioStock() {
         tabla = "Stock";
@@ -53,7 +53,6 @@ class IntermediarioStock extends IntermediarioRelacional {
             }
         } catch (Exception ex) {
             System.out.println("Exploto el Intermediario Stock");
-            ex.printStackTrace();
         }
         return stock;
 
