@@ -5,6 +5,7 @@
 package Experto;
 
 import Persistencia.FachadaInterna;
+import java.util.List;
 
 /**
  *
@@ -12,13 +13,16 @@ import Persistencia.FachadaInterna;
  */
 public class DecoradorParametros extends ExpertoParametros {
 
-    public void estableceer() {
-        FachadaInterna.getInstancia().iniciatTX();
-        }
     @Override
-    public boolean confirmar(){
+    public List buscarParametros() {
+        FachadaInterna.getInstancia().iniciatTX();
+        return super.buscarParametros();
+    }
+
+    @Override
+    public boolean confirmar() {
         boolean confirmado = super.confirmar();
         FachadaInterna.getInstancia().finalizarTX();
         return confirmado;
-        }
+    }
 }

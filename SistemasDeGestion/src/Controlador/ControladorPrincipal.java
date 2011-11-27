@@ -2,13 +2,17 @@ package Controlador;
 
 import Excepciones.NoClienteExcepcion;
 import Excepciones.NoProductoExcepcion;
+import Experto.ExpertoParametros;
 import Experto.ExpertoReloj;
 import Experto.FabricaExperto;
+import Interfaces.Parametros;
 import Pantalla.*;
 import Persistencia.AdministradorTx;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyVetoException;
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
@@ -21,6 +25,8 @@ public final class ControladorPrincipal {
     private static ControladorParametros controladorParametros;
     private ExpertoReloj clock;
     public GregorianCalendar fechaSistema;
+    private ExpertoParametros expertoparametros;
+    private double alfa, beta, gama;
 
     public ControladorPrincipal() {
         pantallaPrincipal = new PantallaPrincipal(this);
@@ -36,9 +42,18 @@ public final class ControladorPrincipal {
         //cargamos bandeja de entrada
         clock = (ExpertoReloj) FabricaExperto.getInstancia().FabricarExperto("ExpertoReloj");
         clock.iniciar(this);
-        
+        expertoparametros = (ExpertoParametros) FabricaExperto.getInstancia().FabricarExperto("ExpertoParametros");
+        buscarParametros();
+        pantallaPrincipal.getLabelAlfa().setText("Alfa: " + alfa);
+        pantallaPrincipal.getLabelBeta().setText("Beta: " + beta);
+        pantallaPrincipal.getLabelGama().setText("Gama: " + gama);
+        pantallaPrincipal.getLabelAlfa().setVisible(true);
+        pantallaPrincipal.getLabelBeta().setVisible(true);
+        pantallaPrincipal.getLabelGama().setVisible(true);
+
         //////////Generar Reporte datos de la Curva ABC
         pantallaPrincipal.getMenuABC().addActionListener(new java.awt.event.ActionListener() {
+
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
                     reportes("ABC");
@@ -47,7 +62,7 @@ public final class ControladorPrincipal {
                 }
             }
         });
-        
+
         //////////Generar Reporte Clientes
         pantallaPrincipal.getMenuClientes().addActionListener(new java.awt.event.ActionListener() {
 
@@ -59,9 +74,10 @@ public final class ControladorPrincipal {
                 }
             }
         });
-        
+
 //////////Generar Reporte Pedidos
         pantallaPrincipal.getMenuPedidos().addActionListener(new java.awt.event.ActionListener() {
+
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
                     reportes("Pedido");
@@ -70,9 +86,10 @@ public final class ControladorPrincipal {
                 }
             }
         });
-        
+
         //////////Generar Reporte Productos
         pantallaPrincipal.getMenuProductos().addActionListener(new java.awt.event.ActionListener() {
+
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
                     reportes("Producto");
@@ -81,9 +98,10 @@ public final class ControladorPrincipal {
                 }
             }
         });
-        
+
         //////////Generar Reporte Ventas
         pantallaPrincipal.getMenuVentas().addActionListener(new java.awt.event.ActionListener() {
+
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
                     reportes("Venta");
@@ -93,6 +111,7 @@ public final class ControladorPrincipal {
             }
         });
         pantallaPrincipal.getItemCliente().addActionListener(new java.awt.event.ActionListener() {
+
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
                     agregarCliente();
@@ -103,6 +122,7 @@ public final class ControladorPrincipal {
         });
 
         pantallaPrincipal.getItemProducto().addActionListener(new java.awt.event.ActionListener() {
+
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
                     agregarProducto();
@@ -114,6 +134,7 @@ public final class ControladorPrincipal {
 
 
         pantallaPrincipal.getItemProveedor().addActionListener(new java.awt.event.ActionListener() {
+
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
                     AdministrarProveedores();
@@ -124,6 +145,7 @@ public final class ControladorPrincipal {
         });
 
         pantallaPrincipal.getVentas().addActionListener(new java.awt.event.ActionListener() {
+
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
                     AdministrarVentas();
@@ -144,6 +166,7 @@ public final class ControladorPrincipal {
         });
 
         pantallaPrincipal.getABC().addActionListener(new java.awt.event.ActionListener() {
+
             public void actionPerformed(ActionEvent e) {
                 try {
                     curvaABC();
@@ -154,6 +177,7 @@ public final class ControladorPrincipal {
         });
 
         pantallaPrincipal.getJmPedidos().addActionListener(new java.awt.event.ActionListener() {
+
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Politica();
             }
@@ -167,6 +191,7 @@ public final class ControladorPrincipal {
         });
 
         pantallaPrincipal.getSalir().addActionListener(new java.awt.event.ActionListener() {
+
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 pantallaPrincipal.dispose();
                 System.exit(0);
@@ -174,36 +199,32 @@ public final class ControladorPrincipal {
         });
 
         pantallaPrincipal.getItemEstablecer().addActionListener(new java.awt.event.ActionListener() {
+
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
                     establecerParametros();
-                    pantallaPrincipal.getLabelAlfa().setText("Alfa: " + String.valueOf(controladorParametros.alfa));
-                    pantallaPrincipal.getLabelBeta().setText("Beta: " + String.valueOf(controladorParametros.beta));
-                    pantallaPrincipal.getLabelGama().setText("Gama: " + String.valueOf(controladorParametros.gama));
-                    pantallaPrincipal.getLabelAlfa().setVisible(true);
-                    pantallaPrincipal.getLabelBeta().setVisible(true);
-                    pantallaPrincipal.getLabelGama().setVisible(true);
+
                 } catch (NoProductoExcepcion ex) {
                     Logger.getLogger(ControladorPrincipal.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
-     /*  pantallaPrincipal.getFechaSistema().addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-               pantallaFecha = new PantallaFechaSistema();
-               pantallaFecha.setVisible(true);
-               add(pantallaFecha);
-            }
+        /*  pantallaPrincipal.getFechaSistema().addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+        pantallaFecha = new PantallaFechaSistema();
+        pantallaFecha.setVisible(true);
+        add(pantallaFecha);
+        }
         });
-       
+        
         pantallaFecha.getJbAceptarFecha().addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                fechaSistema.setGregorianChange(pantallaFecha.getJd_FechaSistema().getDate());
-                clock.iniciar(ctlr);
-            }
+        public void actionPerformed(ActionEvent e) {
+        fechaSistema.setGregorianChange(pantallaFecha.getJd_FechaSistema().getDate());
+        clock.iniciar(ctlr);
+        }
         });*/
-        
-        
+
+
     }
 
     public void crearConexion(String dir, String usuario, String pass) {
@@ -236,9 +257,9 @@ public final class ControladorPrincipal {
     }
 
     private void establecerParametros() throws NoProductoExcepcion {
-        new ControladorParametros(this).agregarParametros();
+        new ControladorParametros(this).agregarParametros(alfa, beta, gama);
     }
-    
+
     private void reportes(String nombreReporte) throws NoClienteExcepcion {
         new ControladorReportes(this).generarReporte(nombreReporte);
     }
@@ -261,7 +282,7 @@ public final class ControladorPrincipal {
         pantallaPrincipal.getBandejaProductos().setVisible(false);
         jInternalFrame.moveToFront();
         jInternalFrame.setMaximizable(true);
-        jInternalFrame.moveToFront();        
+        jInternalFrame.moveToFront();
         pantallaPrincipal.getjDesktopPane1().add(jInternalFrame);
         //pantallaPrincipal.getjDesktopPane1().getDesktopManager().maximizeFrame(jInternalFrame);
 
@@ -286,6 +307,13 @@ public final class ControladorPrincipal {
     public void setPantallaPrincipal(PantallaPrincipal pantallaPrincipal) {
         this.pantallaPrincipal = pantallaPrincipal;
     }
-    
-    
+
+    public List<Parametros> buscarParametros() {
+        List<Parametros> vectorParametros = new ArrayList<Parametros>();
+        vectorParametros = expertoparametros.buscarParametros();
+        alfa = vectorParametros.get(0).getAlfa();
+        beta = vectorParametros.get(0).getBeta();
+        gama = vectorParametros.get(0).getGama();
+        return vectorParametros;
+    }
 }

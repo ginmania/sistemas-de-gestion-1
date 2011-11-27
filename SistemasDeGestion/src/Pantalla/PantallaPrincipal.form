@@ -99,7 +99,7 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="itemEstablecer">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Establecer"/>
+                <Property name="text" type="java.lang.String" value="Modificar"/>
                 <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
                   <Insets value="[0, 10, 0, 0]"/>
                 </Property>
@@ -169,7 +169,7 @@
     <Property name="defaultCloseOperation" type="int" value="3"/>
     <Property name="title" type="java.lang.String" value="Sistemas de Gestion 1"/>
     <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-      <Color id="Cursor Por defecto"/>
+      <Color id="Cursor predeterminado"/>
     </Property>
     <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
       <Dimension value="[1200, 600]"/>
