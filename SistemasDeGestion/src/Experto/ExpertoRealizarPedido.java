@@ -131,8 +131,8 @@ public class ExpertoRealizarPedido implements Experto{
             adp.setOIDProducto(aProd.getoid());
             dpedido.setPedido(pedido);
             dpedido.setProducto(aProd);            
-            int cant = (Integer) cantidad.get(adp.getProducto().getCodigoProducto());
-            adp.setCantidad(cant);
+            String cant = (String) cantidad.get(adp.getProducto().getCodigoProducto());
+            adp.setCantidad(Integer.parseInt(cant));
             adp.setBaja(0);
             pedido.setDetallePedido(dpedido);
         }

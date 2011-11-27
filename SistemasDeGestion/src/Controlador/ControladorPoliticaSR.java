@@ -185,7 +185,7 @@ public class ControladorPoliticaSR {
            p = (Producto) productos.get(prod);
            prods.add(p);
            //el lote
-           int cant = (Integer) objGUIPolSR.getJtTabla().getValueAt(i, 5);
+           String cant = (String)objGUIPolSR.getJtTabla().getValueAt(i, 5);
            cantidad.put(p.getCodigoProducto(), cant);
         }
         if(expPed.CrearPedidoPendiente(fechaEmision, proveedor, prods, cantidad)){
