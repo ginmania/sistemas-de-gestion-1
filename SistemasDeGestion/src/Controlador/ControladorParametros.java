@@ -10,8 +10,6 @@ import Pantalla.PantallaParametros;
 import Pantalla.PantallaPrincipal;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JLabel;
-
 /**
  *
  * @author diego
