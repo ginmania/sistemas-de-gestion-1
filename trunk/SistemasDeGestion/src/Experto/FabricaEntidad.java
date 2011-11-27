@@ -5,6 +5,7 @@ import Agentes.AgenteCliente;
 import Agentes.AgenteDemanda;
 import Agentes.AgenteDetallePedido;
 import Agentes.AgenteDetalleVenta;
+import Agentes.AgenteParametros;
 import Agentes.AgentePedido;
 import Agentes.AgenteProducto;
 import Agentes.AgenteProductoProveedor;
@@ -16,6 +17,7 @@ import Implementaciones.ClienteImpl;
 import Implementaciones.DemandaImpl;
 import Implementaciones.DetallePedidoImpl;
 import Implementaciones.DetalleVentaImpl;
+import Implementaciones.ParametrosImpl;
 import Implementaciones.PedidoImpl;
 import Implementaciones.ProductoImpl;
 import Implementaciones.ProductoProveedorImpl;
@@ -30,8 +32,8 @@ public class FabricaEntidad {
 
     private static enum Entidades {
 
-        Cliente, Producto, Proveedor, DetalleVenta, Venta, ProductoProveedor,Stock,
-        Pedido, DetallePedido, Catalogo,Demanda
+        Cliente, Producto, Proveedor, DetalleVenta, Venta, ProductoProveedor, Stock,
+        Pedido, DetallePedido, Catalogo, Demanda, Parametros
     }
 
     public static FabricaEntidad getInstancia() {
@@ -43,7 +45,7 @@ public class FabricaEntidad {
 
     public Object FabricarEntidad(Class c) {
         ObjetoPersistente obj = null;
-        
+
         switch (Entidades.valueOf(c.getSimpleName())) {
             case Cliente:
                 obj = new AgenteCliente();
@@ -60,33 +62,37 @@ public class FabricaEntidad {
             case Venta:
                 obj = new AgenteVenta();
                 ((AgenteVenta) obj).setImpl(new VentaImpl());
-                return obj;    
+                return obj;
             case DetalleVenta:
                 obj = new AgenteDetalleVenta();
                 ((AgenteDetalleVenta) obj).setImpl(new DetalleVentaImpl());
-                return obj;   
-            case ProductoProveedor:                
-                obj = new AgenteProductoProveedor(new ProductoProveedorImpl());                
-                return obj;   
-            case Stock:                
+                return obj;
+            case ProductoProveedor:
+                obj = new AgenteProductoProveedor(new ProductoProveedorImpl());
+                return obj;
+            case Stock:
                 obj = new AgenteStock();
-                ((AgenteStock) obj).setImpl(new StockImpl());                
-                return obj;   
+                ((AgenteStock) obj).setImpl(new StockImpl());
+                return obj;
             case Pedido:
                 obj = new AgentePedido();
-                ((AgentePedido)obj).setImpl(new PedidoImpl());
+                ((AgentePedido) obj).setImpl(new PedidoImpl());
                 return obj;
             case DetallePedido:
                 obj = new AgenteDetallePedido();
-                ((AgenteDetallePedido)obj).setImpl(new DetallePedidoImpl());
+                ((AgenteDetallePedido) obj).setImpl(new DetallePedidoImpl());
                 return obj;
             case Catalogo:
                 obj = new AgenteCatalogo();
-                ((AgenteCatalogo)obj).setImpl(new CatalogoImpl());
+                ((AgenteCatalogo) obj).setImpl(new CatalogoImpl());
                 return obj;
             case Demanda:
                 obj = new AgenteDemanda();
-                ((AgenteDemanda)obj).setImpl(new DemandaImpl());
+                ((AgenteDemanda) obj).setImpl(new DemandaImpl());
+                return obj;
+            case Parametros:
+                obj = new AgenteParametros();
+                ((AgenteParametros) obj).setImpl(new ParametrosImpl());
                 return obj;
             default:
                 System.out.println("no existe la entidad que desea crear");

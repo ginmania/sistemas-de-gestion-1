@@ -6,10 +6,14 @@ package Controlador;
 
 import Experto.ExpertoParametros;
 import Experto.FabricaExperto;
+import Interfaces.Parametros;
 import Pantalla.PantallaParametros;
 import Pantalla.PantallaPrincipal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 /**
  *
  * @author diego
@@ -44,12 +48,13 @@ public class ControladorParametros {
             }
         });
         pantallaParametros.getBotonGuardarParametros().addActionListener(new java.awt.event.ActionListener() {
-            
+
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
                     setAlfa(Double.parseDouble(pantallaParametros.getCampoAlfa().getText()));
-                    setBeta(Double.parseDouble(pantallaParametros.getCampoBeta().getText()));
+                    setBeta(Double.parseDouble(pantallaParametros.getCampoAlfa().getText()));
                     setGama(Double.parseDouble(pantallaParametros.getCampoGama().getText()));
+                    guardarParametros(Double.parseDouble(pantallaParametros.getCampoAlfa().getText()), Double.parseDouble(pantallaParametros.getCampoAlfa().getText()),Double.parseDouble(pantallaParametros.getCampoGama().getText()));
                     pantallaParametros.dispose();
                 } catch (Exception ex) {
                     Logger.getLogger(ControladorParametros.class.getName()).log(Level.SEVERE, null, ex);
@@ -84,11 +89,17 @@ public class ControladorParametros {
         });
     }
 
-    public void agregarParametros() {
+    public void agregarParametros(double a, double b, double g) {
         pantallaParametros.setTitle("Parametros");
+        pantallaParametros.getCampoAlfa().setText(String.valueOf(a));
+        pantallaParametros.getCampoBeta().setText(String.valueOf(b));
+        pantallaParametros.getCampoAlfa().setText(String.valueOf(g));
         pantallaParametros.setVisible(true);
     }
 
+    public void guardarParametros(double a, double b, double g){
+        
+    }
     public static double getAlfa() {
         return alfa;
     }

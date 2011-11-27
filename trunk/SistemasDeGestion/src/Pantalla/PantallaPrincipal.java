@@ -1,7 +1,6 @@
 package Pantalla;
 
 import Controlador.ControladorPrincipal;
-import com.toedter.calendar.JDateChooser;
 import javax.swing.JDesktopPane;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
@@ -58,17 +57,17 @@ public class PantallaPrincipal extends javax.swing.JFrame {
 
         labelAlfa.setForeground(new java.awt.Color(255, 0, 0));
         labelAlfa.setText("Alfa:");
-        labelAlfa.setBounds(1276, 10, 120, 15);
+        labelAlfa.setBounds(1276, 10, 120, 18);
         jDesktopPane1.add(labelAlfa, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         labelBeta.setForeground(new java.awt.Color(255, 0, 0));
         labelBeta.setText("Beta:");
-        labelBeta.setBounds(1270, 30, 110, 15);
+        labelBeta.setBounds(1270, 30, 110, 18);
         jDesktopPane1.add(labelBeta, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         labelGama.setForeground(new java.awt.Color(255, 0, 0));
         labelGama.setText("Gama:");
-        labelGama.setBounds(1262, 50, 100, 15);
+        labelGama.setBounds(1262, 50, 100, 18);
         jDesktopPane1.add(labelGama, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         jScrollPane1.setBackground(new java.awt.Color(204, 204, 255));
@@ -176,7 +175,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         menuParametros.setText("Parametros");
         menuParametros.setMargin(new java.awt.Insets(0, 10, 0, 0));
 
-        itemEstablecer.setText("Establecer");
+        itemEstablecer.setText("Modificar");
         itemEstablecer.setMargin(new java.awt.Insets(0, 10, 0, 0));
         menuParametros.add(itemEstablecer);
 
