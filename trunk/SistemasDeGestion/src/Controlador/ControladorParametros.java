@@ -98,7 +98,7 @@ public class ControladorParametros {
     }
 
     public void guardarParametros(double a, double b, double g){
-        
+        expertoParametros.guardarParametros(a, b, g);
     }
     public static double getAlfa() {
         return alfa;
