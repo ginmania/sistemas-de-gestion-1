@@ -25,12 +25,13 @@ public final class ControladorPrincipal {
     private static ControladorParametros controladorParametros;
     private ExpertoReloj clock;
     public GregorianCalendar fechaSistema;
+    final ControladorPrincipal ctlr;
     private ExpertoParametros expertoparametros;
     private double alfa, beta, gama;
 
     public ControladorPrincipal() {
         pantallaPrincipal = new PantallaPrincipal(this);
-        final ControladorPrincipal ctlr = this;
+        ctlr = this;
         fechaSistema = new GregorianCalendar();
         pantallaPrincipal.getLabelAlfa().setVisible(false);
         pantallaPrincipal.getLabelBeta().setVisible(false);
@@ -41,7 +42,7 @@ public final class ControladorPrincipal {
         crearConexion("jdbc:mysql://localhost:3306/sg1", "root", "duendecito");
         //cargamos bandeja de entrada
         clock = (ExpertoReloj) FabricaExperto.getInstancia().FabricarExperto("ExpertoReloj");
-        clock.iniciar(this);
+        clock.iniciar(ctlr);
         expertoparametros = (ExpertoParametros) FabricaExperto.getInstancia().FabricarExperto("ExpertoParametros");
         buscarParametros();
         pantallaPrincipal.getLabelAlfa().setText("Alfa: " + alfa);
@@ -213,24 +214,43 @@ public final class ControladorPrincipal {
                 }
             }
         });
+
+      /* pantallaPrincipal.getFechaSistema().addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+               pantallaFecha = new PantallaFechaSistema();
+               pantallaFecha.setVisible(true);
+               add(pantallaFecha);
+            }
+
         /*  pantallaPrincipal.getFechaSistema().addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(ActionEvent e) {
         pantallaFecha = new PantallaFechaSistema();
         pantallaFecha.setVisible(true);
         add(pantallaFecha);
         }
+
         });
         
         pantallaFecha.getJbAceptarFecha().addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                fechaSistema.setGregorianChange(pantallaFecha.getJd_FechaSistema().getDate());
+                llamarreloj();
+            }
+
         public void actionPerformed(ActionEvent e) {
         fechaSistema.setGregorianChange(pantallaFecha.getJd_FechaSistema().getDate());
         clock.iniciar(ctlr);
         }
+
         });*/
 
 
     }
 
+    public void llamarreloj(){
+        clock.iniciar(ctlr);
+    }
+    
     public void crearConexion(String dir, String usuario, String pass) {
         try {
             AdministradorTx.getInstance().crearConexion(dir, usuario, pass);
