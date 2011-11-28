@@ -31,7 +31,7 @@ public class ExpertoRecibirPedido implements Experto{
         
         p = detalle.getProducto();
         int aux = p.getStock().getCantidad();
-        p.getStock().setCantdidad(aux + cant);
+        p.getStock().setCantidad(aux + cant);
         detalle.setProducto(p);
         detalle.setPedido(pedido);
         if(detalle.getCantidad() > cant)

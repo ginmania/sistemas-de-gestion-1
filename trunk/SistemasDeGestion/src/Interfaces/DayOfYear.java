@@ -70,4 +70,10 @@ public class DayOfYear {
         GregorianCalendar anio = new GregorianCalendar();
         return anio.get(GregorianCalendar.YEAR);
     }
+
+    public String AString() {
+        String fecha;
+        fecha = String.valueOf(anio)+ String.valueOf(mes) +String.valueOf(dia);
+        return fecha;
+    }
 }

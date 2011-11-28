@@ -11,6 +11,8 @@ import Agentes.AgenteVenta;
 import Interfaces.Cliente;
 import Interfaces.DetalleVenta;
 import Interfaces.Venta;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +39,7 @@ public class IntermediarioVenta extends IntermediarioRelacional {
         AgenteVenta venta = (AgenteVenta) objeto;
         rs.addCampo(new Campo("OIDVenta", "'" + venta.getoid() + "'"));
         rs.addCampo(new Campo("OIDCliente", "'" + venta.getOIDCliente() + "'"));
-        rs.addCampo(new Campo("fechaventa", "'" + venta.getFechaventa() + "'"));
+        rs.addCampo(new Campo("fechaventa", "'" + Date.valueOf(venta.getFechaventa()) + "'"));
         rs.addCampo(new Campo("numero", String.valueOf(venta.getNumero())));
         rs.addCampo(new Campo("total", String.valueOf(venta.getTotal())));
         return rs;
@@ -48,6 +50,7 @@ public class IntermediarioVenta extends IntermediarioRelacional {
     public ArrayList convertirRegistroObjeto(List<Registro> rs) {
         ArrayList<Venta> venta = new ArrayList<Venta>();
         Agentes.AgenteVenta temp = null;
+        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
         try {
 
             for (Registro registro : rs) {
@@ -55,7 +58,7 @@ public class IntermediarioVenta extends IntermediarioRelacional {
                 temp.setImpl(new Implementaciones.VentaImpl());
                 temp.setoid(registro.getCampo("OIDVenta").getValor());
                 temp.setOIDCliente(registro.getCampo("OIDCliente").getValor());
-                temp.setFechaventa(registro.getCampo("fechaventa").getValor());
+                temp.setFechaventa(formato.format(Date.valueOf(registro.getCampo("fechaventa").getValor())));
                 temp.setNumero(Integer.parseInt(registro.getCampo("numero").getValor()));
                 temp.setTotal(Double.parseDouble(registro.getCampo("total").getValor()));
                 temp.setDetalleVentas(Fachada.getInstancia().buscar(DetalleVenta.class, FabricaCriterio.getInstancia().crearCriterio("OIDVenta", "=", temp.getoid())));

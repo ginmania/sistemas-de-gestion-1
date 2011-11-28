@@ -10,6 +10,12 @@
  */
 package Pantalla;
 
+import com.toedter.calendar.JDateChooser;
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 import javax.swing.JMenuItem;
@@ -43,10 +49,10 @@ public class PantallaVenta extends javax.swing.JInternalFrame {
         jtTotal = new javax.swing.JTextField();
         jbConfirma = new javax.swing.JButton();
         jbCancela = new javax.swing.JButton();
-        Fecha = new javax.swing.JFormattedTextField();
         NroFactura = new javax.swing.JFormattedTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        jdFechaVenta = new com.toedter.calendar.JDateChooser();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         mBuscar = new javax.swing.JMenuItem();
@@ -89,8 +95,6 @@ public class PantallaVenta extends javax.swing.JInternalFrame {
 
         jbCancela.setText("Cancelar");
 
-        Fecha.setText("--/--/----");
-
         NroFactura.setAlignmentX(2.5F);
 
         jLabel1.setText("Nro. Factura");
@@ -127,7 +131,7 @@ public class PantallaVenta extends javax.swing.JInternalFrame {
                                 .addComponent(jtTotal, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(14, 14, 14)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                             .addComponent(jbSelecCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -137,9 +141,9 @@ public class PantallaVenta extends javax.swing.JInternalFrame {
                                         .addGap(107, 107, 107))
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                         .addComponent(jLabel2)
-                                        .addGap(44, 44, 44)
-                                        .addComponent(Fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                                        .addComponent(jdFechaVenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(39, 39, 39)
                                         .addComponent(jLabel1)
                                         .addGap(29, 29, 29)
                                         .addComponent(NroFactura, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -150,11 +154,12 @@ public class PantallaVenta extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(15, 15, 15)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(NroFactura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Fecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(NroFactura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel1)
+                        .addComponent(jLabel2))
+                    .addComponent(jdFechaVenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbSelecCliente)
@@ -169,7 +174,7 @@ public class PantallaVenta extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbConfirma)
                     .addComponent(jbCancela))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         pack();
@@ -180,7 +185,6 @@ public class PantallaVenta extends javax.swing.JInternalFrame {
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JFormattedTextField Fecha;
     private javax.swing.JButton JbSelecProducto;
     private javax.swing.JFormattedTextField NroFactura;
     private javax.swing.JLabel jLabel1;
@@ -192,6 +196,7 @@ public class PantallaVenta extends javax.swing.JInternalFrame {
     private javax.swing.JButton jbCancela;
     private javax.swing.JButton jbConfirma;
     private javax.swing.JButton jbSelecCliente;
+    private com.toedter.calendar.JDateChooser jdFechaVenta;
     private javax.swing.JLabel jlCliente;
     private javax.swing.JTable jtDetalleVenta;
     private javax.swing.JTextField jtTotal;
@@ -254,13 +259,11 @@ public class PantallaVenta extends javax.swing.JInternalFrame {
         this.jtTotal.setText(total);
     }
 
-    public JFormattedTextField getFecha() {
-        return Fecha;
+    public JDateChooser getFecha() {
+        return jdFechaVenta;
     }
 
-    public void setFecha(JFormattedTextField Fecha) {
-        this.Fecha = Fecha;
-    }
+    
 
     public JFormattedTextField getNroFactura() {
         return NroFactura;
@@ -273,9 +276,20 @@ public class PantallaVenta extends javax.swing.JInternalFrame {
     public void setNroFactura(String valueOf) {
         this.NroFactura.setText(valueOf);
     }
-
-    public void setFecha(String date) {
-        this.Fecha.setText(date);
+    
+    public void setFecha(Date Fecha) {
+        this.jdFechaVenta.setDate(Fecha);
+    }
+    
+    public void setFecha(String fecha) {
+        Date d;
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+        try {
+            d = (Date) formato.parse(fecha);
+            this.jdFechaVenta.setDate(d);
+        } catch (ParseException ex) {
+            Logger.getLogger(PantallaVenta.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public JMenuItem getmBuscar() {

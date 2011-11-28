@@ -28,7 +28,7 @@ public class StockImpl implements Stock {
         return cantidadminima;
     }
 
-    public void setCantdidadMinima(int cantidadminima) {
+    public void setCantidadMinima(int cantidadminima) {
         this.cantidadminima = cantidadminima;
     }
 
@@ -36,7 +36,7 @@ public class StockImpl implements Stock {
         return cantidad;
     }
 
-    public void setCantdidad(int cantidad) {
+    public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
     }
 

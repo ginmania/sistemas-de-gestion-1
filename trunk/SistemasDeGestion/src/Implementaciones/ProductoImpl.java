@@ -33,19 +33,6 @@ public class ProductoImpl implements Producto {
     public ProductoImpl() {
     }
 
-    public ProductoImpl(ProductoImpl producto) {
-        this.codigo = producto.getCodigoProducto();
-        this.nombre = producto.getNombreProducto();
-        this.descripcion = producto.getDescripcionProducto();
-        this.preciocompra = producto.getPrecioCompra();
-        this.precioventa = producto.getPrecioVenta();
-        this.baja = producto.getbaja();
-        this.stock = producto.getStock();
-        this.proveedores = producto.getProveedors();
-        this.demandas = producto.getDemandas();
-    }
-    
-
     public Stock getStock() {
         return stock;
     }

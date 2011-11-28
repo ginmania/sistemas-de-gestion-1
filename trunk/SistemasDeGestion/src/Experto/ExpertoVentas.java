@@ -4,6 +4,7 @@
  */
 package Experto;
 
+import Agentes.AgenteDetalleVenta;
 import Agentes.AgenteProducto;
 import Agentes.AgenteVenta;
 import Controlador.DTO_DetalleVenta;
@@ -18,6 +19,7 @@ import Persistencia.FachadaInterna;
 import Persistencia.ObjetoPersistente;
 import java.lang.Math;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Hashtable;
 import java.util.List;
 /**
@@ -29,8 +31,10 @@ public class ExpertoVentas implements Experto{
     //private ArrayList<Producto> productos;
     private int NroFactura;
     private Venta vta;
+    private AgenteVenta Avta;
     private List<DetalleVenta> detalles;
     private DetalleVenta detalle;
+    private AgenteDetalleVenta Adetalle;
     private DTO_DetalleVenta dtoDetalle;
     private double Total;    
     private Hashtable detVta;
@@ -38,6 +42,8 @@ public class ExpertoVentas implements Experto{
     public ExpertoVentas() {
         this.NroFactura = (int) Math.random();//nro aleatorio de factura
         this.vta = (Venta) FabricaEntidad.getInstancia().FabricarEntidad(Venta.class); 
+        Avta = (AgenteVenta) vta;
+        vta.setNumero(this.NroFactura()+1);
         this.detalles = new ArrayList<DetalleVenta>();  
         this.detVta = new Hashtable();
     }
@@ -45,6 +51,7 @@ public class ExpertoVentas implements Experto{
     public DTO_DetalleVenta nuevoDetalle(Producto prod, int Cant){        
         dtoDetalle = new DTO_DetalleVenta();
         detalle = (DetalleVenta) FabricaEntidad.getInstancia().FabricarEntidad(DetalleVenta.class);
+        Adetalle = (AgenteDetalleVenta) detalle;
 
         detalle.setProducto(prod);
         dtoDetalle.setProd(prod);
@@ -55,6 +62,7 @@ public class ExpertoVentas implements Experto{
         dtoDetalle.setCantidad(Cant);
 
         detalle.setVenta(this.vta);
+        Adetalle.setOIDVenta(this.Avta.getoid());
         dtoDetalle.setNroVenta(this.vta.getNumero());
         dtoDetalle.setVta(this.vta);
 
@@ -66,10 +74,12 @@ public class ExpertoVentas implements Experto{
         detalle.setPrecio(pv);
         dtoDetalle.setPrecio(pv);
 
-        Total = Total + pv;            
+        Total = Total + pv;     
+        vta.setTotal(Total);
+        vta.setDetalleVenta(detalle);
         detalles.add(detalle);  
         System.out.println("agregamos el siguiente detalle");
-        System.out.println(detalle);
+        System.out.println(detalle.getCantidad()+"\n "+detalle.getPrecioUnitario()+"\n "+detalle.getProducto());
         return dtoDetalle;
         
     }
@@ -79,12 +89,21 @@ public class ExpertoVentas implements Experto{
     }
     
     public int NroFactura(){
-        return this.NroFactura + (int) Math.random();
+        int aux1, aux, nro=0;
+        ArrayList<Venta> vtas = Fachada.getInstancia().buscar_todo(Venta.class);
+        for(int i=1;i<vtas.size();i++){
+            aux = vtas.get(i-1).getNumero();
+            aux1 = vtas.get(i).getNumero();
+            if(aux > aux1) nro = aux;
+            else nro = aux1;
+        }
+        return nro;
     }
     
-    public boolean GuardarVenta(int nroFactura,String fecha,Cliente cli){
+    public boolean GuardarVenta(int nroFactura,Date fecha,Cliente cli){
         boolean res = false;
-        vta.setFechaventa(fecha);        
+        String fch = fecha.toString();
+        vta.setFechaventa(fch);        
         vta.setCliente(cli);
         vta.setTotal(Total);
         vta.setNumero(nroFactura);        
@@ -95,7 +114,7 @@ public class ExpertoVentas implements Experto{
         NroFactura = vta.getNumero();        
         //deberia imprimir por impresora la factura
         System.out.println("\n Se guardo la factura nro"+String.valueOf(nroFactura)); 
-  //      System.out.println("\n Cliente"+cli.getNombre()+"-"+cli.getApellido()+" -CUIT "+cli.getCUIT());       
+        System.out.println("\n Cliente"+cli.getNombre()+"-"+cli.getApellido()+" -CUIT "+cli.getCUIT());       
         
         return res;
     }
@@ -104,13 +123,13 @@ public class ExpertoVentas implements Experto{
     public List<DTO_Venta> buscarVentas (String fechaDesde,String fechaHasta){
         Criterio c1 = new Criterio();
         Criterio c2 = new Criterio();
-        /*if (!fechaDesde.equals("")) {
+        if (!fechaDesde.equals("")) {
             c1 = Fachada.getInstancia().crearCriterio("fechaventa", ">", fechaDesde);
         }
         if (!fechaHasta.equalsIgnoreCase("")) {
             c2 = Fachada.getInstancia().crearCriterio("fechaventa", "<", fechaHasta);
-        }*/
-        Criterio c3 = Fachada.getInstancia().crearCriterio("1", "=", "1");
+        }
+        Criterio c3 = Fachada.getInstancia().crearCriterioCompuesto(c1, "AND", c2);
         
         ArrayList<Venta> venta = Fachada.getInstancia().buscar(Venta.class,c3 ); 
         List<DTO_Venta> vres = new ArrayList<DTO_Venta>();
@@ -157,8 +176,9 @@ public class ExpertoVentas implements Experto{
     private void actualizarStock(List<DetalleVenta> detalles) {
         ExpertoGestionStock es = (ExpertoGestionStock) FabricaExperto.getInstancia().FabricarExperto("ExpertoGestionStock");
         for(int i=0;i<detalles.size();i++){
-            int cantN = detalles.get(i).getCantidad();            
-            es.ActualizarStock(cantN,(AgenteProducto)detalles.get(i).getProducto());
+            int cantN = detalles.get(i).getCantidad();  
+            AgenteProducto p = (AgenteProducto)detalles.get(i).getProducto();
+            es.DisminuirStock(cantN,p);
         }
         
     }

@@ -47,7 +47,7 @@
                       </Group>
                       <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jtCantidad" alignment="0" min="-2" pref="74" max="-2" attributes="0"/>
+                          <Component id="jtCantidad" min="-2" pref="47" max="-2" attributes="0"/>
                           <Component id="jlCombo" alignment="0" min="-2" pref="245" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -102,12 +102,6 @@
         <Property name="text" type="java.lang.String" value="Cantidad"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="jtCantidad">
-      <AccessibilityProperties>
-        <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="jtCantidad"/>
-        <Property name="AccessibleContext.accessibleDescription" type="java.lang.String" value="cantidad"/>
-      </AccessibilityProperties>
-    </Component>
     <Component class="javax.swing.JButton" name="jBtnAceptar">
       <Properties>
         <Property name="text" type="java.lang.String" value="Aceptar"/>
@@ -116,6 +110,14 @@
     <Component class="javax.swing.JButton" name="btnCancelar">
       <Properties>
         <Property name="text" type="java.lang.String" value="Cancelar"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JFormattedTextField" name="jtCantidad">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+        <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+          <Color id="Cursor de Texto"/>
+        </Property>
       </Properties>
     </Component>
   </SubComponents>

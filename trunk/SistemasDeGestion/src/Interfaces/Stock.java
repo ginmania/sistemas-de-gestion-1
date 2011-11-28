@@ -12,11 +12,11 @@ public interface Stock {
     
 public int getCantidadMinima();
 
-public void setCantdidadMinima(int cantidadminima);
+public void setCantidadMinima(int cantidadminima);
 
 public int getCantidad();
 
-public void setCantdidad(int cantidad);
+public void setCantidad(int cantidad);
 
     public int getStockPendiente();
 

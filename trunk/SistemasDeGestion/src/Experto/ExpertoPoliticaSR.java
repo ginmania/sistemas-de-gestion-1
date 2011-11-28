@@ -309,7 +309,7 @@ public class ExpertoPoliticaSR implements Experto {
 
         int S = (int) (Ue + (k * Oe));
         System.out.println("  S: " + S + " unidades");
-        p.getStock().setCantdidadMinima(S);
+        p.getStock().setCantidadMinima(S);
 
         int total = S - stockDisp;
         System.out.println("  S - Stock Disponible: " + total + " unidades");

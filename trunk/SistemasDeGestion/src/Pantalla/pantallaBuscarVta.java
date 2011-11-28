@@ -10,6 +10,7 @@
  */
 package Pantalla;
 
+import com.toedter.calendar.JDateChooser;
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 import javax.swing.JTable;
@@ -42,6 +43,9 @@ public class pantallaBuscarVta extends javax.swing.JInternalFrame {
         tablaVentas = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        jdDesde = new com.toedter.calendar.JDateChooser();
+        jdHasta = new com.toedter.calendar.JDateChooser();
+        jLabel3 = new javax.swing.JLabel();
 
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -97,6 +101,8 @@ public class pantallaBuscarVta extends javax.swing.JInternalFrame {
 
         jLabel2.setText("Detalle de la venta seleccionada");
 
+        jLabel3.setText("Período desde - hasta:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -105,31 +111,44 @@ public class pantallaBuscarVta extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jbBuscar)
-                        .addGap(229, 229, 229))
+                        .addComponent(jLabel2)
+                        .addContainerGap(362, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 517, Short.MAX_VALUE)
+                        .addComponent(jbBuscar)
+                        .addGap(106, 106, 106)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jdDesde, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(108, 108, 108)
+                                .addComponent(jdHasta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(99, 99, 99))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 581, Short.MAX_VALUE)
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 517, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 581, Short.MAX_VALUE)
                         .addContainerGap())))
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(jLabel1)
-                .addContainerGap(476, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel2)
-                .addContainerGap(322, Short.MAX_VALUE))
+                .addContainerGap(535, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jbBuscar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
-                .addComponent(jLabel1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(24, 24, 24)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jdDesde, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jdHasta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jbBuscar))
                 .addGap(18, 18, 18)
+                .addComponent(jLabel1)
+                .addGap(12, 12, 12)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
                 .addComponent(jLabel2)
@@ -151,32 +170,16 @@ public class pantallaBuscarVta extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton jbBuscar;
+    private com.toedter.calendar.JDateChooser jdDesde;
+    private com.toedter.calendar.JDateChooser jdHasta;
     private javax.swing.JTable tablaDetalleVenta;
     private javax.swing.JTable tablaVentas;
     // End of variables declaration//GEN-END:variables
 
-/*public Date getDateFchDesde() {
-        Date fch = new Date(fchDesde.getText());
-        return fch;
-    }
-
-    public void setFchDesde(Date fchDesde) {
-        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy"); 
-        this.fchDesde.setText(formato.format(fchDesde));
-    }
-
-    public Date getDateFchHasta() {
-        Date fch = new Date(fchHasta.getText());
-        return fch;
-    }
-
-    public void setFchHasta(Date fchHasta) {
-        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy"); 
-        this.fchHasta.setText(formato.format(fchHasta));
-    }*/
 
     public JButton getJbBuscar() {
         return jbBuscar;
@@ -202,13 +205,22 @@ public class pantallaBuscarVta extends javax.swing.JInternalFrame {
         this.tablaVentas.setModel(tabla);
     }
 
-  /*  public JFormattedTextField getFchDesde() {
-        return fchDesde;
+    public JDateChooser getJdDesde() {
+        return jdDesde;
     }
 
-    public JFormattedTextField getFchHasta() {
-        return fchHasta;
+    public void setJdDesde(JDateChooser jdDesde) {
+        this.jdDesde = jdDesde;
     }
-    */
+
+    public JDateChooser getJdHasta() {
+        return jdHasta;
+    }
+
+    public void setJdHasta(JDateChooser jdHasta) {
+        this.jdHasta = jdHasta;
+    }
+
+  
 
 }

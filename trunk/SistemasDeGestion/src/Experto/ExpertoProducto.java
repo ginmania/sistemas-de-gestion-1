@@ -61,8 +61,8 @@ public class ExpertoProducto implements Experto {
                 System.out.println("Descripcion: " + producto.getDescripcionProducto() + "\n");
                 System.out.println("PrecioCompra: " + producto.getPrecioCompra() + "\n");
                 System.out.println("PrecioVenta: " + producto.getPrecioVenta() + "\n");
-              //  System.out.println("Cantidad Minima: " + producto.getStock().getCantidadMinima() + "\n");
-              //  System.out.println("Cantidad: " + producto.getStock().getCantidad() + "\n");
+                System.out.println("Cantidad Minima: " + producto.getStock().getCantidadMinima() + "\n");
+                System.out.println("Cantidad: " + producto.getStock().getCantidad() + "\n");
                 vectorDTOProducto.add(producto);
             }
         }
@@ -80,8 +80,8 @@ public class ExpertoProducto implements Experto {
         producto.setPrecioVenta(precioVenta);
         producto.setbaja(baja);
         Stock stock = (Stock) FabricaEntidad.getInstancia().FabricarEntidad(Stock.class);
-        stock.setCantdidadMinima(cantidadminima);
-        stock.setCantdidad(cantidad);
+        stock.setCantidadMinima(cantidadminima);
+        stock.setCantidad(cantidad);
         resultado = Fachada.getInstancia().guardar((ObjetoPersistente) stock);
         producto.setStock(stock);
         resultado = Fachada.getInstancia().guardar((ObjetoPersistente) producto);
@@ -117,8 +117,8 @@ public class ExpertoProducto implements Experto {
         producto.setbaja(baja);       
         //stock
         stock.setStockPendiente(0);
-        stock.setCantdidadMinima(cantidadminima);
-        stock.setCantdidad(cantidad);
+        stock.setCantidadMinima(cantidadminima);
+        stock.setCantidad(cantidad);
         //catalogo
         APP.setOIDProducto(aP.getoid());
         APP.setOIDProducto(ap.getoid());

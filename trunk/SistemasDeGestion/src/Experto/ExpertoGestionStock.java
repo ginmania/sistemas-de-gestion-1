@@ -22,10 +22,11 @@ public class ExpertoGestionStock implements Experto{
     private Stock stock;
     
     public Stock buscarStock(Producto prod){
-        int codigoProducto = prod.getCodigoProducto();        
+        AgenteProducto ap = (AgenteProducto) prod;
+        /*int codigoProducto = prod.getCodigoProducto();        
         Criterio c1 = new Criterio();
-        c1 = Fachada.getInstancia().crearCriterio("CodigoProducto", "=", prod.getCodigoProducto());
-        stock = (Stock) Fachada.getInstancia().buscar(Stock.class, c1);
+        c1 = Fachada.getInstancia().crearCriterio("OIDStock", "=", ap.getOIDStock());*/
+        stock = (Stock) FachadaInterna.getInstancia().buscarOID(Stock.class, ap.getOIDStock());
         return stock;
     }
     
@@ -34,7 +35,20 @@ public class ExpertoGestionStock implements Experto{
         c1 = Fachada.getInstancia().crearCriterio("OIDStock", "=", prod.getStock());
         stock = (Stock) FachadaInterna.getInstancia().buscarOID(Stock.class, prod.getOIDStock());
         int cant = stock.getCantidad();
-        stock.setCantdidad(cant + nuevo);
+        stock.setCantidad(cant + nuevo);
+        Fachada.getInstancia().guardar((ObjetoPersistente)stock);
+    }
+    
+    public void DisminuirStock(int nuevo, AgenteProducto prod){
+        Criterio c1 = new Criterio();
+        c1 = Fachada.getInstancia().crearCriterio("OIDStock", "=", prod.getStock());
+        stock = (Stock) FachadaInterna.getInstancia().buscarOID(Stock.class, prod.getOIDStock());
+        int cant = stock.getCantidad();
+        int nueva = cant - nuevo;
+        if(nueva > 0)
+            stock.setCantidad(nueva);
+        else
+            stock.setCantidad(0);
         Fachada.getInstancia().guardar((ObjetoPersistente)stock);
     }
 }
