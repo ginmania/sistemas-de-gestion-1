@@ -5,6 +5,7 @@
 package Experto;
 
 import Interfaces.Parametros;
+import Interfaces.Venta;
 import Persistencia.Criterio;
 import Persistencia.Fachada;
 import Persistencia.ObjetoPersistente;
@@ -15,8 +16,11 @@ import java.util.List;
  * @author diego
  */
 public class ExpertoParametros implements Experto {
+    
+    private Parametros pm;
 
     public ExpertoParametros() {
+        this.pm = (Parametros) FabricaEntidad.getInstancia().FabricarEntidad(Parametros.class); 
     }
 
     public List<Parametros> buscarParametros() {
@@ -34,11 +38,10 @@ public class ExpertoParametros implements Experto {
     }
         public boolean guardarParametros(double a, double b, double g) {
         boolean resultado = false;
-        Parametros parametros = (Parametros) FabricaEntidad.getInstancia().FabricarEntidad(Parametros.class);
-        parametros.setAlfa(a);
-        parametros.setBeta(b);
-        parametros.setGama(g);
-        resultado = Fachada.getInstancia().guardar((ObjetoPersistente) parametros);
+        pm.setAlfa(a);
+        pm.setBeta(b);
+        pm.setGama(g);
+        resultado = Fachada.getInstancia().guardar((ObjetoPersistente) pm);
         return resultado;
     }
 

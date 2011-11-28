@@ -43,14 +43,14 @@ public class IntermediarioParametros extends IntermediarioRelacional {
             for (Registro registro : rs) {
                 temp = new Agentes.AgenteParametros();
                 temp.setImpl(new Implementaciones.ParametrosImpl());
-                temp.setoid(registro.getCampo(oid).getValor());
-                temp.setAlfa(Double.parseDouble(registro.getCampo("Alfa").getValor()));
-                temp.setBeta(Double.parseDouble(registro.getCampo("Beta").getValor()));
-                temp.setGama(Double.parseDouble(registro.getCampo("Gama").getValor()));
+                temp.setoid(registro.getCampo("idParametros").getValor());
+                temp.setAlfa((Double)(registro.getCampo("Alfa").getValor(Double.class)));
+                temp.setBeta((Double)(registro.getCampo("Beta").getValor(Double.class)));
+                temp.setGama((Double)(registro.getCampo("Gama").getValor(Double.class)));
                 parametros.add(temp);
             }
         } catch (Exception ex) {
-            System.out.println("Exploto el Intermediario PArametros");
+            System.out.println("Exploto el Intermediario Parametros");
         }
         return parametros;
     }
