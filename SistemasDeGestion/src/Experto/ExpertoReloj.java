@@ -105,6 +105,7 @@ public class ExpertoReloj implements Experto{
         Proveedor prov = (Proveedor) FabricaEntidad.getInstancia().FabricarEntidad(Proveedor.class);
         prods = fac.buscar(Producto.class, p1);
         //separo los productos que alcanzaron el mínimo
+        
         for(int i=0; i< prods.size();i++){
             Stock s = prods.get(i).getStock();
             int ss = s.getCantidadMinima();
@@ -120,8 +121,8 @@ public class ExpertoReloj implements Experto{
             }
         }
         ppal.getPantallaPrincipal().getBandejaProductos().setModel(tprod);
-        if(diaActual != 28) return false;
-        if(pp.size()== 0) return false;
+        //if(diaActual != 28) return false;
+        //if(pp.size()== 0) return false;
         //si tenemos productos con stock bajo y es fin de mes        
         for(int j=0; j<pp.size();j++){
                 Producto pto = pp.get(j);

@@ -85,6 +85,8 @@ public class ControladorPoliticaSR {
                 CrearPedidoPendiente();
             }
         });
+        
+        
     }
 
     public DTO obtenerDTO(DTO dTO) {
@@ -146,6 +148,7 @@ public class ControladorPoliticaSR {
         Producto p = (Producto) productos.get(item);
         AgenteProducto ap = (AgenteProducto) p;
         String politica = new String();
+        
         //cambiar para permitir el envio de un producto y de un proveedor en particular
         int lote = -1;
         //lote = objEPSR.calcularLote(p,P);

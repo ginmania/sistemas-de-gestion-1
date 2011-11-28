@@ -1,7 +1,10 @@
 package Persistencia;
 
+import Agentes.AgenteCatalogo;
 import Agentes.AgenteProducto;
 import Agentes.AgenteStock;
+import Experto.FabricaEntidad;
+import Interfaces.Catalogo;
 import Interfaces.Demanda;
 import Interfaces.Producto;
 import Interfaces.ProductoProveedor;
@@ -81,9 +84,16 @@ public class IntermediarioProducto extends IntermediarioRelacional {
                     temp.setDemandas(buscar);
                 }
                 //busquedaoidquenoexisten(temp);
-                //proveedor deberia tener siempre
-               // ArrayList<ProductoProveedor> pp = Fachada.getInstancia().buscar(ProductoProveedor.class, FabricaCriterio.getInstancia().crearCriterio("OIDProducto", "=", temp.getoid()));
-                //temp.setProveedor(pp.get(0).getProveedor() );
+                //traigo los proveedores asociados
+               ArrayList<Catalogo> pp = Fachada.getInstancia().buscar(Catalogo.class, FabricaCriterio.getInstancia().crearCriterio("OIDProducto", "=", temp.getoid()));
+               ArrayList<Proveedor>provs = new ArrayList();
+               for(int i=0;i<pp.size();i++){
+                   AgenteCatalogo ac = (AgenteCatalogo) pp.get(i);
+                   Proveedor aux = (Proveedor) FabricaEntidad.getInstancia().FabricarEntidad(Proveedor.class);
+                   aux = (Proveedor) FachadaInterna.getInstancia().buscarOID(Proveedor.class,ac.getOIDProveedor());
+                   provs.add(aux);
+               }               
+               temp.setProveedors(provs);
                 producto.add(temp);
             }
         } catch (Exception ex) {
