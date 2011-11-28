@@ -97,6 +97,7 @@ public class ExpertoReloj implements Experto{
         ArrayList<Proveedor> praux = new ArrayList();
         Hashtable prodaux = new Hashtable();
         tprod.addColumn("CodProducto"); 
+        tprod.addColumn("Producto"); 
         tprod.addColumn("cantidad");   
         tprod.addColumn("cantidad minima");  
         tprod.addColumn("clasificacion");  
@@ -110,19 +111,20 @@ public class ExpertoReloj implements Experto{
             Stock s = prods.get(i).getStock();
             int ss = s.getCantidadMinima();
             int actual = s.getCantidad();
-            if(actual<ss){
+            if(actual < ss){
                 pp.add(prods.get(i));
-                Object[] newRow = new Object[4];
+                Object[] newRow = new Object[5];
                 newRow[0] = prods.get(i).getCodigoProducto();
-                newRow[1] = prods.get(i).getStock().getCantidad();
-                newRow[2] = prods.get(i).getStock().getCantidadMinima();
-                newRow[3] = prods.get(i).getClasifABC();
+                newRow[1] = prods.get(i).getNombreProducto();
+                newRow[2] = prods.get(i).getStock().getCantidad();
+                newRow[3] = prods.get(i).getStock().getCantidadMinima();
+                newRow[4] = prods.get(i).getClasifABC();
                 tprod.addRow(newRow);
             }
         }
         ppal.getPantallaPrincipal().getBandejaProductos().setModel(tprod);
-        //if(diaActual != 28) return false;
-        //if(pp.size()== 0) return false;
+        if(diaActual != 28) return false;
+        if(pp.size() > 0) return false;
         //si tenemos productos con stock bajo y es fin de mes        
         for(int j=0; j<pp.size();j++){
                 Producto pto = pp.get(j);
@@ -149,6 +151,7 @@ public class ExpertoReloj implements Experto{
         for(int s=0; s<praux.size();s++){
             ArrayList<Producto> aux = new ArrayList();
             Proveedor P =praux.get(s);
+            //producto sobre el que trabajamos
             aux = (ArrayList<Producto>) prodaux.get(P);
             Hashtable cantidad = new Hashtable();
             for(int l=0; l<aux.size();l++){

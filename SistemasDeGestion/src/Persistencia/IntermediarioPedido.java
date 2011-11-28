@@ -9,6 +9,8 @@ import Agentes.AgentePedido;
 import Agentes.AgenteProducto;
 import Interfaces.DetallePedido;
 import Interfaces.Pedido;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,7 +37,9 @@ public class IntermediarioPedido extends IntermediarioRelacional {
         AgentePedido pedido = (AgentePedido) objeto;
         rs.addCampo(new Campo("OIDPedido", "'" + pedido.getoid() + "'"));
         rs.addCampo(new Campo("OIDProveedor", "'" + pedido.getOIDProveedor() + "'"));
+        if(pedido.getFechaEmision() != "0000-00-00")
         rs.addCampo(new Campo("fechaemision", "'" + pedido.getFechaEmision() + "'"));
+        if(pedido.getFechaEntrega() != "0000-00-00")
         rs.addCampo(new Campo("fechaentrega", "'" + pedido.getFechaEntrega() + "'"));
         rs.addCampo(new Campo("pend", "'" + String.valueOf(pedido.getPendiente()) + "'"));
         //rs.addCampo(new Campo("NroPedido", "'" + pedido.getNroPedido() + "'"));
@@ -46,14 +50,15 @@ public class IntermediarioPedido extends IntermediarioRelacional {
     public ArrayList convertirRegistroObjeto(List<Registro> rs) {
         ArrayList<Pedido> pedido = new ArrayList<Pedido>();
         Agentes.AgentePedido temp = null;
+        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
         try {
             for (Registro registro : rs) {
                 temp = new Agentes.AgentePedido();
                 temp.setImpl(new Implementaciones.PedidoImpl());
                 temp.setoid(registro.getCampo("OIDPedido").getValor());
                 temp.setOIDProveedor(registro.getCampo("OIDProveedor").getValor());
-                temp.setFechaEmision(registro.getCampo("fechaemision").getValor());
-                temp.setFechaEntrega(registro.getCampo("fechaentrega").getValor());
+                temp.setFechaEmision(formato.format(Date.valueOf(registro.getCampo("fechaemision").getValor())));
+                temp.setFechaEntrega(formato.format(Date.valueOf(registro.getCampo("fechaentrega").getValor())));
                 temp.setPendiente(Integer.parseInt(registro.getCampo("pend").getValor()));
                 temp.setNroPedido(registro.getCampo("NroPedido").getValor());
                 temp.setDetallePedidos(Fachada.getInstancia().buscar(DetallePedido.class, FabricaCriterio.getInstancia().crearCriterio("OIDPedido", "=", temp.getoid())));

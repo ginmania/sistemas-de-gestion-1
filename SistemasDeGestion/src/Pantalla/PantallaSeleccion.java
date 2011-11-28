@@ -13,7 +13,7 @@ package Pantalla;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JTextField;
+import javax.swing.JFormattedTextField;
 
 /**
  *
@@ -23,7 +23,8 @@ public class PantallaSeleccion extends javax.swing.JInternalFrame {
 
     /** Creates new form PantallaSeleccion */
     public PantallaSeleccion() {
-        initComponents();
+        //initComponents();
+        inicioComponentes();
     }
 
     /** This method is called from within the constructor to
@@ -38,9 +39,9 @@ public class PantallaSeleccion extends javax.swing.JInternalFrame {
         jlCombo = new javax.swing.JComboBox();
         jlEtiqueta = new javax.swing.JLabel();
         jLabelCantidad = new javax.swing.JLabel();
-        jtCantidad = new javax.swing.JTextField();
         jBtnAceptar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
+        jtCantidad = new javax.swing.JFormattedTextField();
 
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -57,6 +58,9 @@ public class PantallaSeleccion extends javax.swing.JInternalFrame {
         jBtnAceptar.setText("Aceptar");
 
         btnCancelar.setText("Cancelar");
+
+        jtCantidad.setEditable(false);
+        jtCantidad.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -76,7 +80,7 @@ public class PantallaSeleccion extends javax.swing.JInternalFrame {
                             .addComponent(jLabelCantidad))
                         .addGap(32, 32, 32)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jlCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(105, Short.MAX_VALUE))
         );
@@ -95,12 +99,10 @@ public class PantallaSeleccion extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jBtnAceptar)
                     .addComponent(btnCancelar))
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
 
         jlCombo.getAccessibleContext().setAccessibleName("cbSelecion");
-        jtCantidad.getAccessibleContext().setAccessibleName("jtCantidad");
-        jtCantidad.getAccessibleContext().setAccessibleDescription("cantidad");
 
         getAccessibleContext().setAccessibleParent(this);
 
@@ -117,9 +119,86 @@ public class PantallaSeleccion extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabelCantidad;
     private javax.swing.JComboBox jlCombo;
     private javax.swing.JLabel jlEtiqueta;
-    private javax.swing.JTextField jtCantidad;
+    private javax.swing.JFormattedTextField jtCantidad;
     // End of variables declaration//GEN-END:variables
 
+    private void inicioComponentes(){
+        jlCombo = new javax.swing.JComboBox();
+        jlEtiqueta = new javax.swing.JLabel();
+        jLabelCantidad = new javax.swing.JLabel();
+        jBtnAceptar = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
+        //de esta forma no permite el ingreso de una letra
+        jtCantidad = new javax.swing.JFormattedTextField(new Integer(5));
+
+        setClosable(true);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setMaximizable(true);
+        setTitle("Seleccion");
+        setName(""); // NOI18N
+
+        jlCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione ..." }));
+
+        jlEtiqueta.setText("Producto");
+
+        jLabelCantidad.setText("Cantidad");
+
+        jBtnAceptar.setText("Aceptar");
+
+        btnCancelar.setText("Cancelar");
+
+        jtCantidad.setEditable(true);
+        jtCantidad.setValue(0);
+        jtCantidad.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(35, 35, 35)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(105, 105, 105)
+                        .addComponent(jBtnAceptar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnCancelar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jlEtiqueta)
+                            .addComponent(jLabelCantidad))
+                        .addGap(32, 32, 32)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jlCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(105, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jlEtiqueta))
+                .addGap(28, 28, 28)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelCantidad)
+                    .addComponent(jtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(34, 34, 34)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jBtnAceptar)
+                    .addComponent(btnCancelar))
+                .addContainerGap(34, Short.MAX_VALUE))
+        );
+
+        jlCombo.getAccessibleContext().setAccessibleName("cbSelecion");
+
+        getAccessibleContext().setAccessibleParent(this);
+
+        pack();
+    
+    }
+    
     public JButton getBtnCancelar() {
         return btnCancelar;
     }
@@ -160,7 +239,7 @@ public class PantallaSeleccion extends javax.swing.JInternalFrame {
         this.jlEtiqueta.setText(Etiqueta);
     }
 
-    public JTextField getJtCantidad() {
+    public JFormattedTextField getJtCantidad() {
         return jtCantidad;
     }
     
@@ -169,7 +248,7 @@ public class PantallaSeleccion extends javax.swing.JInternalFrame {
     }
 
     public void setJtCantidad(int Cantidad) {
-        this.jtCantidad.setText(String.valueOf(Cantidad));
+        this.jtCantidad.setValue(Cantidad);
     }
 
     public String getSeleccionCombo() {

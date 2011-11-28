@@ -29,16 +29,16 @@ public class AgenteStock implements Stock, ObjetoPersistente {
         return impl.getCantidadMinima();
     }
 
-    public void setCantdidadMinima(int cantidadminima) {
-        this.impl.setCantdidadMinima(cantidadminima);
+    public void setCantidadMinima(int cantidadminima) {
+        this.impl.setCantidadMinima(cantidadminima);
     }
 
     public int getCantidad() {
         return impl.getCantidad();
     }
 
-    public void setCantdidad(int cantidad) {
-        this.impl.setCantdidad(cantidad);
+    public void setCantidad(int cantidad) {
+        this.impl.setCantidad(cantidad);
     }
 
     public void setoid(String oid) {

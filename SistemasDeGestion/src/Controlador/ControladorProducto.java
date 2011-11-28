@@ -181,7 +181,7 @@ public class ControladorProducto {
         productoSeleccionado.setPrecioCompra(Double.parseDouble(nuevoProducto.getTxPrecioCompra().getText()));
         productoSeleccionado.setPrecioVenta(Double.parseDouble(nuevoProducto.getTxPrecioVenta().getText()));
        // productoSeleccionado.getStock().setCantdidadMinima(Integer.parseInt(nuevoProducto.getTxCantidadMinima().getText()));
-        productoSeleccionado.getStock().setCantdidad(Integer.parseInt(nuevoProducto.getTxCantidad().getText()));
+        productoSeleccionado.getStock().setCantidad(Integer.parseInt(nuevoProducto.getTxCantidad().getText()));
         String ABC = nuevoProducto.getCbClasificacion().getSelectedItem().toString();
         productoSeleccionado.setClasifABC(ABC.charAt(0));
     }

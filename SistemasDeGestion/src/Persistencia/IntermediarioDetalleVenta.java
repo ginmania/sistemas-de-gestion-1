@@ -22,7 +22,7 @@ public class IntermediarioDetalleVenta extends IntermediarioRelacional {
 
     @Override
     public String generarSQLOID(String oid) {
-        return "SELECT * FROM " + tabla + " WHERE OIDDetallleVenta= " + oid;
+        return "SELECT * FROM " + "DetalleVenta" + " WHERE OIDDetallleVenta= " + oid;
 
     }
 

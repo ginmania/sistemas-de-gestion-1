@@ -42,12 +42,14 @@ public class ControladorPoliticaSR {
     private ArrayList<Proveedor> provs;
     private Hashtable proveedores;
     private Hashtable productos;
-    private DefaultTableModel dtm; 
+    private DefaultTableModel dtm;  
+    private boolean provsCargados;
 
     public ControladorPoliticaSR(ControladorPrincipal obj){
         this.objCG = obj;
         proveedores = new Hashtable();
         productos = new Hashtable();       
+        provsCargados = false;
         Object[][] data = new Object[0][6];
         String[] columnNames = {"Codigo","Nombre","Politica", "Precio", "Stock Actual", "Lote"};
          dtm = new javax.swing.table.DefaultTableModel(data, columnNames);
@@ -110,11 +112,13 @@ public class ControladorPoliticaSR {
 
     public void iniciar() {    
         objEPSR.iniciar(objCG.fechaSistema);
-        provs = expProv.ListarProveedor();         
+        provs = expProv.ListarProveedor(); 
+        
         for(int i=0; i< provs.size();i++){
             objGUIPolSR.getJcProveedores().addItem(provs.get(i).getNombre());
             proveedores.put(provs.get(i).getNombre(), provs.get(i));
-        }                
+        }   
+        provsCargados = true;
     }
 
     public Object[][] getProductosPrev(int posVec){
@@ -130,13 +134,15 @@ public class ControladorPoliticaSR {
        String prov = (String) selectedItem;
        ArrayList<Producto> prods;
        //limpio la tabla al cambiar de proveedor
-       limpiarTabla();
-       Proveedor P = (Proveedor) proveedores.get(prov);
-       prods = expProd.buscarEnCatalogo(P);
-       objGUIPolSR.getJcProductos().removeAllItems();
-       for(int i=0; i< prods.size();i++){
-           objGUIPolSR.getJcProductos().addItem(prods.get(i).getNombreProducto());
-           productos.put(prods.get(i).getNombreProducto(),prods.get(i));
+       if(provsCargados){
+            limpiarTabla();
+            Proveedor P = (Proveedor) proveedores.get(prov);
+            prods = expProd.buscarEnCatalogo(P);
+            objGUIPolSR.getJcProductos().removeAllItems();
+          for(int i=0; i< prods.size();i++){
+            objGUIPolSR.getJcProductos().addItem(prods.get(i).getNombreProducto());
+            productos.put(prods.get(i).getNombreProducto(),prods.get(i));
+           }
        }
     }
     

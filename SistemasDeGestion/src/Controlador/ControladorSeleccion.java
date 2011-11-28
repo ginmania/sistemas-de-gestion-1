@@ -8,6 +8,7 @@ import Pantalla.PantallaSeleccion;
 import Controlador.ControladorPrincipal;
 import Interfaces.Cliente;
 import Interfaces.Producto;
+import Interfaces.Stock;
 import java.beans.PropertyVetoException;
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -27,11 +28,13 @@ public class ControladorSeleccion {
     private ArrayList<Producto> prod;
     private Hashtable clientes;
     private Hashtable productos;
+    private Hashtable stock;
     
     public ControladorSeleccion(ControladorPrincipal principal) {        
         this.CtrlPrincipal = principal;
         this.clientes = new Hashtable();
         this.productos = new Hashtable();
+        this.stock = new Hashtable();
     } 
     
        
@@ -45,6 +48,7 @@ public class ControladorSeleccion {
                 producto = prod.get(i).getCodigoProducto()+"-"+prod.get(i).getNombreProducto();
                 pantalla.getJlCombo().addItem(producto);      
                 productos.put(producto,prod.get(i));
+                stock.put(producto,prod.get(i).getStock());
             }
             pantalla.setJlEtiqueta("Productos");            
             pantalla.setTitle(msj);      
@@ -80,5 +84,9 @@ public class ControladorSeleccion {
        return P;
     }
     
+    public Stock recuperarStock(Object sel){
+        Stock s = (Stock) stock.get(sel);
+        return s;
+    }
     
 }

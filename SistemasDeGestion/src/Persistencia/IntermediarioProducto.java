@@ -75,8 +75,9 @@ public class IntermediarioProducto extends IntermediarioRelacional {
                 temp.setOIDPolitica(registro.getCampo("politica").getValor());
                 ArrayList<Stock> buscarStock;
                 if(registro.getCampo("OIDStock").getValor() != null){
-                    buscarStock= FachadaInterna.getInstancia().buscar(Stock.class,FabricaCriterio.getInstancia().crearCriterio("OIDStock", "=", registro.getCampo("OIDStock").getValor()));
-                    temp.setStock(buscarStock.get(0));
+                    Stock s = (Stock) FabricaEntidad.getInstancia().FabricarEntidad(Stock.class);
+                    s= (Stock) FachadaInterna.getInstancia().buscarOID(Stock.class,temp.getOIDStock());
+                    temp.setStock(s);
                 }
                 ArrayList<Demanda> buscar; 
                 if(temp.getoid() != null){

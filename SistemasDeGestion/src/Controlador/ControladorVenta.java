@@ -4,16 +4,20 @@
  */
 package Controlador;
 
+import Agentes.AgenteProducto;
 import Excepciones.NoClienteExcepcion;
 import Excepciones.NoProductoExcepcion;
 import Pantalla.PantallaVenta;
 import Experto.ExpertoCliente;
+import Experto.ExpertoGestionStock;
 import Experto.ExpertoProducto;
 import Experto.ExpertoVentas;
 import Experto.FabricaExperto;
 import Interfaces.Cliente;
+import Interfaces.DayOfYear;
 import Interfaces.DetalleVenta;
 import Interfaces.Producto;
+import Interfaces.Stock;
 import Pantalla.ModeloTablaDetalleVenta;
 import Pantalla.PantallaSeleccion;
 import Pantalla.pantallaBuscarVta;
@@ -46,7 +50,7 @@ public class ControladorVenta {
     private List<Producto> productos;
     final private ExpertoCliente expClientes;
     final private ExpertoProducto expProducto;
-    // final private ExpertoGestionStock expStock;
+    final private ExpertoGestionStock expStock;
     final private ExpertoVentas expVenta;
     private ArrayList<DetalleVenta> detalles;
     private DetalleVenta detalle;
@@ -60,7 +64,7 @@ public class ControladorVenta {
         this.pantallaVta = new PantallaVenta();
         this.expClientes = (ExpertoCliente) FabricaExperto.getInstancia().FabricarExperto("ExpertoCliente");
         this.expProducto = (ExpertoProducto) FabricaExperto.getInstancia().FabricarExperto("ExpertoProducto");
-        //   this.expStock = (ExpertoGestionStock) FabricaExperto.getInstancia().FabricarExperto("ExpertoGestionStock");
+        this.expStock = (ExpertoGestionStock) FabricaExperto.getInstancia().FabricarExperto("ExpertoGestionStock");
 
         ctrlSeleccion = new ControladorSeleccion(ctrlPrincipal);
         pantallaSel = new PantallaSeleccion();
@@ -78,7 +82,6 @@ public class ControladorVenta {
                     Logger.getLogger(ControladorVenta.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 pantallaSel.getjBtnAceptar().addActionListener(new java.awt.event.ActionListener() {
-
                     public void actionPerformed(java.awt.event.ActionEvent evt) {
                         try {
                             llenarFactura(seleccion);
@@ -95,7 +98,7 @@ public class ControladorVenta {
 
         });
         
-        //SELECCIONAMOS UN PROVEEDOR
+        //SELECCIONAMOS UN PRODUCTO
         pantallaVta.getJbSelecProducto().addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
@@ -106,7 +109,6 @@ public class ControladorVenta {
                     Logger.getLogger(ControladorVenta.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 pantallaSel.getjBtnAceptar().addActionListener(new java.awt.event.ActionListener() {
-
                     public void actionPerformed(java.awt.event.ActionEvent evt) {
                         try {
                             llenarFactura(seleccion);
@@ -125,7 +127,7 @@ public class ControladorVenta {
                 String seleccion = pantallaVta.getJlCliente();
                 Cliente cliente = ctrlSeleccion.recuperarCliente(seleccion);
                 int nroFactura = Integer.parseInt(pantallaVta.getNroFactura().getText());
-                String fch = pantallaVta.getFecha().getText();
+                Date fch = pantallaVta.getFecha().getDate();
                 boolean GuardarVenta = expVenta.GuardarVenta(nroFactura, fch, cliente);
                 if (GuardarVenta == true) {
                     System.out.println("Se genero la venta");
@@ -135,18 +137,17 @@ public class ControladorVenta {
             }
         });
         
-                pantallaVta.getJbConfirma().addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(ActionEvent ae) {
-                String seleccion = pantallaVta.getJlCliente();
-                Cliente cliente = ctrlSeleccion.recuperarCliente(seleccion);
-                int nroFactura = Integer.parseInt(pantallaVta.getNroFactura().getText());
-                String fch = pantallaVta.getFecha().getText();
-                boolean GuardarVenta = expVenta.GuardarVenta(nroFactura, fch, cliente);
-                if (GuardarVenta == true) {
-                    System.out.println("Se genero la venta");
-                    JOptionPane.showMessageDialog(pantallaVta, "Se registro la venta", "Nueva Venta", JOptionPane.INFORMATION_MESSAGE);
-                    LimpiarPantalla();
+        pantallaVta.getmBuscar().addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    inicializarPantallaBusqueda();
+                    pantallaBus.setVisible(true);
+                    pantallaBus.moveToFront();
+                    ctrlPrincipal.add(pantallaBus);
+                } catch (ParseException ex) {
+                    Logger.getLogger(ControladorVenta.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                
             }
         });
 
@@ -162,13 +163,13 @@ public class ControladorVenta {
         });
 
         pantallaBus.getJbBuscar().addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(ActionEvent ae) {
-                SimpleDateFormat formato = new SimpleDateFormat("DD/mm/yyyy");
-                formato.applyPattern("dd/MM/yyyy");
-                //Date init = pantallaBus.getDateFchDesde();
-                String fechaD = "01/09/2011";
-                //Date fin = pantallaBus.getDateFchHasta();
-                String fechaH = "31/09/2011";
+            public void actionPerformed(ActionEvent ae) {                
+                SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+                formato.applyPattern("yyyy-MM-dd");
+                Date init = pantallaBus.getJdDesde().getDate();
+                String fechaD = formato.format(init);
+                Date fin = pantallaBus.getJdHasta().getDate();
+                String fechaH =formato.format(fin);
                 List<DTO_Venta> v = expVenta.buscarVentas(fechaD, fechaH);
                 for (int i = 0; i < v.size(); i++) {
                     tablaV.add(v.get(i));
@@ -180,15 +181,15 @@ public class ControladorVenta {
         pantallaBus.getTablaVentas().getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent lse) {
                 int s = pantallaBus.getTablaVentas().getSelectedRow();
+                
                 System.out.println("buscar nro venta de la fila");
                 System.out.println(s);
                 int nroVenta = (Integer) tablaV.getValueAt(s, 0);
-
+                pantallaBus.getTablaDetalles().removeAll();
                 List<DTO_DetalleVenta> dtoDV = expVenta.buscarDetallesVenta(nroVenta);
                 for (int i = 0; i < dtoDV.size(); i++) {
                     tabla.add(dtoDV.get(i));
                 }
-                pantallaBus.getTablaDetalles().removeAll();
                 pantallaBus.getTablaDetalles().setModel(tabla);
             }
         });
@@ -200,19 +201,22 @@ public class ControladorVenta {
             Producto combo = ctrlSeleccion.recuperarProducto(productoSeleccionado);
             double totalVta = 0;
             int cantidad = Integer.parseInt(pantallaSel.getCantidad());
-            DTO_DetalleVenta linea = expVenta.nuevoDetalle(combo, cantidad);
-            tabla.add(linea);
-            pantallaVta.setJtDetalleVenta(tabla);
-            totalVta = expVenta.CalcularTotal();
-            pantallaVta.setJtTotal(String.valueOf(totalVta));
-            pantallaVta.getJbConfirma().setVisible(true);
-            //actualizacion de stock
-            /*
-            Stock st = expStock.buscarStock(productos.get(0));
-            int cantAnt = st.getCantidad(); 
-            int cantActual= cantAnt - cantidad;
-            expStock.ActualizarStock(cantActual, productos.get(0));
-             */
+            Stock s = ctrlSeleccion.recuperarStock(productoSeleccionado);
+            if(cantidad < s.getCantidad()){
+                DTO_DetalleVenta linea = expVenta.nuevoDetalle(combo, cantidad);
+                tabla.add(linea);
+                pantallaVta.setJtDetalleVenta(tabla);
+                totalVta = expVenta.CalcularTotal();
+                pantallaVta.setJtTotal(String.valueOf(totalVta));
+                pantallaVta.getJbConfirma().setVisible(true);
+                 //actualizacion de stock            
+                int cantAnt = s.getCantidad(); 
+                int cantActual= cantAnt - cantidad;
+                expStock.ActualizarStock(cantActual,(AgenteProducto)combo);
+            }
+            else{
+                JOptionPane.showMessageDialog(pantallaVta, "La cantidad que intenta vender no se encuentra en stock", "Stock", JOptionPane.ERROR_MESSAGE);
+            }
 
         } else if (tarea.equals("Cliente")) { //asigna un cliente a la factura
             pantallaVta.setJlCliente(pantallaSel.getSeleccionCombo());
@@ -234,18 +238,18 @@ public class ControladorVenta {
     private void inicializarPantalla() {
         Date fechaHoy = new Date();
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-        pantallaVta.setNroFactura(String.valueOf(expVenta.NroFactura()));
-        pantallaVta.setFecha(formato.format(fechaHoy));
+        pantallaVta.setNroFactura(String.valueOf(expVenta.NroFactura()+1));
+        pantallaVta.getFecha().setDate(fechaHoy);
         pantallaVta.getJbSelecProducto().setVisible(false);
         pantallaVta.getJbConfirma().setVisible(false);
 
     }
 
     private void LimpiarPantalla() {
-        Date fechaHoy = new Date();
+        Date now = new Date();
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
         pantallaVta.setNroFactura(String.valueOf(expVenta.NroFactura()));
-        pantallaVta.setFecha(formato.format(fechaHoy));
+        pantallaVta.getFecha().setDate(now);
         pantallaVta.getJbSelecProducto().setVisible(false);
         pantallaVta.getJbConfirma().setVisible(false);
         pantallaVta.setJlCliente("");
@@ -255,10 +259,9 @@ public class ControladorVenta {
     }
 
     private void inicializarPantallaBusqueda() throws ParseException {
-        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-        /*pantallaBus.setFchDesde(formato.parse("09/01/2011"));
-        pantallaBus.setFchHasta(formato.parse("09/31/2011"));
-        pantallaBus.getFchDesde().setVisible(false);
-        pantallaBus.getFchHasta().setVisible(false);*/
+        Date now = new Date();
+        pantallaBus.getJdDesde().setDate(now);
+        pantallaBus.getJdHasta().setDate(now);
+        
     }
 }

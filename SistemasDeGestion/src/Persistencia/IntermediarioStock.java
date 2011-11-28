@@ -46,9 +46,9 @@ public class IntermediarioStock extends IntermediarioRelacional {
                 temp = new Agentes.AgenteStock();
                 temp.setImpl(new Implementaciones.StockImpl());
                 temp.setoid(registro.getCampo("OIDStock").getValor());
-                temp.setCantdidadMinima((Integer) (registro.getCampo("cantidadminima").getValor(Integer.class)));
-                temp.setCantdidad((Integer) (registro.getCampo("cantidad").getValor(Integer.class)));
-                temp.setCantdidad((Integer) (registro.getCampo("stockPendiente").getValor(Integer.class)));
+                temp.setCantidadMinima((Integer) (registro.getCampo("cantidadminima").getValor(Integer.class)));
+                temp.setCantidad((Integer) (registro.getCampo("cantidad").getValor(Integer.class)));
+                temp.setStockPendiente((Integer) (registro.getCampo("stockPendiente").getValor(Integer.class)));
                 stock.add(temp);
             }
         } catch (Exception ex) {
