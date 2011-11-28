@@ -203,6 +203,10 @@ public final class ControladorPrincipal {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
                     establecerParametros();
+                    buscarParametros();
+                    pantallaPrincipal.getLabelAlfa().setText("Alfa: " + alfa);
+                    pantallaPrincipal.getLabelBeta().setText("Beta: " + beta);
+                    pantallaPrincipal.getLabelGama().setText("Gama: " + gama);
 
                 } catch (NoProductoExcepcion ex) {
                     Logger.getLogger(ControladorPrincipal.class.getName()).log(Level.SEVERE, null, ex);

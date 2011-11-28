@@ -17,6 +17,13 @@ public class AgenteParametros implements Parametros, ObjetoPersistente {
     private String idParametros;
     private ParametrosImpl impl;
 
+    public AgenteParametros() {
+    }
+
+    public AgenteParametros(ParametrosImpl impl) {
+        this.impl = impl;
+    }
+
     public ParametrosImpl getImpl() {
         return impl;
     }

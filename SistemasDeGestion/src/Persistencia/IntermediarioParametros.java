@@ -22,7 +22,7 @@ public class IntermediarioParametros extends IntermediarioRelacional {
 
     @Override
     public String generarSQLOID(String oid) {
-        return "SELECT * FROM " + "Stock" + " WHERE idParametros= " + oid;
+        return "SELECT * FROM " + tabla + " WHERE idParametros= " + oid;
     }
 
     @Override
@@ -43,7 +43,7 @@ public class IntermediarioParametros extends IntermediarioRelacional {
             for (Registro registro : rs) {
                 temp = new Agentes.AgenteParametros();
                 temp.setImpl(new Implementaciones.ParametrosImpl());
-                temp.setoid(registro.getCampo("idParametros").getValor());
+                temp.setoid(registro.getCampo(oid).getValor());
                 temp.setAlfa(Double.parseDouble(registro.getCampo("Alfa").getValor()));
                 temp.setBeta(Double.parseDouble(registro.getCampo("Beta").getValor()));
                 temp.setGama(Double.parseDouble(registro.getCampo("Gama").getValor()));
