@@ -20,18 +20,18 @@ import java.util.logging.Logger;
  */
 public class ControladorParametros {
 
-    private ExpertoParametros expertoParametros;
     private ControladorPrincipal controladorPrincipal;
     private PantallaParametros pantallaParametros;
     private PantallaPrincipal pantallaPrincipal;
-    public static double alfa = 0.0;
-    public static double beta = 0.0;
-    public static double gama = 0.0;
+    public double alfa = 0.0;
+    public double beta = 0.0;
+    public double gama = 0.0;
     private String a;
+    private ExpertoParametros expertoparametros;
 
     public ControladorParametros(ControladorPrincipal controladorPrincipal) {
         this.controladorPrincipal = controladorPrincipal;
-        expertoParametros = (ExpertoParametros) FabricaExperto.getInstancia().FabricarExperto("ExpertoParametros");
+        expertoparametros = (ExpertoParametros) FabricaExperto.getInstancia().FabricarExperto("ExpertoParametros");
         pantallaParametros = new PantallaParametros(null, true);
         pantallaParametros.setLocationRelativeTo(null);
 
@@ -54,73 +54,54 @@ public class ControladorParametros {
                     setAlfa(Double.parseDouble(pantallaParametros.getCampoAlfa().getText()));
                     setBeta(Double.parseDouble(pantallaParametros.getCampoAlfa().getText()));
                     setGama(Double.parseDouble(pantallaParametros.getCampoGama().getText()));
-                    guardarParametros(Double.parseDouble(pantallaParametros.getCampoAlfa().getText()), Double.parseDouble(pantallaParametros.getCampoAlfa().getText()),Double.parseDouble(pantallaParametros.getCampoGama().getText()));
+                    guardarParametros(Double.parseDouble(pantallaParametros.getCampoAlfa().getText()), Double.parseDouble(pantallaParametros.getCampoAlfa().getText()), Double.parseDouble(pantallaParametros.getCampoGama().getText()));
                     pantallaParametros.dispose();
                 } catch (Exception ex) {
                     Logger.getLogger(ControladorParametros.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
-        ///FOCO PARA EL BETA EN EL METODO TENDENCIA ////////
-        pantallaParametros.getCampoBeta().addFocusListener(new java.awt.event.FocusAdapter() {
-
-            @Override
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                a = pantallaParametros.getCampoAlfa().getText();
-                alfa = Double.parseDouble(a);
-                beta = alfa / 2;
-                pantallaParametros.getCampoBeta().setText(String.valueOf(beta));
-
-            }
-        });
-
-
-        ///FOCO PARA EL GAMMA EN EL METODO ESTACIONALIDAD ////////
-        pantallaParametros.getCampoGama().addFocusListener(new java.awt.event.FocusAdapter() {
-
-            @Override
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                a = pantallaParametros.getCampoAlfa().getText();
-                alfa = Double.parseDouble(a);
-                gama = alfa * 2;
-                pantallaParametros.getCampoGama().setText(String.valueOf(gama));
-
-            }
-        });
     }
 
     public void agregarParametros(double a, double b, double g) {
         pantallaParametros.setTitle("Parametros");
-        pantallaParametros.getCampoAlfa().setText(String.valueOf(a));
-        pantallaParametros.getCampoBeta().setText(String.valueOf(b));
-        pantallaParametros.getCampoAlfa().setText(String.valueOf(g));
-        pantallaParametros.setVisible(true);
+         pantallaParametros.setVisible(true);
     }
 
-    public void guardarParametros(double a, double b, double g){
-        expertoParametros.guardarParametros(a, b, g);
+    public void guardarParametros(double a, double b, double g) {
+        expertoparametros.guardarParametros(a, b, g);
     }
-    public static double getAlfa() {
+
+    public double getAlfa() {
         return alfa;
     }
 
-    public static void setAlfa(double alfa) {
-        ControladorParametros.alfa = alfa;
+    public void setAlfa(double alfa) {
+        this.alfa = alfa;
     }
 
-    public static double getBeta() {
+    public double getBeta() {
         return beta;
     }
 
-    public static void setBeta(double beta) {
-        ControladorParametros.beta = beta;
+    public void setBeta(double beta) {
+        this.beta = beta;
     }
 
-    public static double getGama() {
+    public double getGama() {
         return gama;
     }
 
-    public static void setGama(double gama) {
-        ControladorParametros.gama = gama;
+    public void setGama(double gama) {
+        this.gama = gama;
+    }
+
+    public List<Parametros> buscarParametros() {
+        List<Parametros> vectorParametros = new ArrayList<Parametros>();
+        vectorParametros = expertoparametros.buscarParametros();
+        alfa = vectorParametros.get(0).getAlfa();
+        beta = vectorParametros.get(0).getBeta();
+        gama = vectorParametros.get(0).getGama();
+        return vectorParametros;
     }
 }

@@ -58,6 +58,7 @@ public class ControladorMetodos {
 
         /////////BOTON METODO CONSULTAR//////////
         pantallaMetodos.getBotonConsultar().addActionListener(new java.awt.event.ActionListener() {
+
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
                     seleccionado = pantallaMetodos.getComboProductos().getSelectedItem().toString();
@@ -82,6 +83,7 @@ public class ControladorMetodos {
 
         /////////BOTON METODO GUARDAR//////////
         pantallaMetodos.getBotonGuardar().addActionListener(new java.awt.event.ActionListener() {
+
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
                     guardar();
@@ -93,6 +95,7 @@ public class ControladorMetodos {
 
         /////////BOTON METODO CANCELAR//////////
         pantallaMetodos.getBotonCancelarMetodos().addActionListener(new java.awt.event.ActionListener() {
+
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
                     pantallaMetodos.dispose();
@@ -105,34 +108,36 @@ public class ControladorMetodos {
 
         /////////BOTON METODO SIMPLE//////////
         pantallaMetodos.getBotonSimple().addActionListener(new java.awt.event.ActionListener() {
+
             public void actionPerformed(java.awt.event.ActionEvent evt) {
             }
         });
         /////////BOTON METODO TENDENCIA//////////
         pantallaMetodos.getBotonTendencia().addActionListener(new java.awt.event.ActionListener() {
+
             public void actionPerformed(java.awt.event.ActionEvent evt) {
             }
         });
 
         /////////BOTON METODO ESTACIONALIDAD//////////
         pantallaMetodos.getBotonEstacionalidad().addActionListener(new java.awt.event.ActionListener() {
+
             public void actionPerformed(java.awt.event.ActionEvent evt) {
             }
         });
 
-
-
         /////////BOTON CALCULAR CALCULO METODO//////////
         pantallaMetodos.getBotonCalcularMetodos().addActionListener(new java.awt.event.ActionListener() {
+
             public void actionPerformed(ActionEvent e) {
                 if (pantallaMetodos.getTxPeriodo().getText().equalsIgnoreCase("")) {
                     JOptionPane.showMessageDialog(pantallaMetodos, "Debe ingresar la cantidad de periodos a predecir", "¡Atención!", JOptionPane.INFORMATION_MESSAGE);
                 }
                 ///PARA EL METODO SIMPLE ///
-                if(!pantallaMetodos.getBotonSimple().isSelected() && !pantallaMetodos.getBotonTendencia().isSelected() && !pantallaMetodos.getBotonTendencia().isSelected()) {
-                JOptionPane.showMessageDialog(pantallaMetodos, "Debe seleccionar un metodo!", "¡Atención!", JOptionPane.INFORMATION_MESSAGE);    
+                if (!pantallaMetodos.getBotonSimple().isSelected() && !pantallaMetodos.getBotonTendencia().isSelected() && !pantallaMetodos.getBotonTendencia().isSelected()) {
+                    JOptionPane.showMessageDialog(pantallaMetodos, "Debe seleccionar un metodo!", "¡Atención!", JOptionPane.INFORMATION_MESSAGE);
                 }
-                
+
                 if (pantallaMetodos.getBotonSimple().isSelected()) {
                     Object itemSeleccionado = pantallaMetodos.getComboProductos().getSelectedItem();
                     valorItemSeleccionado = itemSeleccionado.toString();
@@ -196,11 +201,7 @@ public class ControladorMetodos {
                     cadena2 = "";
                     cadena3 = "";
                     cadena4 = "";
-
                 }
-                 
-
-
                 ///PARA EL METODO TENDENCIA ///
 
                 if (pantallaMetodos.getBotonTendencia().isSelected()) {
@@ -339,9 +340,6 @@ public class ControladorMetodos {
                 }
 
             }
-       
-            
-            
         });
     }
 
@@ -355,24 +353,15 @@ public class ControladorMetodos {
     }
 
     public void agregarMetodos() throws NoProductoExcepcion {
-
-        alfa = ControladorParametros.alfa;
-        beta = ControladorParametros.beta;
-        gama = ControladorParametros.gama;
-        if (alfa == 0.0) {
-            JOptionPane.showMessageDialog(pantallaMetodos, "Debe establecer los parametros del sistema", "¡Atención!", JOptionPane.INFORMATION_MESSAGE);
-            pantallaMetodos.dispose();
-        } else {
-            productobuscado = buscarProducto();
-            if (!productobuscado.isEmpty()) {
-                for (int i = 0; i < productobuscado.size(); i++) {
-                    pantallaMetodos.getComboProductos().addItem(productobuscado.get(i).getNombreProducto());
-                }
-                pantallaMetodos.setTitle("Metodos");
-                pantallaMetodos.setVisible(true);
-            } else {
-                System.out.println("No hay productos");
+        productobuscado = buscarProducto();
+        if (!productobuscado.isEmpty()) {
+            for (int i = 0; i < productobuscado.size(); i++) {
+                pantallaMetodos.getComboProductos().addItem(productobuscado.get(i).getNombreProducto());
             }
+            pantallaMetodos.setTitle("Metodos");
+            pantallaMetodos.setVisible(true);
+        } else {
+            System.out.println("No hay productos");
         }
     }
 
