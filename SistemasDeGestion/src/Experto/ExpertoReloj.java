@@ -31,6 +31,7 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
@@ -206,6 +207,14 @@ public class ExpertoReloj implements Experto{
                 elegido = pr.get(i-1);
         }
         return elegido;
+    }
+
+    public void simulacion() {
+        calculoDemanda();
+        buscarProductosPuntoPedido(); 
+        buscarPedidosPendientes();
+        PantallaPrincipal pant = ppal.getPantallaPrincipal();
+        JOptionPane.showMessageDialog(pant, "Simulación terminada!", "¡Atención!", JOptionPane.INFORMATION_MESSAGE);
     }
     
     
