@@ -14,13 +14,17 @@ import Interfaces.DetallePedido;
 import Interfaces.Pedido;
 import Interfaces.Producto;
 import Interfaces.Proveedor;
+import Pantalla.PantallaPrincipal;
 import Persistencia.Criterio;
 import Persistencia.Fachada;
 import Persistencia.FachadaInterna;
 import Persistencia.ObjetoPersistente;
+import java.awt.Window;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Hashtable;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -113,14 +117,18 @@ public class ExpertoRealizarPedido implements Experto{
     }
     
     public boolean CrearPedidoPendiente(Date fecha,Proveedor prov, ArrayList<Producto> prod, Hashtable cantidad){
+       ExpertoGestionStock expStock = (ExpertoGestionStock) FabricaExperto.getInstancia().FabricarExperto("ExpertoGestionStock");
         Pedido pedido = (Pedido) FabricaEntidad.getInstancia().FabricarEntidad(Pedido.class);        
         AgenteProveedor aprov = (AgenteProveedor) prov;
         AgentePedido aped = (AgentePedido) pedido;
-        String fechaEmi = fecha.toGMTString();
+        Hashtable cants = new Hashtable();
+        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+        String fechaEmi = formato.format(fecha);
         //armo el pedido
         aped.setOIDProveedor(aprov.getoid());
         pedido.setProveedor(prov);
         pedido.setFechaEmision(fechaEmi);
+        pedido.setFechaEntrega("7000-10-2");
         pedido.setPendiente(1);
         //armo los detalles
         for(int i=0; i< prod.size();i++){
@@ -135,10 +143,30 @@ public class ExpertoRealizarPedido implements Experto{
             adp.setCantidad(cant);
             adp.setBaja(0);
             pedido.setDetallePedido(dpedido);
+            cants.put(aProd.getCodigoProducto(), cant);
         }
         //el pedido se encarga de guardar los detalles
         obFP = Fachada.getInstancia();
-        return obFP.guardar((ObjetoPersistente) pedido);
+        if(obFP.guardar((ObjetoPersistente) pedido)){
+            for(int j=0;j<prod.size();j++){
+                AgenteProducto aProd = (AgenteProducto) prod.get(j);
+                int c = (Integer) cants.get(aProd.getCodigoProducto());
+                expStock.ActualizarStockPendiente(c, aProd);
+            }
+            System.out.println("Se registro un nuevo pedido pendiente y actualizo el stock pendiente");
+            cants.clear();
+            limpiarVariables();
+            return true;
+        }
+        else return false;
+    }
+    
+    public void limpiarVariables(){
+        pedido.clear();
+        detalle.clear();
+        this.catalogo.clear();
+        this.producto.clear();
+        this.proveedor.clear();
     }
 
 }

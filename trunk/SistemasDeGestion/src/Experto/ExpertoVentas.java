@@ -35,7 +35,7 @@ public class ExpertoVentas implements Experto{
     private Venta vta;
     private AgenteVenta Avta;
     private List<DetalleVenta> detalles;
-    private ArrayList<Producto> prods;
+    private ArrayList<Producto> produs;
     private DetalleVenta detalle;
     private AgenteDetalleVenta Adetalle;
     private DTO_DetalleVenta dtoDetalle;
@@ -49,7 +49,7 @@ public class ExpertoVentas implements Experto{
         Avta = (AgenteVenta) vta;
         vta.setNumero(this.NroFactura()+1);
         this.detalles = new ArrayList<DetalleVenta>();  
-        this.prods = new ArrayList<Producto>();
+        this.produs = new ArrayList<Producto>();
         this.detVta = new Hashtable();
     }
     
@@ -83,7 +83,7 @@ public class ExpertoVentas implements Experto{
         vta.setTotal(Total);
         vta.setDetalleVenta(detalle);
         detalles.add(detalle);  
-        prods.add(prod);
+        produs.add(prod);
         System.out.println("agregamos el siguiente detalle");
         System.out.println(detalle.getCantidad()+"\n "+detalle.getPrecioUnitario()+"\n "+detalle.getProducto());
         return dtoDetalle;
@@ -122,12 +122,13 @@ public class ExpertoVentas implements Experto{
             actualizarStock(detalles);
             /*AUTOMATIZACION*/
             //verifico si el producto alcanzo el ss y si es asi realizo el pedido
-            expPSQ.automatizado(prods);
-            expPSR.automatizado(prods);
+            expPSQ.automatizado(produs);
+            expPSR.automatizado(produs);
             //deberia imprimir por impresora la factura
             System.out.println("\n Se guardo la factura nro"+String.valueOf(nroFactura)); 
             System.out.println("\n Cliente"+cli.getNombre()+"-"+cli.getApellido()+" -CUIT "+cli.getCUIT());
             detalles.clear();
+            produs.clear();
         }
         return res;
     }
