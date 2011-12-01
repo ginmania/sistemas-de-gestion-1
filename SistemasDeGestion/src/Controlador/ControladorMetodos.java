@@ -42,7 +42,6 @@ public class ControladorMetodos {
     private String[][] resultadotendencia;
     private String[][] resultadoestacionalidad;
     private List<Producto> vectorProductos = new ArrayList<Producto>();
-    //   private List<Parametros> vectorParametros = new ArrayList<Parametros>();
     private String[][] vectorDemandas = null;
     private List<Demanda> vectorDemandas2 = new ArrayList<Demanda>();
     private List<Producto> productobuscado = new ArrayList<Producto>();
@@ -50,19 +49,23 @@ public class ControladorMetodos {
     private String[][] vectorDemandaensimple = null;
     private String[][] vectorDemandaentendencia = null;
     private String[][] vectorDemandaenestacionalidad = null;
-    private ControladorParametros cp;
     private String seleccionado;
-    private ExpertoParametros expertoParametros;
+    private final ControladorParametros controladorParametros;
+    private List<Parametros> vectorParametros = new ArrayList<Parametros>();
 
     public ControladorMetodos(ControladorPrincipal controladorPrincipal) throws NoProductoExcepcion {
         this.controladorPrincipal = controladorPrincipal;
+        controladorParametros = new ControladorParametros(controladorPrincipal);
         expertoMetodos = (ExpertoMetodos) FabricaExperto.getInstancia().FabricarExperto("ExpertoMetodos");
         pantallaMetodos = new PantallaMetodos(null, true);
         pantallaMetodos.setLocationRelativeTo(null);
-        List<Parametros> vectorParametros = new ArrayList<Parametros>();
-        alfa = 0.1;
-        beta = 0.05;
-        gama = 0.2;
+        vectorParametros = controladorParametros.buscarParametros();
+        alfa = vectorParametros.get(0).getAlfa();
+        beta = vectorParametros.get(0).getBeta();
+        gama = vectorParametros.get(0).getGama();
+        System.out.println("Alfa: " + alfa);
+        System.out.println("Beta: " + beta);
+        System.out.println("Gama: " + gama);
         /////////BOTON METODO CONSULTAR//////////
         pantallaMetodos.getBotonConsultar().addActionListener(new java.awt.event.ActionListener() {
 
@@ -355,9 +358,6 @@ public class ControladorMetodos {
         return vectorProductos;
     }
 
-    // private List<Parametros> buscarParametros() throws NoProductoExcepcion {
-    //  return vectorParametros;
-    //}
     private void guardar() {
         expertoMetodos.guardar();
     }
