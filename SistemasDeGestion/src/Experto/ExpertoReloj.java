@@ -68,8 +68,9 @@ public class ExpertoReloj implements Experto{
     public void iniciar(ControladorPrincipal pant){
         ppal = pant;
         fechaSistema = pant.fechaSistema;
+        Date dia = new Date();
         calculoDemanda();
-        //buscarProductosPuntoPedido(); 
+        buscarProductosPuntoPedido(dia.getDay()); 
         buscarPedidosPendientes();
                
     }
@@ -99,7 +100,7 @@ public class ExpertoReloj implements Experto{
         ppal.getPantallaPrincipal().getBandejaEntrada().setModel(md);
     }
 
-    private boolean buscarProductosPuntoPedido() {
+    private boolean buscarProductosPuntoPedido(int diaActual) {
         ExpertoPoliticaSQ expPSQ = (ExpertoPoliticaSQ) FabricaExperto.getInstancia().FabricarExperto("ExpertoPoliticaSQ");
         ExpertoPoliticaSR expPSR = (ExpertoPoliticaSR) FabricaExperto.getInstancia().FabricarExperto("ExpertoPoliticaSR");
         DefaultTableModel tprod = new DefaultTableModel();
@@ -127,7 +128,7 @@ public class ExpertoReloj implements Experto{
             if(!Dpen.isEmpty()) //existen pedidos pendientes para el producto
                 prods.remove(i);
         }
-        //if(diaActual != 28) return false;
+        if(diaActual != 28) return false;
         
         expPSQ.automatizado(prods);
         expPSR.automatizado(prods);
@@ -211,7 +212,7 @@ public class ExpertoReloj implements Experto{
 
     public void simulacion() {
         calculoDemanda();
-        buscarProductosPuntoPedido(); 
+        buscarProductosPuntoPedido(28); 
         buscarPedidosPendientes();
         PantallaPrincipal pant = ppal.getPantallaPrincipal();
         JOptionPane.showMessageDialog(pant, "Simulación terminada!", "¡Atención!", JOptionPane.INFORMATION_MESSAGE);
