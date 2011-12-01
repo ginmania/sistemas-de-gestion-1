@@ -89,6 +89,8 @@ public class ExpertoReloj implements Experto{
     }
 
     private boolean buscarProductosPuntoPedido() {
+        ExpertoPoliticaSQ expPSQ = (ExpertoPoliticaSQ) FabricaExperto.getInstancia().FabricarExperto("ExpertoPoliticaSQ");
+        ExpertoPoliticaSR expPSR = (ExpertoPoliticaSR) FabricaExperto.getInstancia().FabricarExperto("ExpertoPoliticaSR");
         DefaultTableModel tprod = new DefaultTableModel();
         ppal.getPantallaPrincipal().getBandejaProductos().removeAll();
         Criterio p1 = fac.crearCriterio("baja", "=",0);
@@ -106,6 +108,10 @@ public class ExpertoReloj implements Experto{
         Proveedor prov = (Proveedor) FabricaEntidad.getInstancia().FabricarEntidad(Proveedor.class);
         prods = fac.buscar(Producto.class, p1);
         //separo los productos que alcanzaron el mínimo
+        if(diaActual < 28) return false;
+        
+        expPSQ.automatizado(prods);
+        expPSR.automatizado(prods);
         
         for(int i=0; i< prods.size();i++){
             Stock s = prods.get(i).getStock();
@@ -123,10 +129,10 @@ public class ExpertoReloj implements Experto{
             }
         }
         ppal.getPantallaPrincipal().getBandejaProductos().setModel(tprod);
-        if(diaActual < 28) return false;
-        if(pp.size() > 0) return false;
+        
+        
         //si tenemos productos con stock bajo y es fin de mes        
-        for(int j=0; j<pp.size();j++){
+        /*for(int j=0; j<pp.size();j++){
                 Producto pto = pp.get(j);
                 pr= pp.get(j).getProveedors();                
                 prov = SeleccionarProveedor(pr);
@@ -144,7 +150,7 @@ public class ExpertoReloj implements Experto{
                 }
         }
         //armamos por proveedor el pedido
-        expPed = (ExpertoRealizarPedido) FabricaExperto.getInstancia().FabricarExperto("ExpertoRealizarPedido");
+       expPed = (ExpertoRealizarPedido) FabricaExperto.getInstancia().FabricarExperto("ExpertoRealizarPedido");
         expSR = (ExpertoPoliticaSR) FabricaExperto.getInstancia().FabricarExperto("ExpertoPoliticaSR");
         expSQ = (ExpertoPoliticaSQ) FabricaExperto.getInstancia().FabricarExperto("ExpertoPoliticaSQ");
         
@@ -168,7 +174,7 @@ public class ExpertoReloj implements Experto{
             }
             expPed.CrearPedidoPendiente(fechaSistema.getGregorianChange(), prov, prods, cantidad);
         }
-        
+        */
         return true;
     }
 

@@ -328,11 +328,14 @@ public class ExpertoPoliticaSR implements Experto {
         factor.put("0.95",1.64);
         factor.put("0.975", 1.96);
         factor.put("0.999", 3.08);
-        factor.put("0.9998", 3);
+        factor.put("0.9998",3.0);
+        factor.put("1.0",3.0);
         if(Double.isNaN(nivelServ))
             nivelServ =0;
         float rtaK = 0;
-        double k = (Double) factor.get(String.valueOf(nivelServ));
+        String key = String.valueOf(nivelServ);
+        System.out.println("nivel de servicio convertido a string:"+key);
+        double k = (Double) factor.get(key);
         if(k!=0.0)
             rtaK = (float) k;
         else
@@ -342,6 +345,7 @@ public class ExpertoPoliticaSR implements Experto {
 
  public int calcularLote(Producto p, Proveedor P) {               
         GregorianCalendar fechaActual = new GregorianCalendar();
+        objFP = Fachada.getInstancia();
         int tiemR = 1;     //Valor por defecto...
         int perActual = 1; //Valor por defecto...
         float diaTemp = 0; //Valor por defecto...
@@ -378,8 +382,8 @@ public class ExpertoPoliticaSR implements Experto {
           Criterio c1 = objFP.crearCriterio("OIDProducto", "=",((AgenteProducto)p).getoid());
           Criterio c2 = objFP.crearCriterio("periodo", "=", String.valueOf(periodo));
           Criterio c3 = objFP.crearCriterio("anio","=",String.valueOf(fechaActual.get(GregorianCalendar.YEAR)-1));
-          Criterio co = objFP.crearCriterioCompuesto(c1, "=", c2);
-          Criterio cco = objFP.crearCriterioCompuesto(co, "=", c3);
+          Criterio co = objFP.crearCriterioCompuesto(c1, "AND", c2);
+          Criterio cco = objFP.crearCriterioCompuesto(co, "AND", c3);
           System.out.println("Criterio: "+cco.getAtributo()+cco.getOperador()+cco.getValor().toString());
           objHD = objFP.buscar(Demanda.class, cco);
           
@@ -415,5 +419,71 @@ public class ExpertoPoliticaSR implements Experto {
             int loteS = (int) getLoteS((float)nivelServicio,demanda,R,te,MSE, (int) StockDisp,p);
             objFP.guardar((ObjetoPersistente)p);
           return loteS;
+    }
+ 
+    public void automatizado(ArrayList<Producto> prods){
+        boolean pp = false;
+        Date fechaSistema = new Date();
+        ArrayList<Producto> prods2 = new ArrayList();
+        Hashtable lotes = new Hashtable();
+        ArrayList<Proveedor> provs = new ArrayList();
+        ArrayList<Catalogo> cats = new ArrayList();
+        Fachada fach = Fachada.getInstancia();
+        
+        for(int i=0;i<prods.size();i++){
+            //verifico que el producto sea de la politica
+          if(prods.get(i).getPolitica().equals("1")){
+                AgenteProducto ap = (AgenteProducto) prods.get(i);
+                Criterio c1 = fach.crearCriterio("OIDProducto", "=", ap.getoid());
+                //busco el catalogo correcto
+                cats = fach.buscar(Catalogo.class, c1);
+                for(int c=1;c<cats.size();c++){
+                    AgenteCatalogo ac = (AgenteCatalogo) cats.get(c);
+                    //busco en el catalogo los proveedores correctos
+                    Proveedor prov = (Proveedor) FabricaEntidad.getInstancia().FabricarEntidad(Proveedor.class);
+                    prov = (Proveedor)FachadaInterna.getInstancia().buscarOID(Proveedor.class, ac.getOIDProveedor());
+                   //si no existe el proveedor lo agrego
+                    if(!provs.contains(prov))
+                        provs.add(prov);
+                    int lote = calcularLote(prods.get(i),prov);
+                    prods2.add(prods.get(i));
+                    lotes.put(prods.get(i).getCodigoProducto(), lote);
+                }
+            }
+        }
+        ExpertoRealizarPedido expPedido = (ExpertoRealizarPedido) FabricaExperto.getInstancia().FabricarExperto("ExpertoRealizarPedido");
+        for(int p=0; p< provs.size();p++){
+            //armo el pedido si se alcanzo el tiempo de reposición
+            if(lotes.isEmpty()) break;
+            if(prods2.isEmpty())break;
+            if(verificarR(provs.get(p)))
+            expPedido.CrearPedidoPendiente(fechaSistema, provs.get(p), prods2, lotes);
+        }
+    }
+    
+    public boolean verificarR(Proveedor P){
+        GregorianCalendar fechaActual = new GregorianCalendar();
+        int tiemR = 1;     //Valor por defecto...
+        int perActual = 1; //Valor por defecto...
+        float diaTemp = 0; //Valor por defecto...
+        float demanda = (float) 0.0; 
+        float MSE = (float) 0.0;
+        tiemR = P.getTiempoR();
+        perActual = P.getPeriodoActual();
+        objDia = new DayOfYear();
+        int diaDelAnio = objDia.getDiaDelAnio();
+        int diasTotalAnio = (objDia.esBisiesto()) ? 366 : 365;
+            if (tiemR == 0) {
+                diaTemp = 0;
+            } else {
+                diaTemp = diaDelAnio / tiemR;
+            }
+            int periodo = (int) diaTemp;
+            //..................................................................
+            if (diaTemp - periodo == 0) {
+                return true;
+            }
+            else
+                return false;
     }
 }
