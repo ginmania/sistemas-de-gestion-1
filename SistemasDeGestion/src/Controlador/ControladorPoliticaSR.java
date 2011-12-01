@@ -84,7 +84,8 @@ public class ControladorPoliticaSR {
         objGUIPolSR.getJbCrearPedido().addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
                //hay que hacer que lo haga para un producto en particular.
-                CrearPedidoPendiente();
+               if(!CrearPedidoPendiente())
+                  JOptionPane.showMessageDialog(objGUIPolSR, "No es necesario generar pedido", "Generar Pedido", JOptionPane.ERROR_MESSAGE);
             }
         });
         
@@ -179,7 +180,7 @@ public class ControladorPoliticaSR {
         objGUIPolSR.getJtTabla().setModel(dtm);
     }
     
-    private void CrearPedidoPendiente(){
+    private boolean CrearPedidoPendiente(){
         expPed = (ExpertoRealizarPedido)FabricaExperto.getInstancia().FabricarExperto("ExpertoRealizarPedido");
         ArrayList<Producto> prods = new ArrayList<Producto>();
         Hashtable cantidad = new Hashtable();
@@ -194,7 +195,8 @@ public class ControladorPoliticaSR {
            p = (Producto) productos.get(prod);
            prods.add(p);
            //el lote
-           String cant = (String)objGUIPolSR.getJtTabla().getValueAt(i, 5);
+           int cant = (Integer) objGUIPolSR.getJtTabla().getValueAt(i, 5);
+           if(cant<=0) return false;
            cantidad.put(p.getCodigoProducto(), cant);
         }
         if(expPed.CrearPedidoPendiente(fechaEmision, proveedor, prods, cantidad)){
@@ -203,6 +205,7 @@ public class ControladorPoliticaSR {
         }else
             JOptionPane.showMessageDialog(objGUIPolSR, "Error al generar pedido", "Generar Pedido", JOptionPane.ERROR_MESSAGE);
         /*CrearPedidoPendiente(String fecha,Proveedor prov, ArrayList<Producto> prod, Hashtable cantidad)*/
+        return true;
     }
     
     private void limpiarTabla(){

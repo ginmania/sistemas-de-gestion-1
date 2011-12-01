@@ -123,7 +123,7 @@ public class ExpertoReloj implements Experto{
             }
         }
         ppal.getPantallaPrincipal().getBandejaProductos().setModel(tprod);
-        if(diaActual != 28) return false;
+        if(diaActual < 28) return false;
         if(pp.size() > 0) return false;
         //si tenemos productos con stock bajo y es fin de mes        
         for(int j=0; j<pp.size();j++){
@@ -206,6 +206,10 @@ public class ExpertoReloj implements Experto{
             prod = (Producto) FachadaInterna.getInstancia().buscarOID(Producto.class,agC.getOIDProducto());
             /*Deberia calcular demanda*/
             /*public String[][] calcularestacionalidad(double alfa, int valorperiodo, String productoSeleccionado, int valorperiodoinicial, int valorperiodofinal, int periodosapredecir) {*/
+            //periodo inicial = 01-01-2010
+            //periodo final = 28 del mes que sea
+            //periodos a predecir = 1 (mes siguiente)
+            //buscar en parametro
             expMetodos.calcularestacionalidad(0.1, periodo,prod.getNombreProducto(), periodo, periodo, periodo);
           }
         }

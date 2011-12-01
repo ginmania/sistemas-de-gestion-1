@@ -81,7 +81,9 @@ public class ExpertoPoliticaSQ implements Experto{
         boolean pedir = false;
         catalogo = (Catalogo)obFP.buscar(Catalogo.class, c1);
         hDemanda = (Demanda)obFP.buscar(Demanda.class,c1);
-        if(producto.getStock().getCantidadMinima() > producto.getStock().getCantidad() + producto.getStock().getStockPendiente()){ // prod.getStockPend debe introducirse en el intermediario producto
+        int cantMinima = producto.getStock().getCantidadMinima();
+        int stockPendiente = producto.getStock().getCantidad() + producto.getStock().getStockPendiente();
+        if(cantMinima > stockPendiente){ // prod.getStockPend debe introducirse en el intermediario producto
             pedir = true;
         }
         return pedir;
@@ -136,7 +138,9 @@ public class ExpertoPoliticaSQ implements Experto{
         if(!cat.isEmpty())
             K = cat.get(0);  
         //evaluo si llego al punto de pedido
-        if(producto.getStock().getCantidadMinima() < producto.getStock().getCantidad() + producto.getStock().getStockPendiente()){
+        int cantMinima = producto.getStock().getCantidadMinima();
+        int stockPendiente = producto.getStock().getCantidad() + producto.getStock().getStockPendiente();
+        if(cantMinima > stockPendiente){
             optimo = (int)Math.sqrt(2 * prove.getCostoEmision() * D.getDemandareal() * 52 / (0.2 * K.getPrecioCompra()));
             System.out.println("Lote optimo " + optimo);
         }

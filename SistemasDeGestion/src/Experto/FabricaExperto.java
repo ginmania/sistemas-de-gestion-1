@@ -1,5 +1,7 @@
 package Experto;
 
+import Interfaces.Producto;
+
 public class FabricaExperto {
 
     private static FabricaExperto instancia;
@@ -43,4 +45,6 @@ public class FabricaExperto {
         }
         return null;
     }
+
+    
 }

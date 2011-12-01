@@ -302,11 +302,16 @@ public final class ControladorPrincipal {
 
     public void add(JInternalFrame jInternalFrame) {
         System.out.println("AGREGA");
+        try {
         pantallaPrincipal.getBandejaEntrada().setVisible(false);
         pantallaPrincipal.getBandejaProductos().setVisible(false);
         jInternalFrame.moveToFront();
         jInternalFrame.setMaximizable(true);
-        jInternalFrame.moveToFront();
+        
+            jInternalFrame.setSelected(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(ControladorPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
         pantallaPrincipal.getjDesktopPane1().add(jInternalFrame);
         //pantallaPrincipal.getjDesktopPane1().getDesktopManager().maximizeFrame(jInternalFrame);
 

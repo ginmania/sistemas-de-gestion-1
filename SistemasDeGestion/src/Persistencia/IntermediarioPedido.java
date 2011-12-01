@@ -38,9 +38,9 @@ public class IntermediarioPedido extends IntermediarioRelacional {
         rs.addCampo(new Campo("OIDPedido", "'" + pedido.getoid() + "'"));
         rs.addCampo(new Campo("OIDProveedor", "'" + pedido.getOIDProveedor() + "'"));
         if(pedido.getFechaEmision() != "0000-00-00")
-        rs.addCampo(new Campo("fechaemision", "'" + pedido.getFechaEmision() + "'"));
+            rs.addCampo(new Campo("fechaemision", "'" + Date.valueOf(pedido.getFechaEmision()) + "'"));
         if(pedido.getFechaEntrega() != "0000-00-00")
-        rs.addCampo(new Campo("fechaentrega", "'" + pedido.getFechaEntrega() + "'"));
+            rs.addCampo(new Campo("fechaentrega", "'" + Date.valueOf(pedido.getFechaEntrega()) + "'"));
         rs.addCampo(new Campo("pend", "'" + String.valueOf(pedido.getPendiente()) + "'"));
         //rs.addCampo(new Campo("NroPedido", "'" + pedido.getNroPedido() + "'"));
         return rs;
