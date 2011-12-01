@@ -303,8 +303,8 @@ public final class ControladorPrincipal {
     public void add(JInternalFrame jInternalFrame) {
         System.out.println("AGREGA");
         try {
-        pantallaPrincipal.getBandejaEntrada().setVisible(false);
-        pantallaPrincipal.getBandejaProductos().setVisible(false);
+       // pantallaPrincipal.getBandejaEntrada().setVisible(false);
+        //pantallaPrincipal.getBandejaProductos().setVisible(false);
         jInternalFrame.moveToFront();
         jInternalFrame.setMaximizable(true);
         
