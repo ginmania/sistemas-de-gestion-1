@@ -15,6 +15,7 @@ import Interfaces.Demanda;
 import Interfaces.PoliticaStock;
 import Interfaces.Producto;
 import Interfaces.Proveedor;
+import Interfaces.Stock;
 import Persistencia.Criterio;
 import Persistencia.Fachada;
 import Persistencia.FachadaInterna;
@@ -81,13 +82,15 @@ public class ExpertoPoliticaSQ implements Experto{
 
     private boolean verificarPtoDePedido(Producto producto){
         obFP = Fachada.getInstancia();
-       // Criterio c1 = obFP.crearCriterio("OIDProducto", "=", ((AgenteProducto)producto).getoid());
         boolean pedir = false;
-//        catalogo = (Catalogo)obFP.buscar(Catalogo.class, c1);
-  //      hDemanda = (Demanda)obFP.buscar(Demanda.class,c1);
-        int cantMinima = producto.getStock().getCantidadMinima();
-        int stockPendiente = producto.getStock().getCantidad() + producto.getStock().getStockPendiente();
-        if(cantMinima > stockPendiente){ // prod.getStockPend debe introducirse en el intermediario producto
+        AgenteProducto ap = (AgenteProducto) producto;
+        Stock s = (Stock) FabricaEntidad.getInstancia().FabricarEntidad(Stock.class);
+        s = (Stock) FachadaInterna.getInstancia().buscarOID(Stock.class,ap.getOIDStock());
+        int cantMinima = s.getCantidadMinima();
+        int stockPendiente = s.getCantidad() + s.getStockPendiente();
+        System.out.println("Verificando punto de pedido");
+        System.out.println(producto.getNombreProducto()+"> Cantidad Minima:"+cantMinima+" StockPendiente:"+stockPendiente);
+        if(stockPendiente <= cantMinima){ // prod.getStockPend debe introducirse en el intermediario producto
             pedir = true;
         }
         return pedir;
@@ -186,7 +189,7 @@ public class ExpertoPoliticaSQ implements Experto{
                 Criterio c1 = fach.crearCriterio("OIDProducto", "=", ap.getoid());
                 //busco el catalogo correcto
                 cats = fach.buscar(Catalogo.class, c1);
-                for(int c=1;c<cats.size();c++){
+                for(int c=0;c<cats.size();c++){
                     AgenteCatalogo ac = (AgenteCatalogo) cats.get(c);
                     //busco en el catalogo los proveedores correctos
                     Proveedor prov = (Proveedor) FabricaEntidad.getInstancia().FabricarEntidad(Proveedor.class);
@@ -194,16 +197,17 @@ public class ExpertoPoliticaSQ implements Experto{
                    //si no existe el proveedor lo agrego
                     if(!provs.contains(prov))
                         provs.add(prov);
+                    int lote = calcularLoteOptimo(prods.get(i),prov);
+                    prods2.add(prods.get(i));
+                    lotes.put(prods.get(i).getCodigoProducto(), lote);
                 }
-                int lote = calcularLoteOptimo(prods.get(i),prov);
-                prods2.add(prods.get(i));
-                lotes.put(prods.get(i).getCodigoProducto(), lote);
-            //CrearPedidoPendiente(Date fecha,Proveedor prov, ArrayList<Producto> prod, Hashtable cantidad)
             }
            }
         }
         ExpertoRealizarPedido expPedido = (ExpertoRealizarPedido) FabricaExperto.getInstancia().FabricarExperto("ExpertoRealizarPedido");
         for(int p=0; p< provs.size();p++){
+            if(lotes.isEmpty()) break;
+            if(prods2.isEmpty())break;
             //armo un pedido por proveedor
             expPedido.CrearPedidoPendiente(fechaSistema, provs.get(p), prods2, lotes);
         }

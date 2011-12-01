@@ -10,6 +10,8 @@ import Agentes.AgenteProveedor;
 import Controlador.ControladorPrincipal;
 import Interfaces.Catalogo;
 import Interfaces.DayOfYear;
+import Interfaces.DetallePedido;
+import Interfaces.Parametros;
 import Interfaces.Pedido;
 import Interfaces.Producto;
 import Interfaces.Proveedor;
@@ -59,8 +61,9 @@ public class ExpertoReloj implements Experto{
         ppal = pant;
         fechaSistema = pant.fechaSistema;
         //calculoDemanda();
+        buscarProductosPuntoPedido(); 
         buscarPedidosPendientes();
-        buscarProductosPuntoPedido();        
+               
     }
     /*Este experto carga el informe inicial o bandeja de entrada de pedidos pendientes*/
     /*carga los avisos de productos por debajo del stock*/
@@ -108,11 +111,18 @@ public class ExpertoReloj implements Experto{
         Proveedor prov = (Proveedor) FabricaEntidad.getInstancia().FabricarEntidad(Proveedor.class);
         prods = fac.buscar(Producto.class, p1);
         //separo los productos que alcanzaron el mínimo
-        if(diaActual < 28) return false;
+        for(int i=0;i<prods.size();i++){
+            Criterio cp = fac.crearCriterio("baja", "=", 0);
+            Criterio pP = fac.crearCriterio("OIDProducto", "=", ((AgenteProducto)prods.get(i)).getoid());
+            Criterio cx = fac.crearCriterioCompuesto(cp,"AND", cp);
+            ArrayList <DetallePedido> Dpen = fac.buscar(DetallePedido.class, cp);
+            if(!Dpen.isEmpty()) //existen pedidos pendientes para el producto
+                prods.remove(i);
+        }
+        //if(diaActual != 28) return false;
         
         expPSQ.automatizado(prods);
         expPSR.automatizado(prods);
-        
         for(int i=0; i< prods.size();i++){
             Stock s = prods.get(i).getStock();
             int ss = s.getCantidadMinima();
@@ -191,6 +201,8 @@ public class ExpertoReloj implements Experto{
             int tiemR = 1;     //Valor por defecto...
             int perActual = 1; //Valor por defecto...
             float diaTemp = 0; //Valor por defecto...
+            String periodoinicial = "01012010";
+            String periodofinal = "31122010";
             tiemR = APR.get(j).getTiempoR();
             if (tiemR == 0) {
                 diaTemp = 0;
@@ -210,13 +222,15 @@ public class ExpertoReloj implements Experto{
             AgenteCatalogo agC = (AgenteCatalogo) cat.get(c);
             Producto prod = (Producto) FabricaEntidad.getInstancia().FabricarEntidad(Producto.class);
             prod = (Producto) FachadaInterna.getInstancia().buscarOID(Producto.class,agC.getOIDProducto());
+            ArrayList<Parametros> pars = Fachada.getInstancia().buscar_todo(Parametros.class);
+            Parametros par = (Parametros) FabricaEntidad.getInstancia().FabricarEntidad(Parametros.class);
             /*Deberia calcular demanda*/
-            /*public String[][] calcularestacionalidad(double alfa, int valorperiodo, String productoSeleccionado, int valorperiodoinicial, int valorperiodofinal, int periodosapredecir) {*/
+            /*calcularestacionalidad(double alfa, int valorperiodo, String productoSeleccionado, int valorperiodoinicial, int valorperiodofinal, int periodosapredecir) {*/
             //periodo inicial = 01-01-2010
             //periodo final = 28 del mes que sea
             //periodos a predecir = 1 (mes siguiente)
             //buscar en parametro
-            expMetodos.calcularestacionalidad(0.1, periodo,prod.getNombreProducto(), periodo, periodo, periodo);
+            //expMetodos.calcularestacionalidad(par.getAlfa(), periodo,prod.getNombreProducto(),'', periodo, periodo);
           }
         }
        
