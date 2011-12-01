@@ -1,0 +1,31 @@
+Clasificación de los artículos según ABC y graficar.
+
+
+  Emitir órdenes de compra.
+
+
+  Ingresar facturas de compra y ventas.
+
+
+  Estimar la demanda futura en base a los métodos de suavizamiento exponencial.
+
+
+  Permitir que un artículo pueda cambiarse de un método de suavizamiento a otro.
+
+
+  Implementar la señal de rastreo.
+
+
+  Graficar la demanda real frente al pronóstico.
+
+
+  Calcular lote económico de compra Q*.
+
+
+  Calcular stock de seguridad en base al nivel de servicio.
+
+
+  Informar los artículos por debajo del punto de pedido.
+
+
+  Dar la posibilidad al usuario de utilizar distintas políticas de inventario para cada artículo y también de cambiarla.

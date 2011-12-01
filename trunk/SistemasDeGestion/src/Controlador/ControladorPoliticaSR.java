@@ -157,9 +157,9 @@ public class ControladorPoliticaSR {
         String politica = new String();
         
         //cambiar para permitir el envio de un producto y de un proveedor en particular
-        int lote = -1;
-        //lote = objEPSR.calcularLote(p,P);
-        if(ap.getOIDPolitica().equals("1")){
+        int lote = 0;
+        
+        if(ap.getPolitica().equals("1")){
            lote = objEPSR.calcularLote(p,P);
            politica = "S,R";
         }else{

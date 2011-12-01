@@ -127,7 +127,6 @@ public class ExpertoReloj implements Experto{
             Stock s = prods.get(i).getStock();
             int ss = s.getCantidadMinima();
             int actual = s.getCantidad();
-            if(actual < ss){
                 pp.add(prods.get(i));
                 Object[] newRow = new Object[5];
                 newRow[0] = prods.get(i).getCodigoProducto();
@@ -136,7 +135,6 @@ public class ExpertoReloj implements Experto{
                 newRow[3] = prods.get(i).getStock().getCantidadMinima();
                 newRow[4] = prods.get(i).getClasifABC();
                 tprod.addRow(newRow);
-            }
         }
         ppal.getPantallaPrincipal().getBandejaProductos().setModel(tprod);
         

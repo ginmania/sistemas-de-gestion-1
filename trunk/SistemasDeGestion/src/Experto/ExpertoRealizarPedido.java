@@ -155,7 +155,7 @@ public class ExpertoRealizarPedido implements Experto{
             }
             System.out.println("Se registro un nuevo pedido pendiente y actualizo el stock pendiente");
             cants.clear();
-            limpiarVariables();
+           // limpiarVariables();
             return true;
         }
         else return false;

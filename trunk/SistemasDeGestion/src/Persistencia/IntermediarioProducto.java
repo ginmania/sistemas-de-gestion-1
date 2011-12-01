@@ -73,6 +73,7 @@ public class IntermediarioProducto extends IntermediarioRelacional {
                 temp.setbaja(Integer.parseInt(registro.getCampo("baja").getValor()));
                 temp.setPrecioVenta((Double) (registro.getCampo("nivelServicio").getValor(Double.class)));
                 temp.setPolitica(registro.getCampo("politica").getValor());
+                temp.setOIDPolitica(registro.getCampo("politica").getValor());
                 ArrayList<Stock> buscarStock;
                 if(registro.getCampo("OIDStock").getValor() != null){
                     Stock s = (Stock) FabricaEntidad.getInstancia().FabricarEntidad(Stock.class);
