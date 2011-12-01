@@ -119,6 +119,7 @@ public class ExpertoPoliticaSQ implements Experto{
                 diaTemp = diaDelAnio / tiemR;
             }
             int periodo = (int) diaTemp;
+            periodo = periodo - 100;
             //..................................................................
             if (diaTemp - periodo != 0) {
                 if (diaTemp < (int) (diasTotalAnio / tiemR)) {
@@ -139,13 +140,18 @@ public class ExpertoPoliticaSQ implements Experto{
         dem = obFP.buscar(Demanda.class, c7);
         Demanda D = (Demanda) FabricaEntidad.getInstancia().FabricarEntidad(Demanda.class);
         if(!dem.isEmpty()) 
-            D = dem.get(0);
+            D = dem.get(dem.size()-1);
         int optimo = 0;
         Catalogo K = (Catalogo) FabricaEntidad.getInstancia().FabricarEntidad(Catalogo.class);
         if(!cat.isEmpty())
             K = cat.get(0);  
         //evaluo si llego al punto de pedido
-        int cantMinima = producto.getStock().getCantidadMinima();
+        ExpertoProducto expProd = (ExpertoProducto) FabricaExperto.getInstancia().FabricarExperto("ExpertoProducto");
+        ExpertoGestionStock expStock = (ExpertoGestionStock) FabricaExperto.getInstancia().FabricarExperto("ExpertoGestionStock");
+        int cantMinima = (int) expProd.CalcularStockSeguridad(producto, prove);
+        producto.getStock().setCantidadMinima(cantMinima);
+        expProd.modificarProducto(producto);
+        expStock.modificarStock(producto.getStock());
         int stockPendiente = producto.getStock().getCantidad() + producto.getStock().getStockPendiente();
         if(cantMinima > stockPendiente){
             optimo = (int)Math.sqrt(2 * prove.getCostoEmision() * D.getDemandareal() * 52 / (0.2 * K.getPrecioCompra()));

@@ -60,4 +60,13 @@ public class ExpertoGestionStock implements Experto{
         stock.setStockPendiente(cant + nuevo);
         Fachada.getInstancia().guardar((ObjetoPersistente)stock);
     }
+
+    public boolean modificarStock(Stock stock) {
+        boolean resultado = false;
+        if (stock == null) {
+            return resultado;
+        }
+        resultado = Fachada.getInstancia().guardar((ObjetoPersistente) stock);
+        return resultado;
+    }
 }
