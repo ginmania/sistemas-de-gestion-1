@@ -6,8 +6,10 @@ package Controlador;
 
 import Excepciones.NoProductoExcepcion;
 import Experto.ExpertoMetodos;
+import Experto.ExpertoParametros;
 import Experto.FabricaExperto;
 import Interfaces.Demanda;
+import Interfaces.Parametros;
 import Interfaces.Producto;
 import Metodo.Periodo;
 import Pantalla.PantallaMetodos;
@@ -40,6 +42,7 @@ public class ControladorMetodos {
     private String[][] resultadotendencia;
     private String[][] resultadoestacionalidad;
     private List<Producto> vectorProductos = new ArrayList<Producto>();
+    //   private List<Parametros> vectorParametros = new ArrayList<Parametros>();
     private String[][] vectorDemandas = null;
     private List<Demanda> vectorDemandas2 = new ArrayList<Demanda>();
     private List<Producto> productobuscado = new ArrayList<Producto>();
@@ -47,15 +50,19 @@ public class ControladorMetodos {
     private String[][] vectorDemandaensimple = null;
     private String[][] vectorDemandaentendencia = null;
     private String[][] vectorDemandaenestacionalidad = null;
-    private ControladorParametros controladorParametros;
+    private ControladorParametros cp;
     private String seleccionado;
+    private ExpertoParametros expertoParametros;
 
-    public ControladorMetodos(ControladorPrincipal controladorPrincipal) {
+    public ControladorMetodos(ControladorPrincipal controladorPrincipal) throws NoProductoExcepcion {
         this.controladorPrincipal = controladorPrincipal;
         expertoMetodos = (ExpertoMetodos) FabricaExperto.getInstancia().FabricarExperto("ExpertoMetodos");
         pantallaMetodos = new PantallaMetodos(null, true);
         pantallaMetodos.setLocationRelativeTo(null);
-
+        List<Parametros> vectorParametros = new ArrayList<Parametros>();
+        alfa = 0.1;
+        beta = 0.05;
+        gama = 0.2;
         /////////BOTON METODO CONSULTAR//////////
         pantallaMetodos.getBotonConsultar().addActionListener(new java.awt.event.ActionListener() {
 
@@ -348,6 +355,9 @@ public class ControladorMetodos {
         return vectorProductos;
     }
 
+    // private List<Parametros> buscarParametros() throws NoProductoExcepcion {
+    //  return vectorParametros;
+    //}
     private void guardar() {
         expertoMetodos.guardar();
     }
