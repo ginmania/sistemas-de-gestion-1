@@ -18,6 +18,7 @@ import Interfaces.Pedido;
 import Interfaces.PoliticaStock;
 import Interfaces.Producto;
 import Interfaces.Proveedor;
+import Metodo.Periodo;
 import Persistencia.Criterio;
 import Persistencia.Fachada;
 import Persistencia.FachadaInterna;
@@ -293,7 +294,7 @@ public class ExpertoPoliticaSR implements Experto {
         p.getStock().setCantidadMinima(S);
         int total = 0;
         if(S > 0)
-            total = S - stockDisp;
+            total = stockDisp - S;
         
         System.out.println("  S - Stock Disponible: " + total + " unidades");
 
@@ -348,7 +349,7 @@ public class ExpertoPoliticaSR implements Experto {
         objFP = Fachada.getInstancia();
         int tiemR = 1;     //Valor por defecto...
         int perActual = 1; //Valor por defecto...
-        float diaTemp = 0; //Valor por defecto...
+        float diaTemp = 1; //Valor por defecto...
         float demanda = (float) 0.0; 
         float MSE = (float) 0.0;
         tiemR = P.getTiempoR();
@@ -362,12 +363,15 @@ public class ExpertoPoliticaSR implements Experto {
                 diaTemp = diaDelAnio / tiemR;
             }
             int periodo = (int) diaTemp;
+            periodo = periodo - 100;
             //..................................................................
             if (diaTemp - periodo != 0) {
                 if (diaTemp < (int) (diasTotalAnio / tiemR)) {
                     ++periodo;
                 }
             }
+            //Periodo per = new Periodo();
+            //int peri = per.getPeriodos(, null)
         //busco la demanda pronosticada del producto
         //busco el tiempo de reposición del proveedor
         //busco el tiempo de demora en el catálogo

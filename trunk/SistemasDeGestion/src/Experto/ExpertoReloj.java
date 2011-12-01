@@ -16,14 +16,21 @@ import Interfaces.Pedido;
 import Interfaces.Producto;
 import Interfaces.Proveedor;
 import Interfaces.Stock;
+import Metodo.Periodo;
 import Pantalla.PantallaPrincipal;
+import Persistencia.ConvertirFechas;
 import Persistencia.Criterio;
 import Persistencia.Fachada;
 import Persistencia.FachadaInterna;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
@@ -60,8 +67,8 @@ public class ExpertoReloj implements Experto{
     public void iniciar(ControladorPrincipal pant){
         ppal = pant;
         fechaSistema = pant.fechaSistema;
-        //calculoDemanda();
-        buscarProductosPuntoPedido(); 
+        calculoDemanda();
+        //buscarProductosPuntoPedido(); 
         buscarPedidosPendientes();
                
     }
@@ -138,51 +145,6 @@ public class ExpertoReloj implements Experto{
         }
         ppal.getPantallaPrincipal().getBandejaProductos().setModel(tprod);
         
-        
-        //si tenemos productos con stock bajo y es fin de mes        
-        /*for(int j=0; j<pp.size();j++){
-                Producto pto = pp.get(j);
-                pr= pp.get(j).getProveedors();                
-                prov = SeleccionarProveedor(pr);
-                //los elegidos
-                praux.add(prov);
-                ArrayList<Producto> aux = new ArrayList();
-                if(prodaux.containsKey(prov)) { 
-                    aux = (ArrayList<Producto>) prodaux.get(prov);
-                    aux.add(pto);
-                    prodaux.remove(prov);
-                    prodaux.put(prov, aux);
-                }else{
-                    aux.add(pto);
-                    prodaux.put(prov, aux);
-                }
-        }
-        //armamos por proveedor el pedido
-       expPed = (ExpertoRealizarPedido) FabricaExperto.getInstancia().FabricarExperto("ExpertoRealizarPedido");
-        expSR = (ExpertoPoliticaSR) FabricaExperto.getInstancia().FabricarExperto("ExpertoPoliticaSR");
-        expSQ = (ExpertoPoliticaSQ) FabricaExperto.getInstancia().FabricarExperto("ExpertoPoliticaSQ");
-        
-        for(int s=0; s<praux.size();s++){
-            ArrayList<Producto> aux = new ArrayList();
-            Proveedor P =praux.get(s);
-            //producto sobre el que trabajamos
-            aux = (ArrayList<Producto>) prodaux.get(P);
-            Hashtable cantidad = new Hashtable();
-            for(int l=0; l<aux.size();l++){
-                int lote = 0;
-                Producto aux2 = aux.get(l);
-                AgenteProducto ap = (AgenteProducto) aux2;
-                if(ap.getOIDPolitica().equals("1")){
-                    lote = expSR.calcularLote(aux2,P);
-                }else{
-                //si es la politica S,Q llamo al otro experto
-                    lote = expSQ.calcularLoteOptimo(aux2,P); 
-                }
-                cantidad.put(aux2, lote);
-            }
-            expPed.CrearPedidoPendiente(fechaSistema.getGregorianChange(), prov, prods, cantidad);
-        }
-        */
         return true;
     }
 
@@ -190,46 +152,43 @@ public class ExpertoReloj implements Experto{
         expMetodos = (ExpertoMetodos) FabricaExperto.getInstancia().FabricarExperto("ExpertoMetodos") ;
         Criterio Pr = fac.crearCriterio("baja", "=", 0);
         ArrayList<Proveedor> APR = fac.buscar(Proveedor.class, Pr);
+        int diferenciadeperiodos, valorperiodoinicial, valorperiodofinal, periodosapredecir;
+        Date perinicial,perfinal;
+        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
         
         for(int j = 0; j<APR.size();j++){
             AgenteProveedor agPr= (AgenteProveedor) APR.get(j);
-            DayOfYear objDia = new DayOfYear();
-            int diaDelAnio = objDia.getDiaDelAnio();
-            int diasTotalAnio = (objDia.esBisiesto()) ? 366 : 365;
-            int tiemR = 1;     //Valor por defecto...
-            int perActual = 1; //Valor por defecto...
-            float diaTemp = 0; //Valor por defecto...
+            Periodo periodo = new Periodo();
             String periodoinicial = "01012010";
             String periodofinal = "31122010";
-            tiemR = APR.get(j).getTiempoR();
-            if (tiemR == 0) {
-                diaTemp = 0;
-            } else {
-                diaTemp = diaDelAnio / tiemR;
-            }
-            int periodo = (int) diaTemp;
-            //..................................................................
-            if (diaTemp - periodo != 0) {
-                if (diaTemp < (int) (diasTotalAnio / tiemR)) {
-                    ++periodo;
-                }
-            }
             Criterio cc = fac.crearCriterio("OIDProveedor","=", agPr.getoid());
             ArrayList<Catalogo> cat = fac.buscar(Catalogo.class, cc);
           for(int c=0; c < cat.size();c++){ 
-            AgenteCatalogo agC = (AgenteCatalogo) cat.get(c);
-            Producto prod = (Producto) FabricaEntidad.getInstancia().FabricarEntidad(Producto.class);
-            prod = (Producto) FachadaInterna.getInstancia().buscarOID(Producto.class,agC.getOIDProducto());
-            ArrayList<Parametros> pars = Fachada.getInstancia().buscar_todo(Parametros.class);
-            Parametros par = (Parametros) FabricaEntidad.getInstancia().FabricarEntidad(Parametros.class);
-            /*Deberia calcular demanda*/
-            /*calcularestacionalidad(double alfa, int valorperiodo, String productoSeleccionado, int valorperiodoinicial, int valorperiodofinal, int periodosapredecir) {*/
-            //periodo inicial = 01-01-2010
-            //periodo final = 28 del mes que sea
-            //periodos a predecir = 1 (mes siguiente)
-            //buscar en parametro
-            //expMetodos.calcularestacionalidad(par.getAlfa(), periodo,prod.getNombreProducto(),'', periodo, periodo);
+                try {
+                    AgenteCatalogo agC = (AgenteCatalogo) cat.get(c);
+                    Producto prod = (Producto) FabricaEntidad.getInstancia().FabricarEntidad(Producto.class);
+                    prod = (Producto) FachadaInterna.getInstancia().buscarOID(Producto.class,agC.getOIDProducto());
+                    ArrayList<Parametros> pars = Fachada.getInstancia().buscar_todo(Parametros.class);
+                    Parametros par = (Parametros) FabricaEntidad.getInstancia().FabricarEntidad(Parametros.class);
+                    
+                    double alfa = 0.1;
+                    Date fechainicio = formato.parse("2010-01-01");
+                    Date fechafin = formato.parse("2010-12-31");
+                    
+                    valorperiodoinicial = periodo.getPeriodos(fechainicio, fechafin)+1;
+                    diferenciadeperiodos = periodo.getPeriodos(fechainicio, fechafin);
+                    perinicial = ConvertirFechas.stringAFecha(periodoinicial);
+                    perfinal = ConvertirFechas.stringAFecha(periodofinal);
+                    valorperiodofinal = valorperiodoinicial + diferenciadeperiodos;
+                    
+                    expMetodos.calcularestacionalidad(alfa,valorperiodoinicial,prod.getNombreProducto(),valorperiodoinicial, valorperiodofinal,3);
+                    
+                } catch (Exception ex) {
+                    Logger.getLogger(ExpertoReloj.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(ExpertoReloj.class.getName()).log(Level.SEVERE, null, ex);
+                }
           }
+          expMetodos.guardar();
         }
        
     }

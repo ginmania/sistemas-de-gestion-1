@@ -267,7 +267,7 @@ public class ExpertoProducto implements Experto {
               dem = dem + demanda.get(i).getDemandapronosticada();              
            }
          //nuestro plazo máximo de entrega son 15 días pasado el tiempo de reposicion
-         int PME = AP.getTiempoR() + 15;
+         int PME = AP.getTiempoR() + 5;
          int pe = AP.getTiempoR();
          ss = (PME - pe)*dem;
          
