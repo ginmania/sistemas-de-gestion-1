@@ -17,6 +17,7 @@ import Interfaces.Catalogo;
 import Interfaces.DayOfYear;
 import Interfaces.Demanda;
 import Interfaces.DetallePedido;
+import Interfaces.DetalleVenta;
 import Interfaces.Pedido;
 import Interfaces.ProductoProveedor;
 import Interfaces.Proveedor;
@@ -183,9 +184,9 @@ public class ExpertoProducto implements Experto {
         return productos;
     }
     
-    public double CalcularNivelServicio(Producto p, Proveedor P){
+    public Double CalcularNivelServicio(Producto p, Proveedor P){
         // 1 - (costo anual de almacenamiento * cantidad pedido)/(Demanda * costo emisión pedido)
-        double res; 
+        Double res; 
         int agotamiento, cantPedida = 0;
         double costoemi,costoalmac = 0;
         Fachada fac = Fachada.getInstancia();
@@ -196,11 +197,10 @@ public class ExpertoProducto implements Experto {
         ArrayList<Pedido> pedidos;
          Criterio d = fac.crearCriterio("OIDProducto", "=", ap.getoid());
          demanda = fac.buscar(Demanda.class, d);
-         float dem = (float) 0.0; 
+         float dem = (float) 0.0;  
          float MSE = (float) 0.0;
          for(int i=0; i < demanda.size();i++){
-              dem = (float) (dem + demanda.get(i).getDemandapronosticada());
-              MSE = (float) demanda.get(i).getMse();
+              dem = (float) (dem + demanda.get(i).getDemandapronosticada());              
            }
          costoemi = P.getCostoEmision();
          if (dem != 0.0){ //el producto no es nuevo
@@ -217,8 +217,36 @@ public class ExpertoProducto implements Experto {
                  }             
              }
           }
-         res = (1 - ((costoalmac * cantPedida)/(dem*costoemi)));
          
+         res = ((costoalmac * cantPedida)/(dem * costoemi));
+         res = 1 - res;
+         if(Double.isNaN(res)) res =0.0;
+        return res;
+    }
+    
+    public double CalcularNivelServicio(Producto p){
+        double res; 
+        int cantVendida=0, cantPedida = 0;
+        
+        Fachada fac = Fachada.getInstancia();
+        AgenteProducto ap = (AgenteProducto) p;
+        ArrayList<Demanda> demanda;
+        ArrayList<DetalleVenta> ventas;
+        ArrayList<Pedido> pedidos;
+         Criterio d = fac.crearCriterio("OIDProducto", "=", ap.getoid());
+         demanda = fac.buscar(Demanda.class, d);
+         float dem = (float) 0.0;  
+         float vtas = (float) 0.0;
+         for(int i=0; i < demanda.size();i++){
+              dem = (float) (dem + demanda.get(i).getDemandapronosticada());
+          }
+         ventas = fac.buscar(DetalleVenta.class, d);
+         for(int j=0; j < ventas.size();j++){
+             vtas = vtas + ventas.get(j).getCantidad();
+         }
+         
+         if(vtas==0 || dem==0) res = 0.50;
+         else res = (vtas/dem) * 100;
         return res;
     }
     

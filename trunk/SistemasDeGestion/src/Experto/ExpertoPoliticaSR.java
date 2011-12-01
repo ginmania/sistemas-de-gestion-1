@@ -73,26 +73,7 @@ public class ExpertoPoliticaSR implements Experto {
     }
 
  public void verificarPolitica() {
-        //Cargo tabla k.........................................................
-        tablaK[0][0] = 0.50f;
-        tablaK[0][1] = 0f;
-        tablaK[1][0] = 0.60f;
-        tablaK[1][1] = 0.25f;
-        tablaK[2][0] = 0.70f;
-        tablaK[2][1] = 0.52f;
-        tablaK[3][0] = 0.80f;
-        tablaK[3][1] = 0.84f;
-        tablaK[4][0] = 0.90f;
-        tablaK[4][1] = 1.28f;
-        tablaK[5][0] = 0.95f;
-        tablaK[5][1] = 1.64f;
-        tablaK[6][0] = 0.975f;
-        tablaK[6][1] = 1.96f;
-        tablaK[7][0] = 0.9990f;
-        tablaK[7][1] = 3.08f;
-        tablaK[8][0] = 0.9998f;
-        tablaK[8][1] = 3.6f;
-        //......................................................................
+         //......................................................................
         //Busco todas las polÃ­ticas para identicar el UUID de S,R...............
         String uuidPSR = "";
         ArrayList<PoliticaStock> objAUXII = objFP.buscar_todo(PoliticaStock.class);
@@ -299,19 +280,21 @@ public class ExpertoPoliticaSR implements Experto {
     private int getLoteS(float nivelServ, float demanda, int R, int te, float desvEstandar, int stockDisp,Producto p) {
         System.out.println("Nivel Servicio:"+ nivelServ);
         int k = (int) getK(nivelServ);
-        System.out.println("  K = " + k + " Demanda: " + demanda + " R: " + R + " te: " + te + " Oe: " + desvEstandar + " Stock Disponible: " + stockDisp);
+        System.out.println("K = " + k + "\t Demanda Pronosticada: " + demanda + "\t R: " + R + "\t te: " + te + "\t Oe: " + desvEstandar + "\t Stock Disponible: " + stockDisp);
 
         int Ue = (int) (demanda * (R + te) / 52);
         System.out.println("  Ue(R+te): " + Ue + " unidades");
 
         float Oe = desvEstandar * (float) (R + te) / 52;
-        System.out.println("  Oe(R+te): " + Oe + " unidades");
+        System.out.println(" Oe(R+te): " + Oe + " unidades");
 
         int S = (int) (Ue + (k * Oe));
         System.out.println("  S: " + S + " unidades");
         p.getStock().setCantidadMinima(S);
-
-        int total = S - stockDisp;
+        int total = 0;
+        if(S > 0)
+            total = S - stockDisp;
+        
         System.out.println("  S - Stock Disponible: " + total + " unidades");
 
         return total;
@@ -333,32 +316,27 @@ public class ExpertoPoliticaSR implements Experto {
      Stock Disponible = Cant_Stock + StockPend //Tabla Productos. $$$$$
      */
     private float getK(float nivelServ){
-        tablaK[0][0] = 0.50f;
-        tablaK[0][1] = 0f;
-        tablaK[1][0] = 0.60f;
-        tablaK[1][1] = 0.25f;
-        tablaK[2][0] = 0.70f;
-        tablaK[2][1] = 0.52f;
-        tablaK[3][0] = 0.80f;
-        tablaK[3][1] = 0.84f;
-        tablaK[4][0] = 0.90f;
-        tablaK[4][1] = 1.28f;
-        tablaK[5][0] = 0.95f;
-        tablaK[5][1] = 1.64f;
-        tablaK[6][0] = 0.975f;
-        tablaK[6][1] = 1.96f;
-        tablaK[7][0] = 0.9990f;
-        tablaK[7][1] = 3.08f;
-        tablaK[8][0] = 0.9998f;
-        tablaK[8][1] = 3.6f;
-        
+       Hashtable factor = new Hashtable();
+        factor.put("0.0", 0.0);
+        factor.put("0.25", 0.0);
+        factor.put("0.3", 0.0);
+        factor.put("0.5", 0.0);
+        factor.put("0.6", 0.25);
+        factor.put("0.7", 0.52);
+        factor.put("0.8", 0.84);
+        factor.put("0.9", 1.28);
+        factor.put("0.95",1.64);
+        factor.put("0.975", 1.96);
+        factor.put("0.999", 3.08);
+        factor.put("0.9998", 3);
+        if(Double.isNaN(nivelServ))
+            nivelServ =0;
         float rtaK = 0;
-        for (int i = 0; i < tablaK.length; i++) {
-            if (nivelServ == tablaK[i][0]) {
-                rtaK = tablaK[i][1];
-                break;
-            }
-        }
+        double k = (Double) factor.get(String.valueOf(nivelServ));
+        if(k!=0.0)
+            rtaK = (float) k;
+        else
+            rtaK = (float) 0.0;
         return rtaK;
     }
 
@@ -391,9 +369,10 @@ public class ExpertoPoliticaSR implements Experto {
         //busco el tiempo de demora en el catálogo
         //calculo el stock disponible
         /*Producto aux = prod.get(z);*/
-          System.out.println("  Inicio Calculo para el producto: "+p.getDescripcionProducto());
+          System.out.println("Producto: "+p.getNombreProducto());
+          System.out.println("Proveedor: "+P.getNombre());
           int R = P.getTiempoR();
-          float nivelServicio = p.getNivelServicio();
+          double nivelServicio = p.getNivelServicio();
           float StockDisp = p.getStock().getCantidad() + p.getStock().getStockPendiente();
        //busco la demanda para el producto - año - periodo
           Criterio c1 = objFP.crearCriterio("OIDProducto", "=",((AgenteProducto)p).getoid());
@@ -410,17 +389,30 @@ public class ExpertoPoliticaSR implements Experto {
                    }
           Criterio k1 = objFP.crearCriterio("OIDProducto", "=", ((AgenteProducto)p).getoid());
           Criterio k2 = objFP.crearCriterio("OIDProveedor","=",((AgenteProveedor)P).getoid());
-          Criterio k3 = objFP.crearCriterioCompuesto(k1,"=",k2);
+          Criterio k3 = objFP.crearCriterioCompuesto(k1,"AND",k2);
           ArrayList<Catalogo> cat = objFP.buscar(Catalogo.class,k3);          
            //busco la demora en el hashtable para este producto
           int te = 0;
           if(cat.size()!=0){
-              int i = cat.size() -1 ;
+              int i = cat.size()-1;
               te = cat.get(i).getDemora();
           }           
            //Registro el pedido pendiente
-            int loteS = (int) getLoteS(nivelServicio,demanda,R,te,MSE, (int) StockDisp,p);
-            p.setNivelServicio(nivelServicio);
+            ExpertoProducto expProd = (ExpertoProducto) FabricaExperto.getInstancia().FabricarExperto("ExpertoProducto");
+            if(nivelServicio == 0){
+                //nivelServicio =  expProd.CalcularNivelServicio(p, P);
+                nivelServicio =  expProd.CalcularNivelServicio(p);
+                p.setNivelServicio((float)nivelServicio);
+                System.out.println("Nivel Servicio segun experto producto: "+nivelServicio);
+            }
+            
+            System.out.println("Nivel Servicio segun experto producto: "+nivelServicio);
+            System.out.println("Desviacion Estándar: "+MSE);
+            System.out.println("Stock Disponible: "+StockDisp);
+            System.out.println("Demanda Pronosticada: "+demanda);
+            System.out.println("te: "+te);
+            
+            int loteS = (int) getLoteS((float)nivelServicio,demanda,R,te,MSE, (int) StockDisp,p);
             objFP.guardar((ObjetoPersistente)p);
           return loteS;
     }
