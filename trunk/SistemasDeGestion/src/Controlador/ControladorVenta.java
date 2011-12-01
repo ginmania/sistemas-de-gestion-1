@@ -129,7 +129,7 @@ public class ControladorVenta {
                 int nroFactura = Integer.parseInt(pantallaVta.getNroFactura().getText());
                 Date fch = pantallaVta.getFecha().getDate();
                 boolean GuardarVenta = expVenta.GuardarVenta(nroFactura, fch, cliente);
-                if (GuardarVenta == true) {
+                if (GuardarVenta) {
                     System.out.println("Se genero la venta");
                     JOptionPane.showMessageDialog(pantallaVta, "Se registro la venta", "Nueva Venta", JOptionPane.INFORMATION_MESSAGE);
                     LimpiarPantalla();
@@ -202,7 +202,7 @@ public class ControladorVenta {
             double totalVta = 0;
             int cantidad = Integer.parseInt(pantallaSel.getCantidad());
             Stock s = ctrlSeleccion.recuperarStock(productoSeleccionado);
-            if(cantidad < s.getCantidad()){
+            if(cantidad <= s.getCantidad()){
                 DTO_DetalleVenta linea = expVenta.nuevoDetalle(combo, cantidad);
                 tabla.add(linea);
                 pantallaVta.setJtDetalleVenta(tabla);
@@ -212,7 +212,7 @@ public class ControladorVenta {
                  //actualizacion de stock            
                 int cantAnt = s.getCantidad(); 
                 int cantActual= cantAnt - cantidad;
-                expStock.ActualizarStock(cantActual,(AgenteProducto)combo);
+              //  expStock.ActualizarStock(cantActual,(AgenteProducto)combo);
             }
             else{
                 JOptionPane.showMessageDialog(pantallaVta, "La cantidad que intenta vender no se encuentra en stock", "Stock", JOptionPane.ERROR_MESSAGE);
@@ -238,7 +238,7 @@ public class ControladorVenta {
     private void inicializarPantalla() {
         Date fechaHoy = new Date();
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-        pantallaVta.setNroFactura(String.valueOf(expVenta.NroFactura()+1));
+        pantallaVta.setNroFactura(String.valueOf(expVenta.NroFactura()));
         pantallaVta.getFecha().setDate(fechaHoy);
         pantallaVta.getJbSelecProducto().setVisible(false);
         pantallaVta.getJbConfirma().setVisible(false);

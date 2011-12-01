@@ -118,6 +118,7 @@ public class ExpertoProducto implements Experto {
         producto.setbaja(baja);       
         //stock
         stock.setStockPendiente(0);
+        cantidadminima = (int) this.CalcularStockSeguridad(producto, prov);
         stock.setCantidadMinima(cantidadminima);
         stock.setCantidad(cantidad);
         //catalogo
@@ -246,9 +247,34 @@ public class ExpertoProducto implements Experto {
          }
          
          if(vtas==0 || dem==0) res = 0.50;
-         else res = (vtas/dem) * 100;
+         else res = (vtas/dem);
+         res = Math.round(res);
         return res;
     }
     
+    public double CalcularStockSeguridad(Producto p, Proveedor P){
+        double ss =0;
+        Fachada fac = Fachada.getInstancia();
+        AgenteProducto ap = (AgenteProducto) p;
+        AgenteProveedor AP = (AgenteProveedor) P;
+        ArrayList<Demanda> demanda;
+        ArrayList<Proveedor> proveedors;
+        //buscamos la demanda para ese producto
+        Criterio d = fac.crearCriterio("OIDProducto", "=", ap.getoid());
+         demanda = fac.buscar(Demanda.class, d);
+         double dem = 0;  
+         for(int i=0; i < demanda.size();i++){
+              dem = dem + demanda.get(i).getDemandapronosticada();              
+           }
+         //nuestro plazo máximo de entrega son 15 días pasado el tiempo de reposicion
+         int PME = AP.getTiempoR() + 15;
+         int pe = AP.getTiempoR();
+         ss = (PME - pe)*dem;
+         
+        return ss;
+    }
     
+    public double CalcularPuntoPedido(Producto p, Proveedor P){
+        return 0;
+    }
 }

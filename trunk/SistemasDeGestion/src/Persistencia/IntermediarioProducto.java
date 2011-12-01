@@ -48,7 +48,7 @@ public class IntermediarioProducto extends IntermediarioRelacional {
         rs.addCampo(new Campo("clasifABC","'"+producto.getClasifABC()+"'"));
         rs.addCampo(new Campo("baja", "'" + String.valueOf(producto.getbaja()) + "'"));
         rs.addCampo(new Campo("nivelServicio", String.valueOf(producto.getNivelServicio())));
-        rs.addCampo(new Campo("politica", "'" + producto.getOIDPolitica() + "'"));
+        rs.addCampo(new Campo("politica", "'" + producto.getPolitica() + "'"));
         return rs;
 
     }
@@ -72,7 +72,7 @@ public class IntermediarioProducto extends IntermediarioRelacional {
                 temp.setClasifABC(valor.charAt(0));
                 temp.setbaja(Integer.parseInt(registro.getCampo("baja").getValor()));
                 temp.setPrecioVenta((Double) (registro.getCampo("nivelServicio").getValor(Double.class)));
-                temp.setOIDPolitica(registro.getCampo("politica").getValor());
+                temp.setPolitica(registro.getCampo("politica").getValor());
                 ArrayList<Stock> buscarStock;
                 if(registro.getCampo("OIDStock").getValor() != null){
                     Stock s = (Stock) FabricaEntidad.getInstancia().FabricarEntidad(Stock.class);

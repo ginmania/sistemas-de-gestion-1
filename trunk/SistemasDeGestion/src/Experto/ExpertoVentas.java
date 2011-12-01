@@ -18,6 +18,7 @@ import Persistencia.Fachada;
 import Persistencia.FachadaInterna;
 import Persistencia.ObjetoPersistente;
 import java.lang.Math;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Hashtable;
@@ -29,10 +30,12 @@ import java.util.List;
 public class ExpertoVentas implements Experto{
     //private Cliente cliente; //solamente un cliente
     //private ArrayList<Producto> productos;
+    private Fachada fachada;
     private int NroFactura;
     private Venta vta;
     private AgenteVenta Avta;
     private List<DetalleVenta> detalles;
+    private ArrayList<Producto> prods;
     private DetalleVenta detalle;
     private AgenteDetalleVenta Adetalle;
     private DTO_DetalleVenta dtoDetalle;
@@ -40,11 +43,13 @@ public class ExpertoVentas implements Experto{
     private Hashtable detVta;
 
     public ExpertoVentas() {
+        fachada = Fachada.getInstancia();
         this.NroFactura = (int) Math.random();//nro aleatorio de factura
         this.vta = (Venta) FabricaEntidad.getInstancia().FabricarEntidad(Venta.class); 
         Avta = (AgenteVenta) vta;
         vta.setNumero(this.NroFactura()+1);
         this.detalles = new ArrayList<DetalleVenta>();  
+        this.prods = new ArrayList<Producto>();
         this.detVta = new Hashtable();
     }
     
@@ -78,6 +83,7 @@ public class ExpertoVentas implements Experto{
         vta.setTotal(Total);
         vta.setDetalleVenta(detalle);
         detalles.add(detalle);  
+        prods.add(prod);
         System.out.println("agregamos el siguiente detalle");
         System.out.println(detalle.getCantidad()+"\n "+detalle.getPrecioUnitario()+"\n "+detalle.getProducto());
         return dtoDetalle;
@@ -90,32 +96,39 @@ public class ExpertoVentas implements Experto{
     
     public int NroFactura(){
         int aux1, aux, nro=0;
-        ArrayList<Venta> vtas = Fachada.getInstancia().buscar_todo(Venta.class);
+        ArrayList<Venta> vtas = fachada.buscar_todo(Venta.class);
         for(int i=1;i<vtas.size();i++){
             aux = vtas.get(i-1).getNumero();
             aux1 = vtas.get(i).getNumero();
             if(aux > aux1) nro = aux;
             else nro = aux1;
         }
-        return nro;
+        return nro +1;
     }
     
     public boolean GuardarVenta(int nroFactura,Date fecha,Cliente cli){
         boolean res = false;
-        String fch = fecha.toString();
+        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+        ExpertoPoliticaSQ expPSQ = (ExpertoPoliticaSQ) FabricaExperto.getInstancia().FabricarExperto("ExpertoPoliticaSQ");
+        ExpertoPoliticaSR expPSR = (ExpertoPoliticaSR) FabricaExperto.getInstancia().FabricarExperto("ExpertoPoliticaSR");
+         formato.applyPattern("yyyy-MM-dd");
+        String fch = formato.format(fecha);
         vta.setFechaventa(fch);        
         vta.setCliente(cli);
         vta.setTotal(Total);
-        vta.setNumero(nroFactura);        
-        vta.setDetalleVentas(detalles);               
-        actualizarStock(detalles);
-        res= Fachada.getInstancia().guardar((ObjetoPersistente) vta);
         
-        NroFactura = vta.getNumero();        
-        //deberia imprimir por impresora la factura
-        System.out.println("\n Se guardo la factura nro"+String.valueOf(nroFactura)); 
-        System.out.println("\n Cliente"+cli.getNombre()+"-"+cli.getApellido()+" -CUIT "+cli.getCUIT());       
-        
+        res= fachada.guardar((ObjetoPersistente) vta);
+        if(res){
+            actualizarStock(detalles);
+            /*AUTOMATIZACION*/
+            //verifico si el producto alcanzo el ss y si es asi realizo el pedido
+            expPSQ.automatizado(prods);
+            expPSR.automatizado(prods);
+            //deberia imprimir por impresora la factura
+            System.out.println("\n Se guardo la factura nro"+String.valueOf(nroFactura)); 
+            System.out.println("\n Cliente"+cli.getNombre()+"-"+cli.getApellido()+" -CUIT "+cli.getCUIT());
+            detalles.clear();
+        }
         return res;
     }
     
@@ -124,14 +137,14 @@ public class ExpertoVentas implements Experto{
         Criterio c1 = new Criterio();
         Criterio c2 = new Criterio();
         if (!fechaDesde.equals("")) {
-            c1 = Fachada.getInstancia().crearCriterio("fechaventa", ">", fechaDesde);
+            c1 = fachada.crearCriterio("fechaventa", ">=", fechaDesde);
         }
         if (!fechaHasta.equalsIgnoreCase("")) {
-            c2 = Fachada.getInstancia().crearCriterio("fechaventa", "<", fechaHasta);
+            c2 = fachada.crearCriterio("fechaventa", "<=", fechaHasta);
         }
-        Criterio c3 = Fachada.getInstancia().crearCriterioCompuesto(c1, "AND", c2);
+        Criterio c3 = fachada.crearCriterioCompuesto(c1, "AND", c2);
         
-        ArrayList<Venta> venta = Fachada.getInstancia().buscar(Venta.class,c3 ); 
+        ArrayList<Venta> venta = fachada.buscar(Venta.class,c3 ); 
         List<DTO_Venta> vres = new ArrayList<DTO_Venta>();
         
         for(int i=0; i<venta.size();i++){
@@ -153,11 +166,6 @@ public class ExpertoVentas implements Experto{
     public ArrayList<DTO_DetalleVenta> buscarDetallesVenta(int nroVta){
         ArrayList<DTO_DetalleVenta> dtoDV = new ArrayList<DTO_DetalleVenta>();
         List<DetalleVenta> dv = (List<DetalleVenta>) detVta.get(nroVta);
-        /*Criterio cri = new Criterio();
-        cri.setAtributo("OIDVenta");
-        cri.setOperador("=");
-        cri.setValor(v.getoid());
-        ArrayList<DetalleVenta> DV = Fachada.getInstancia().buscar(DetalleVenta.class,cri);*/
         
         for(int i=0; i< dv.size();i++){
             DTO_DetalleVenta dtoTemp = new DTO_DetalleVenta();
