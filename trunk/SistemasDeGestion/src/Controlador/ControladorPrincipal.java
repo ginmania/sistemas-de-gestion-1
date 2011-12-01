@@ -215,13 +215,11 @@ public final class ControladorPrincipal {
             }
         });
 
-      /* pantallaPrincipal.getFechaSistema().addActionListener(new java.awt.event.ActionListener() {
+       pantallaPrincipal.getFechaSistema().addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
-               pantallaFecha = new PantallaFechaSistema();
-               pantallaFecha.setVisible(true);
-               add(pantallaFecha);
+               clock.simulacion();
             }
-
+       });
         /*  pantallaPrincipal.getFechaSistema().addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(ActionEvent e) {
         pantallaFecha = new PantallaFechaSistema();
