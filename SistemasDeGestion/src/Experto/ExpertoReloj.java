@@ -8,6 +8,7 @@ import Agentes.AgenteCatalogo;
 import Agentes.AgenteProducto;
 import Agentes.AgenteProveedor;
 import Controlador.ControladorPrincipal;
+import Excepciones.NoProductoExcepcion;
 import Interfaces.Catalogo;
 import Interfaces.DayOfYear;
 import Interfaces.DetallePedido;
@@ -69,7 +70,11 @@ public class ExpertoReloj implements Experto{
         ppal = pant;
         fechaSistema = pant.fechaSistema;
         Date dia = new Date();
-        calculoDemanda();
+        try {
+            calculoDemanda();
+        } catch (NoProductoExcepcion ex) {
+            Logger.getLogger(ExpertoReloj.class.getName()).log(Level.SEVERE, null, ex);
+        }
         buscarProductosPuntoPedido(dia.getDay()); 
         buscarPedidosPendientes();
                
@@ -150,14 +155,14 @@ public class ExpertoReloj implements Experto{
         return true;
     }
 
-    private void calculoDemanda() {
+    private void calculoDemanda() throws NoProductoExcepcion {
         expMetodos = (ExpertoMetodos) FabricaExperto.getInstancia().FabricarExperto("ExpertoMetodos") ;
         Criterio Pr = fac.crearCriterio("baja", "=", 0);
         ArrayList<Proveedor> APR = fac.buscar(Proveedor.class, Pr);
         int diferenciadeperiodos, valorperiodoinicial, valorperiodofinal, periodosapredecir;
         Date perinicial,perfinal;
         SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
-        
+        expMetodos.buscarProducto();
         for(int j = 0; j<APR.size();j++){
             AgenteProveedor agPr= (AgenteProveedor) APR.get(j);
             Periodo periodo = new Periodo();
@@ -173,9 +178,9 @@ public class ExpertoReloj implements Experto{
                     ArrayList<Parametros> pars = Fachada.getInstancia().buscar_todo(Parametros.class);
                     Parametros par = (Parametros) FabricaEntidad.getInstancia().FabricarEntidad(Parametros.class);
                     
-                    double alfa = 0.1;
+                    //double alfa = 0.1;
                     Date fechainicio = formato.parse("2010-01-01");
-                    Date fechafin = formato.parse("2010-12-31");
+                    Date fechafin = formato.parse("2010-05-31");
                     
                     valorperiodoinicial = periodo.getPeriodos(fechainicio, fechafin)+1;
                     diferenciadeperiodos = periodo.getPeriodos(fechainicio, fechafin);
@@ -183,7 +188,7 @@ public class ExpertoReloj implements Experto{
                     perfinal = ConvertirFechas.stringAFecha(periodofinal);
                     valorperiodofinal = valorperiodoinicial + diferenciadeperiodos;
                     
-                    expMetodos.calcularestacionalidad(alfa,valorperiodoinicial,prod.getNombreProducto(),valorperiodoinicial, valorperiodofinal,3);
+                    expMetodos.calcularestacionalidad(pars.get(0).getAlfa(),diferenciadeperiodos,prod.getNombreProducto(),valorperiodoinicial, valorperiodofinal,3);
                     
                 } catch (Exception ex) {
                     Logger.getLogger(ExpertoReloj.class.getName()).log(Level.SEVERE, null, ex);
@@ -211,7 +216,11 @@ public class ExpertoReloj implements Experto{
     }
 
     public void simulacion() {
-        calculoDemanda();
+        try {
+            calculoDemanda();
+        } catch (NoProductoExcepcion ex) {
+            Logger.getLogger(ExpertoReloj.class.getName()).log(Level.SEVERE, null, ex);
+        }
         buscarProductosPuntoPedido(28); 
         buscarPedidosPendientes();
         PantallaPrincipal pant = ppal.getPantallaPrincipal();
